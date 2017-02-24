@@ -1,0 +1,27 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/service_container.html
+parameters:
+    app.form.type.election: AppBundle\Form\Type\ElectionType
+    app.model.election: AppBundle\Entity\Election
+
+services:
+    app.repository.election:
+        class: AppBundle\Repository\ElectionRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - "%app.model.election%"
+
+    app.form.handler.election:
+        class: AppBundle\Form\Handler\ElectionFormHandler
+        arguments:
+            - "@form.factory"
+            - "%app.form.type.election%"
+            - "@doctrine.orm.entity_manager"
+
+    app.form.type.election:
+        class: AppBundle\Form\Type\ElectionType
+        tags:
+            - name: "form.type"
+        arguments:
+            - "%app.model.election%"
+

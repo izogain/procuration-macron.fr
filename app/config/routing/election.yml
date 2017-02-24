@@ -1,0 +1,23 @@
+election_delete:
+    path: /{id}/delete
+    defaults: { _controller: AppBundle:Election:delete }
+    methods: GET
+    requirements:
+        id: \d+
+
+election_new:
+    path: /new
+    methods: GET|POST
+    defaults: { _controller: AppBundle:Election:new }
+
+election_edit:
+    path: /{id}
+    defaults: { _controller: AppBundle:Election:edit }
+    methods: GET|POST
+    requirements:
+        id: \d+
+
+election_index:
+    path: /
+    methods: GET
+    defaults: { _controller: AppBundle:Election:index }
