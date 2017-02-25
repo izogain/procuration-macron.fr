@@ -14,6 +14,14 @@
 
 .form-box--compacted {
     height: auto;
+
+    .form-fields {
+        margin: 30px 0;
+    }
+
+    .form-note {
+        margin-top: 30px;
+    }
 }
 
 .form-content {
@@ -53,16 +61,16 @@
     opacity: 1;
 }
 
-.form-fields {
-    padding: 30px 0;
-}
-
 .form-group {
     margin-top: 15px;
 
     &:first-of-type {
         margin-top: 30px;
     }
+}
+
+.form-fields {
+
 }
 
 .form-text {
@@ -122,6 +130,22 @@
     }
 }
 
+.form-checkbox {
+    float: left;
+    margin-top: 2px;
+    margin-right: 8px;
+}
+
+.form-label {
+    letter-spacing: -.2px;
+}
+
+.form-label-hint {
+    margin-top: 4px;
+    margin-left: 22px;
+    font-size: 12px;
+}
+
 .form-btn {
     display: inline-block;
     margin: 0;
@@ -142,4 +166,9 @@
     &:hover {
         background-color: $cerise;
     }
+}
+
+.form-note {
+    font-size: 12px;
+    letter-spacing: 0;
 }

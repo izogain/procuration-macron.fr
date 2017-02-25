@@ -11,3 +11,8 @@ label {
     font-weight: normal;
     letter-spacing: .3px;
 }
+
+input[type="checkbox"] {
+    display: inline-block;
+    width: auto;
+}
