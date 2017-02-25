@@ -14,7 +14,7 @@
 
 
 
-        <div style="padding: 80px 0; background-color: #f2f2f2; text-align: center;">
+        <div class="test-form-container">
 
 
 
@@ -42,10 +42,10 @@
                             <div class="form-group">
                                 <p class="form-text">Mon bureau de vote / consulat</p>
                                 <select class="form-select" name="vote-place">
-                                    <option value="Bureau de vote 1">Bureau de vote 1</option>
-                                    <option value="Bureau de vote 2">Bureau de vote 2</option>
-                                    <option value="Bureau de vote 3">Bureau de vote 3</option>
-                                    <option value="Bureau de vote 4">Bureau de vote 4</option>
+                                    <option value="1">Bureau de vote 1</option>
+                                    <option value="2">Bureau de vote 2</option>
+                                    <option value="3">Bureau de vote 3</option>
+                                    <option value="4">Bureau de vote 4</option>
                                 </select>
                             </div>
                         </div>
@@ -110,22 +110,22 @@
                             <div class="form-group">
                                 <input class="form-checkbox" type="checkbox" name="presidential-first-round" id="presidential-first-round">
                                 <label class="form-label" for="presidential-first-round">Pour le premier tour de l'élection présidentielle</label>
-                                <p class="form-hint">(dimanche 23 avril 2017)</p>
+                                <p class="form-label-hint">(dimanche 23 avril 2017)</p>
                             </div>
                             <div class="form-group">
                                 <input class="form-checkbox" type="checkbox" name="presidential-second-round" id="presidential-second-round">
                                 <label class="form-label" for="presidential-second-round">Pour le second tour de l'élection présidentielle</label>
-                                <p class="form-hint">(dimanche 7 mai 2017)</p>
+                                <p class="form-label-hint">(dimanche 7 mai 2017)</p>
                             </div>
                             <div class="form-group">
                                 <input class="form-checkbox" type="checkbox" name="legislative-first-round" id="legislative-first-round">
                                 <label class="form-label" for="legislative-first-round">Pour le second tour de l'élection législative</label>
-                                <p class="form-hint">(dimanche 11 juin 2017)</p>
+                                <p class="form-label-hint">(dimanche 11 juin 2017)</p>
                             </div>
                             <div class="form-group">
                                 <input class="form-checkbox" type="checkbox" name="legislative-second-round" id="legislative-second-round">
                                 <label class="form-label" for="legislative-second-round">Pour le second tour de l'élection législative</label>
-                                <p class="form-hint">(dimanche 18 juin 2017)</p>
+                                <p class="form-label-hint">(dimanche 18 juin 2017)</p>
                             </div>
                         </div>
 
@@ -162,6 +162,42 @@
 
                         <div class="center">
                             <button class="form-btn">Je continue</button>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+                <div class="form-box">
+                    <div class="form-content">
+
+                        <div class="form-steps">
+                            <div class="form-step">1</div>
+                            <div class="form-step">2</div>
+                            <div class="form-step">3</div>
+                            <div class="form-step">4</div>
+                            <div class="form-step form-step--is-active">5</div>
+                        </div>
+
+                        <div>
+                            <p class="text-medium center">Pour finir (optionnel)</p>
+                            <div class="form-group">
+                                <p class="form-text">Pour quelle raison faîtes vous <span class="nowrap">procuration ?</span></p>
+                                <select class="form-select" name="reason">
+                                    <option value="1">en raison d’obligations professionnelles</option>
+                                    <option value="2">en raison d’un handicap ; pour raison de santé</option>
+                                    <option value="3">en raison d’assistance apportée à une personne malade ou infirme</option>
+                                    <option value="4">en raison d’obligations de formation</option>
+                                    <option value="5">parce que je suis en vacances</option>
+                                    <option value="6">parce que je réside dans une commune différente de celle où je suis inscrit(e) sur une liste électorale</option>
+                                </select>
+                                <p class="form-select-hint">Ce n’est pas de l’indiscrétion, cette question figure dans le document CERFA :)</p>
+                            </div>
+                        </div>
+
+                        <div class="center">
+                            <button class="form-btn">Je termine</button>
                         </div>
 
                     </div>

@@ -102,6 +102,15 @@
     border: 1px solid $silver;
 }
 
+.form-select-hint {
+    margin: 15px 18px 0;
+    font-size: 12px;
+
+    @media (max-width: $bp-xsmall) {
+        margin: 15px 4px 0;
+    }
+}
+
 .form-inputs-address {
     display: flex;
     flex-wrap: wrap;
@@ -157,10 +166,14 @@
     letter-spacing: -.2px;
 }
 
-.form-hint {
+.form-label-hint {
     margin-top: 4px;
     margin-left: 22px;
     font-size: 12px;
+
+    @media (max-width: $bp-xsmall) {
+        margin-left: 2px;
+    }
 }
 
 .form-btn {
@@ -188,4 +201,23 @@
 .form-note {
     font-size: 12px;
     letter-spacing: 0;
+}
+
+
+
+
+
+.test-form-container {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #f2f2f2;
+    text-align: center;
+
+    .form-box {
+        margin: 64px;
+
+        @media (max-width: 700px) {
+            margin: 64px 0;
+        }
+    }
 }
