@@ -1,0 +1,93 @@
+.form-box {
+    display: inline-block;
+    padding: 30px 15px;
+    width: 100%;
+    max-width: 400px;
+    height: 500px;
+    background-color: white;
+    text-align: left;
+}
+
+.form-box--bordered {
+    border: solid 1px $silver;
+}
+
+.form-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 340px;
+    height: 100%;
+}
+
+.form-steps {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 256px;
+}
+
+.form-step {
+    width: 30px;
+    height: 30px;
+    line-height: 31px;
+    border-radius: 15px;
+    background-color: gray;
+    color: black;
+    font-size: 14px;
+    text-align: center;
+    opacity: .3;
+    transition: color 450ms, opacity 450ms;
+    cursor: default;
+}
+
+.form-step--is-active {
+    color: white;
+    opacity: 1;
+}
+
+.form-groups {
+    margin-top: 32px;
+}
+
+.form-group {
+    margin-top: 16px;
+}
+
+.form-text {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.form-input,
+.form-select {
+    margin-top: 16px;
+    padding: 0 12px;
+    height: 42px;
+    border: 1px solid $silver;
+}
+
+.form-btn {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    max-width: 300px;
+    height: 75px;
+    line-height: 75px;
+    border: none;
+    background-color: $strawberry;
+    color: white;
+    font-family: $gillsans;
+    font-size: 18px;
+    text-transform: uppercase;
+    transition: background-color 450ms;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $cerise;
+    }
+}

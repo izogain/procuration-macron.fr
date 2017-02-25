@@ -5,6 +5,7 @@
 .home-section--form {
     background: url(../img/en-marche-photo.jpg) no-repeat center;
     background-size: cover;
+    text-align: right;
 }
 
 .home-section--vote {
@@ -31,12 +32,16 @@
     align-items: center;
     margin-top: 80px;
 
-    &:nth-child(2n) {
-        flex-direction: row-reverse;
+    @media (max-width: $bp-small) {
+        flex-direction: column;
     }
 
-    @media (max-width: $bp-small) {
-        flex-direction: column !important;
+    &:nth-child(2n) {
+        flex-direction: row-reverse;
+
+        @media (max-width: $bp-small) {
+            flex-direction: column;
+        }
     }
 }
 
@@ -70,29 +75,26 @@
 
 .home-query-container {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    align-items: center;
 
-    @media (max-width: $bp-large) {
-        justify-content: space-between;
-    }
-
-    @media (max-width: $bp-small) {
+    @media (max-width: $bp-medium) {
         flex-direction: column;
         align-items: center;
-
-        & > div:last-child {
-            margin-top: 80px
-        }
     }
 }
 
 .home-query-box {
     width: 100%;
-    max-width: 340px;
+    max-width: 400px;
     padding: 80px 15px;
     background-color: $cerise;
     color: white;
     text-align: center;
+
+    @media (max-width: $bp-medium) {
+        margin-bottom: 80px
+    }
 
     p:not(:first-child) {
         margin-top: 32px;
