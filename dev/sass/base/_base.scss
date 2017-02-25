@@ -1,0 +1,43 @@
+html {
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+body {
+    background: white;
+    color: black;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+ul,
+ol,
+li {
+    margin: 0;
+    padding: 0;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: normal;
+}
+
+a, a:active, a:focus, a:link, a:visited {
+    color: black;
+    text-decoration: none;
+    transition: color 450ms;
+}
+
+a:hover {
+    color: rgba(0, 0, 0, .4);
+}
