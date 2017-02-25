@@ -3,9 +3,18 @@
 }
 
 .home-section--form {
-    height: 512px;
     background: url(../img/en-marche-photo.jpg) no-repeat center;
     background-size: cover;
+}
+
+.home-section--vote {
+    height: 384px;
+    background: url(../img/en-marche-photo.jpg) no-repeat center;
+    background-size: cover;
+}
+
+.home-section--query {
+    background-color: $concrete
 }
 
 .home-header-subtitle {
@@ -42,17 +51,52 @@
 
 .home-p {
     margin-top: 32px;
-    letter-spacing: .3px;
-    line-height: 1.6;
+    line-height: 1.5;
 }
 
 .home-exp-img {
     width: 47.5%;
     max-width: 540px;
-    height: auto;
 
     @media (max-width: $bp-small) {
         margin-top: 32px;
         width: 100%;
+    }
+}
+
+
+
+
+
+.home-query-container {
+    display: flex;
+    justify-content: space-around;
+
+    @media (max-width: $bp-large) {
+        justify-content: space-between;
+    }
+
+    @media (max-width: $bp-small) {
+        flex-direction: column;
+        align-items: center;
+
+        & > div:nth-child(2) {
+            margin-top: 80px
+        }
+    }
+}
+
+.home-query-box {
+    width: 100%;
+    max-width: 340px;
+    padding: 80px 15px;
+    background-color: $cerise;
+    color: white;
+    text-align: center;
+
+    p {
+        &:not(:first-child) {
+            margin-top: 32px;
+        }
     }
 }
