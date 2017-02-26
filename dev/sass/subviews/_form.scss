@@ -228,6 +228,24 @@
     }
 }
 
+.form-desc {
+    margin-top: 30px;
+}
+
+.form-rsx-box {
+    display: flex;
+    justify-content: space-between;
+
+    @media (max-width: 410px) {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    button {
+        margin-top: 15px;
+    }
+}
+
 
 
 
