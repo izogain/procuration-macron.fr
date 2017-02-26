@@ -203,6 +203,31 @@
     letter-spacing: 0;
 }
 
+.form-copy-box {
+    display: flex;
+    justify-content: space-between;
+
+    @media (max-width: $bp-xsmall) {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    input {
+        margin-top: 15px;
+        width: 232px;
+        text-align: center;
+
+        @media (max-width: $bp-xsmall) {
+            width: 100%;
+        }
+    }
+
+    button {
+        margin-top: 15px;
+        cursor: copy;
+    }
+}
+
 
 
 

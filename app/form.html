@@ -192,7 +192,7 @@
                                     <option value="5">parce que je suis en vacances</option>
                                     <option value="6">parce que je réside dans une commune différente de celle où je suis inscrit(e) sur une liste électorale</option>
                                 </select>
-                                <p class="form-select-hint">Ce n’est pas de l’indiscrétion, cette question figure dans le document CERFA :)</p>
+                                <p class="form-select-hint">Ce n’est pas de l’indiscrétion, cette question figure dans le document <abbr title="Centre d'enregistrement et de révision des formulaires administratifs">CERFA</abbr> :)</p>
                             </div>
                         </div>
 
@@ -212,8 +212,10 @@
                         <p class="center">Votre demande de procuration a bien été enregistrée. Un mandataire vous contactera dans les 3 jours pour finaliser la procuration.</p>
                         <div class="form-group">
                             <p class="form-text">En attendant, partagez ce dispositif auprès de vos proches</p>
-                            <input class="form-input" type="text" value="www.procuration-macron.fr">
-                            <button class="btn">copier lien</button>
+                            <div class="form-copy-box">
+                                <input class="form-input" type="text" value="www.procuration-macron.fr" name="link-copy" id="procuration-link">
+                                <button class="btn js-btn-clipboard" data-clipboard-target="#procuration-link">copier lien</button>
+                            </div>
                         </div>
                         <p class="form-note">* La procuration peut être établie pour une durée maximale d'un an sur le territoire national et de trois ans dans les ambassades ou postes consulaires pour les Français établis à l'étranger.</p>
 
@@ -227,6 +229,14 @@
 
 
         </div>
+
+
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.6.0/clipboard.min.js"></script>
+
+        <script>
+            new Clipboard('.js-btn-clipboard');
+        </script>
 
 
 
