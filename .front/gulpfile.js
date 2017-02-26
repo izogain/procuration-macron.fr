@@ -8,7 +8,7 @@ var csso = require('gulp-csso');
 var uglify = require('gulp-uglify');
 var devDir = 'dev/';
 var appDir = 'app/';
-var appAssetsDir = appDir + 'assets/';
+var appAssetsDir = appDir + 'web/';
 
 
 
