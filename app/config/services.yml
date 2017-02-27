@@ -2,15 +2,14 @@
 # http://symfony.com/doc/current/service_container.html
 parameters:
     app.form.type.election: AppBundle\Form\Type\ElectionType
+    app.form.type.procuration_assignation: AppBundle\Form\Type\ProcurationAssignationType
+
     app.model.election: AppBundle\Entity\Election
+    app.model.office: AppBundle\Entity\Office
+    app.model.procuration: AppBundle\Entity\Procuration
+    app.model.voting_availability: AppBundle\Entity\VotingAvailability
 
 services:
-    app.repository.election:
-        class: AppBundle\Repository\ElectionRepository
-        factory: ["@doctrine.orm.entity_manager", getRepository]
-        arguments:
-            - "%app.model.election%"
-
     app.form.handler.election:
         class: AppBundle\Form\Handler\ElectionFormHandler
         arguments:
@@ -18,10 +17,76 @@ services:
             - "%app.form.type.election%"
             - "@doctrine.orm.entity_manager"
 
+    app.form.handler.procuration_assignation:
+        class: AppBundle\Form\Handler\ProcurationAssignationFormHandler
+        arguments:
+            - "@form.factory"
+            - "%app.form.type.procuration_assignation%"
+            - "@doctrine.orm.entity_manager"
+
     app.form.type.election:
-        class: AppBundle\Form\Type\ElectionType
+        class: "%app.form.type.election%"
         tags:
             - name: "form.type"
         arguments:
             - "%app.model.election%"
+    app.form.type.procuration_assignation:
+        class: "%app.form.type.procuration_assignation%"
+        tags:
+            - name: form.type
+        arguments:
+            - "%app.model.procuration%"
+            - "%app.model.voting_availability%"
+
+    app.mediator.procuration:
+        class: AppBundle\Mediator\ProcurationMediator
+        arguments:
+            - "@app.repository.procuration"
+            - "@doctrine.orm.entity_manager"
+
+    app.mediator.voting_availability:
+        class: AppBundle\Mediator\VotingAvailabilityMediator
+        arguments:
+            - "@app.repository.voting_availability"
+            - "@doctrine.orm.entity_manager"
+
+    app.repository.election:
+        class: AppBundle\Repository\ElectionRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - "%app.model.election%"
+    app.repository.office:
+        class: AppBundle\Repository\OfficeRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - "%app.model.office%"
+    app.repository.procuration:
+        class: AppBundle\Repository\ProcurationRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - "%app.model.procuration%"
+    app.repository.user:
+        class: AppBundle\Repository\UserRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - "%fos_user.model.user.class%"
+    app.repository.voting_availability:
+        class: AppBundle\Repository\VotingAvailabilityRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - "%app.model.voting_availability%"
+
+
+    app.twig.procuration_extension:
+        class: AppBundle\Twig\ProcurationExtension
+        public: false
+        tags:
+            - { name: twig.extension }
+        arguments:
+            - "@app.form.handler.procuration_assignation"
+    twig.extension.intl:
+        class: Twig_Extensions_Extension_Intl
+        public: false
+        tags:
+            - { name: twig.extension }
 

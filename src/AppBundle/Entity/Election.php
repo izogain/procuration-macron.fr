@@ -24,6 +24,11 @@ class Election
      */
     protected $active = true;
 
+    public function __toString()
+    {
+        return (string) $this->getLabel();
+    }
+
     /**
      * @return int
      */

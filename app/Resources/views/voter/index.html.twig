@@ -1,0 +1,88 @@
+{% extends '::base.html.twig' %}
+{% set selected_nav = 'voter' %}
+
+
+{% block body %}
+    <div class="page-header">
+        <h1>Liste des remplaçants</h1>
+    </div>
+
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Date</th>
+                <th>Bureau de vote</th>
+                <th>Statut</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for voting_availability in voting_availabilities if voting_availabilities|length %}
+                {% set procuration = voting_availability.procuration %}
+                {% set election = voting_availability.election %}
+                {% set voter = voting_availability.voter %}
+                {% set voterVotingOffice = voter.votingOffice %}
+                <tr>
+                    <td>{{ voter }}</td>
+                    <td>{{ election }} ({{ election.performanceDate|localizeddate(timeFormat='none') }})</td>
+                    <td>{{ voterVotingOffice }} ({{ voter.votingOffice.address.postalCode }} {{ voter.votingOffice.address.city }})</td>
+                    <td>
+                        {% if procuration is null %}
+                            Disponible
+                        {% else %}
+                            <b class="text-success">Affecté</b>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ path('voting_availability_delete', {'id': voting_availability.id}) }}"
+                           class="delete-voting-availability btn btn-xs btn-danger{% if procuration is not null %} disabled{% endif %}"
+                           data-voter="{{ voter }}" data-election="{{ election }}"
+                           data-election-date="{{ election.performanceDate|localizeddate(timeFormat='none') }}"
+                           data-redirect-url="{{ path('voting_availability_index') }}"
+                        >
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5" class="text-center">Aucune disponibilité</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function() {
+            $("a.delete-voting-availability").click(function(e) {
+                var $this = $(this);
+
+                if ($this.hasClass('disabled')) {
+                    return false;
+                }
+
+                if (!confirm('Etes-vous sûr de vouloir supprimer la disponibilité de '+ $this.data('voter') + ' pour ' + $this.data('election') + ' le ' + $this.data('election-date') + '?')) {
+                    return false;
+                }
+
+                $.ajax({
+                    url: $this.attr('href'),
+                    method: 'DELETE',
+                    beforeSend: function() {
+                        $this.addClass('disabled');
+                    },
+                    complete: function() {
+                        $this.removeClass('disabled');
+                    },
+                    success: function () {
+                        window.location = $this.data('redirect-url');
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

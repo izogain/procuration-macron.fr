@@ -1,10 +1,18 @@
+procuration:
+    prefix: /admin/procurations
+    resource: "routing/procuration.yml"
+
+voting_availability:
+    prefix: /admin/voting-availability
+    resource: "routing/voting_availability.yml"
+
 election:
-    prefix: /admin/election
+    prefix: /admin/elections
     resource: "routing/election.yml"
 
-app:
-    resource: "@AppBundle/Controller/"
-    type:     annotation
+admin_index:
+    path: /admin/
+    defaults: { _controller: AppBundle:Admin:index }
 
 fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
@@ -16,3 +24,7 @@ fos_user_resetting:
 
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+homepage:
+    path: /
+    defaults: { _controller: AppBundle:Default:index }

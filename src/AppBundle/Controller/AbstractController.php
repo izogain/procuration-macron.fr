@@ -19,4 +19,20 @@ abstract class AbstractController extends Controller
             $entityManager->flush();
         }
     }
+
+    /**
+     * @return \AppBundle\Form\Handler\ProcurationAssignationFormHandler
+     */
+    protected function getProcurationAssignationFormHandler()
+    {
+        return $this->get('app.form.handler.procuration_assignation');
+    }
+
+    /**
+     * @return \AppBundle\Mediator\VotingAvailabilityMediator
+     */
+    protected function getVotingAvailabilityMediator()
+    {
+        return $this->get('app.mediator.voting_availability');
+    }
 }

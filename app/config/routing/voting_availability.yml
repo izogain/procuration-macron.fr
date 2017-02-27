@@ -1,0 +1,9 @@
+voting_availability_delete:
+    path: /{id}
+    defaults: { _controller: AppBundle:VotingAvailability:delete }
+    methods: DELETE
+
+voting_availability_index:
+    path: /
+    methods: GET
+    defaults: { _controller: AppBundle:VotingAvailability:index }

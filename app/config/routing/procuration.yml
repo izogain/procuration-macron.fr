@@ -1,0 +1,19 @@
+procuration_assign:
+    path: /{id}
+    methods: POST
+    defaults: { _controller: AppBundle:Procuration:assign }
+
+procuration_unbind:
+    path: /{id}/unbin
+    methods: GET
+    defaults: { _controller: AppBundle:Procuration:unbind }
+
+procuration_delete:
+    path: /{id}
+    methods: DELETE
+    defaults: { _controller: AppBundle:Procuration:delete }
+
+procuration_index:
+    path: /
+    methods: GET
+    defaults: { _controller: AppBundle:Procuration:index }

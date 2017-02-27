@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- src/AppBundle/Resources/config/doctrine/User.orm.xml -->
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <embeddable name="AppBundle\Entity\Address">
+        <field name="streetNumber" nullable="true" />
+        <field name="streetRepeater" nullable="true" type="smallint" length="2" />
+        <field name="streetType" nullable="true" type="smallint" length="1" />
+        <field name="streetName" />
+        <field name="extraInformations" nullable="true" />
+        <field name="postalCode" length="10" />
+        <field name="city" />
+        <field name="countryCode" length="2" />
+    </embeddable>
+</doctrine-mapping>

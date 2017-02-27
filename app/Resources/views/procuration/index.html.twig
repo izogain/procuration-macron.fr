@@ -1,0 +1,123 @@
+{% extends '::base.html.twig' %}
+{% set selected_nav = 'procuration' %}
+
+{% block body %}
+    <div class="page-header">
+        <h1>Liste des demandes</h1>
+    </div>
+
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Date de la demande</th>
+                <th>Election</th>
+                <th>Bureau de l'absent</th>
+                <th>Nom de l'absent</th>
+                <th>Remplaçant choisi</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for procuration in procurations if procurations|length %}
+                {% set election = procuration.election %}
+                {% set requester = procuration.requester %}
+                {% set has_voter = procuration.votingAvailability is not null %}
+                <tr>
+                    <td>{{ procuration.id }}</td>
+                    <td>{{ procuration.createdAt|localizeddate(timeFormat='none') }}</td>
+                    <td>{{ election }} ({{ election.performanceDate|localizeddate(timeFormat='none') }})</td>
+                    <td>{{ requester.votingOffice }}</td>
+                    <td>{{ requester }}</td>
+                    <td>
+                        {% if has_voter %}
+                            {{ procuration.votingAvailability.voter }}
+                        {% else %}
+                            {% set form = procuration_assignation_form(procuration) %}
+                            {% if form.votingAvailability.vars.choices|length %}
+                                <form method="post" action="{{ path('procuration_assign', {'id': procuration.id}) }}" class="form-inline procuration-assignation">
+                                    {{ form_errors(form) }}
+                                    <div class="form-group">
+                                        <label>
+                                            {{ form_widget(form.votingAvailability) }}
+                                            {{ form_errors(form.votingAvailability) }}
+                                        </label>
+                                    </div>
+
+                                    {{ form_rest(form) }}
+                                    <button type="submit" class="btn btn-xs btn-success text-uppercase">Mettre en relation</button>
+                                </form>
+                            {% else %}
+                                <i>Aucun représentant disponible</i>
+                            {% endif %}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if has_voter %}
+                            <a href="{{ path('procuration_unbind', {'id': procuration.id}) }}" class="unbind-procuration btn btn-xs btn-warning" data-requester="{{ requester }}" data-voter="{{ procuration.votingAvailability.voter }}" data-election-date="{{ procuration.election.performanceDate|localizeddate(timeFormat='none') }}">
+                                <span class="glyphicon glyphicon-log-out"></span>
+                            </a>
+                        {% else %}
+                            <a href="{{ path('procuration_delete', {'id': procuration.id}) }}" class="delete-procuration btn btn-xs btn-danger" data-redirect-url="{{ path('procuration_index') }}">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7" class="text-center">Aucune demande</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function() {
+            // Ask confirmation to delete possible entries
+            $("a.delete-procuration").click(function(e) {
+                e.preventDefault();
+                var $this = $(this);
+
+                if ($this.hasClass('disabled')) {
+                    return false;
+                }
+
+                if (!confirm('Etes-vous sûr de vouloir supprimer cette procuration?')) {
+                    return false;
+                }
+
+                $.ajax({
+                    url: $this.attr('href'),
+                    method: 'DELETE',
+                    beforeSend: function () {
+                        $this.addClass('disabled');
+                    },
+                    success: function() {
+                        window.location = $this.data('redirect-url');
+                    },
+                    complete: function() {
+                        $this.removeClass('disabled');
+                    }
+                });
+            });
+
+            $("a.unbind-procuration").click(function() {
+                var $this = $(this);
+
+                if (!confirm('Voulez-vous annuler le mandat entre '+$this.data('requester')+' et '+$this.data('voter')+' du '+$this.data('election-date')+'?')) {
+                    return false;
+                }
+            });
+
+            // Ensure form is validated before submission
+            $("form.procuration-assignation").submit(function() {
+                if (!confirm('Je suis certain que le mandataire est au courant?')) {
+                    return false;
+                }
+            });
+        });
+    </script>
+{% endblock %}

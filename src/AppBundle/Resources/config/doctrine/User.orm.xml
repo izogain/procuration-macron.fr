@@ -1,12 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- src/AppBundle/Resources/config/doctrine/User.orm.xml -->
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <entity name="AppBundle\Entity\User">
+    <entity name="AppBundle\Entity\User" repository-class="AppBundle\Repository\UserRepository">
         <id name="id" type="integer" column="id">
             <generator strategy="AUTO"/>
         </id>
+
+        <field name="civility" type="smallint" length="1" />
+        <field name="firstName" length="80" />
+        <field name="lastName" length="80" />
+        <field name="birthDate" type="date" />
+        <field name="phoneNumber" length="15" />
+        <embedded name="address" class="AppBundle\Entity\Address" />
+
+        <one-to-many target-entity="AppBundle\Entity\Procuration" mapped-by="requester" field="procurations">
+            <cascade>
+                <cascade-all/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many target-entity="AppBundle\Entity\VotingAvailability" mapped-by="voter" field="votingAvailabilities" />
+
+        <many-to-one target-entity="AppBundle\Entity\Office" field="votingOffice">
+            <join-column on-delete="SET NULL" nullable="true" />
+        </many-to-one>
+
+        <many-to-many target-entity="AppBundle\Entity\Office" field="officesInCharge" inversed-by="referents">
+            <join-table name="referent_office">
+                <join-columns>
+                    <join-column/>
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column/>
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+
     </entity>
 </doctrine-mapping>

@@ -18,40 +18,44 @@
         <![endif]-->
     </head>
     <body{% if is_super_admin or is_admin %} class="has-nav"{% endif %}>
-        {% if is_super_admin or is_admin %}
-            <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="{{ path('homepage') }}">Procuration</a>
+        {% block navbar %}
+            {% if is_super_admin or is_admin %}
+                <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand" href="{{ path('homepage') }}">Procuration-Macron.fr</a>
+                        </div>
+
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav">
+                                <li{% if selected_nav|default('') == 'procuration' %} class="active"{% endif %}><a href="{{ path('procuration_index') }}">Demandes</a></li>
+                                <li{% if selected_nav|default('') == 'voter' %} class="active"{% endif %}><a href="{{ path('voting_availability_index') }}">Remplaçants</a></li>
+                                {% if is_super_admin %}
+                                    <li{% if selected_nav|default('') == 'election' %} class="active"{% endif %}><a href="{{ path('election_index') }}">Elections</a></li>
+                                {% endif %}
+                            </ul>
+
+                            <ul class="nav navbar-nav navbar-right">
+                                <li>
+                                    <a href="{{ path('fos_user_security_logout') }}">
+                                        <span class="glyphicon glyphicon-off"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <p class="navbar-text navbar-right">Bonjour {{ app.user.firstName }}</p>
+                        </div>
                     </div>
+                </nav>
+            {% endif %}
+        {% endblock %}
 
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav">
-                            {#<li><a href="#">Link <span class="sr-only">(current)</span></a></li>#}
-                            {% if is_super_admin %}
-                                <li><a href="{{ path('election_index') }}">Elections</a></li>
-                            {% endif %}
-                        </ul>
-
-                        <ul class="nav navbar-nav navbar-right">
-                            <li>
-                                <a href="{{ path('fos_user_security_logout') }}">
-                                    <span class="glyphicon glyphicon-off"></span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        {% endif %}
-
-        <div class="container-fluid">
+        <div class="container">
             {% block body %}{% endblock %}
         </div>
 

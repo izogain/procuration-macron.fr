@@ -29,7 +29,9 @@
         "incenteev/composer-parameter-handler": "^2.0",
         "twig/twig": "^1.0||^2.0",
         "friendsofsymfony/user-bundle": "^2.0.0",
-        "doctrine/doctrine-fixtures-bundle": "^2.3"
+        "doctrine/doctrine-fixtures-bundle": "^2.3",
+        "stof/doctrine-extensions-bundle": "^1.2",
+        "twig/extensions": "^1.4"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^3.0"

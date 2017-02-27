@@ -1,4 +1,135 @@
-{% extends 'base.html.twig' %}
+{% extends 'public.html.twig' %}
 
 {% block body %}
+    <main>
+        <header class="home-section">
+            <div class="l-container center">
+                <h1 class="text-large uppercase">Ne gâchez pas votre vote</h1>
+                <p class="text-large home-header-subtitle">Faîtes procuration</p>
+            </div>
+        </header>
+
+        <section class="home-section home-section--form">
+            <div class="l-container">
+
+                <div class="form-box form-box--compacted">
+                    <div class="form-content">
+                        <div class="form-steps">
+                            <div class="form-step form-step--is-active">1</div>
+                            <div class="form-step">2</div>
+                            <div class="form-step">3</div>
+                            <div class="form-step">4</div>
+                            <div class="form-step">5</div>
+                        </div>
+                        <div>
+                            <p class="text-medium center">Mon lieu de vote</p>
+                            <div class="form-group">
+                                <p class="form-text">Ma commune / ma ville d'expatriation</p>
+                                <input class="form-input" type="text" name="vote-city">
+                            </div>
+                            <div class="form-group">
+                                <p class="form-text">Mon bureau de vote / consulat</p>
+                                <select class="form-select" name="vote-place">
+                                    <option value="Bureau de vote 1">Bureau de vote 1</option>
+                                    <option value="Bureau de vote 2">Bureau de vote 2</option>
+                                    <option value="Bureau de vote 3">Bureau de vote 3</option>
+                                    <option value="Bureau de vote 4">Bureau de vote 4</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="center">
+                            <button class="form-btn">Je continue</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="home-section">
+            <div class="l-container">
+                <h2 class="text-large center">Comment faire procuration avec <span class="nowrap">En Marche !</span></h2>
+                <div class="home-exp">
+                    <div class="home-exp-content">
+                        <h3 class="text-medium">1. Vous remplissez le formulaire et nous trouvons votre remplaçant</h3>
+                        <p class="home-p">Indiquez vos coordonnées et votre bureau de vote. Un(e) habitant(e) de votre commune, membre de l'un de nos 4000 comités locaux, vous contactera, il/elle ira voter en votre nom le jour de l'élection.</p>
+                    </div>
+                    <img class="home-exp-img" src="{{ asset('img/en-marche-photo.jpg') }}" alt="En Marche !">
+                </div>
+                <div class="home-exp">
+                    <div class="home-exp-content">
+                        <h3 class="text-medium">2. Vous recevez votre CERFA et le faîtes tamponner au commissariat</h3>
+                        <p class="home-p">À partir de vos informations et de celle de votre remplaçant, nous produisons le document CERFA. Il est indispensable d'aller le faire tamponner au <a href="https://www.google.fr/maps/search/commissariat+de+police" target="_blank">commisariat le plus proche de chez vous</a>.</p>
+                    </div>
+                    <img class="home-exp-img" src="{{ asset('img/en-marche-photo.jpg') }}" alt="En Marche !">
+                </div>
+                <div class="home-exp">
+                    <div class="home-exp-content">
+                        <h3 class="text-medium">3. Le jour de l'élection, votre remplaçant vote en votre nom</h3>
+                        <p class="home-p">Votre remplaçant(e) se rend dans votre bureau de vote. Celui-ci est prévenu de sa venue. Il vote en votre nom pour le candidat que vous avez choisi. Une fois son vote enregistré, il vous appelle pour confirmer que tout s'est bien passé.</p>
+                    </div>
+                    <img class="home-exp-img" src="{{ asset('img/en-marche-photo.jpg') }}" alt="En Marche !">
+                </div>
+            </div>
+        </section>
+
+        <section class="home-section">
+            <div class="l-container">
+                <h2 class="text-large center">Comment sont sélectionnés ceux qui voteront en votre nom</h2>
+                <p class="home-p">
+                    Procedente igitur mox tempore cum adventicium nihil inveniretur, relicta ora maritima in Lycaoniam adnexam Isauriae se contulerunt ibique densis intersaepientes itinera praetenturis provincialium et viatorum opibus pascebantur.
+                    Et Epigonus quidem amictu tenus philosophus, ut apparuit, prece frustra temptata, sulcatis lateribus mortisque metu admoto turpi confessione cogitatorum socium, quae nulla erant, fuisse firmavit cum nec vidisset quicquam nec audisset penitus expers forensium rerum; Eusebius vero obiecta fidentius negans, suspensus in eodem gradu constantiae stetit latrocinium illud esse, non iudicium clamans.
+                    Nam quibusdam, quos audio sapientes habitos in Graecia, placuisse opinor mirabilia quaedam sed nihil est quod illi non persequantur argutiis vivendum securitatem qua frui non possit anima.
+                </p>
+            </div>
+        </section>
+
+        <section class="home-section home-section--vote">
+
+        </section>
+
+        <section class="home-section home-section--query">
+            <div class="l-container">
+                <div class="home-query-container">
+
+                    <div class="home-query-box">
+                        <p class="text-medium">Des questions sur <span class="nowrap">procuration-macron ?</span></p>
+                        <p class="text-medium">Appelez le <a class="nowrap" href="tel:0129934093">01 29 93 40 93</a></p>
+                    </div>
+
+                    <div class="form-box form-box--compacted">
+                        <div class="form-content">
+                            <div class="form-steps">
+                                <div class="form-step form-step--is-active">1</div>
+                                <div class="form-step">2</div>
+                                <div class="form-step">3</div>
+                                <div class="form-step">4</div>
+                                <div class="form-step">5</div>
+                            </div>
+                            <div>
+                                <p class="text-medium center">Mon lieu de vote</p>
+                                <div class="form-group">
+                                    <p class="form-text">Ma commune / ma ville d'expatriation</p>
+                                    <input class="form-input" type="text" name="vote-city">
+                                </div>
+                                <div class="form-group">
+                                    <p class="form-text">Mon bureau de vote / consulat</p>
+                                    <select class="form-select" name="vote-place">
+                                        <option value="Bureau de vote 1">Bureau de vote 1</option>
+                                        <option value="Bureau de vote 2">Bureau de vote 2</option>
+                                        <option value="Bureau de vote 3">Bureau de vote 3</option>
+                                        <option value="Bureau de vote 4">Bureau de vote 4</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="center">
+                                <button class="form-btn">Je continue</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
 {% endblock %}
