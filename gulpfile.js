@@ -6,9 +6,9 @@ var sass = require('gulp-sass');
 var autoprefixer = require('gulp-autoprefixer');
 var csso = require('gulp-csso');
 var uglify = require('gulp-uglify');
-var devDir = 'dev/';
-var appDir = 'app/';
-var appAssetsDir = appDir + 'web/';
+var devDir = 'front/dev/';
+var appDir = 'front/app/';
+var appAssetsDir = 'web/';
 
 
 
