@@ -1,0 +1,49 @@
+machine:
+    php:
+        version: 7.1.0
+    environment:
+        YARN_VERSION: 0.18.1
+        PATH: "${PATH}:${HOME}/.yarn/bin:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
+        DATABASE_HOST: 127.0.0.1
+        DATABASE_USER: ubuntu
+        DATABASE_PASSWORD: ''
+        DATABASE_NAME: circle_test
+    services:
+        - docker
+
+dependencies:
+    cache_directories:
+        - ~/.composer/cache/files
+    pre:
+        - echo "memory_limit = 256M" > /opt/circleci/php/$(phpenv global)/etc/conf.d/memory.ini
+    override:
+        - composer install --no-interaction
+
+test:
+    override:
+        - echo "no tests"
+
+deployment:
+    staging:
+        branch: master
+        owner: EnMarche
+        commands:
+            # Check packages security
+            - bin/console security:check
+
+            # Google Cloud authentication
+            - echo $GCLOUD_SERVICE_KEY | base64 --decode > ${HOME}/gcloud-service-key.json && cp ${HOME}/gcloud-service-key.json gcloud-service-key.json
+            - sudo /opt/google-cloud-sdk/bin/gcloud --quiet components update
+            - sudo /opt/google-cloud-sdk/bin/gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
+            - sudo /opt/google-cloud-sdk/bin/gcloud config set project $GCLOUD_PROJECT
+
+            # Build the image
+            - docker build -t eu.gcr.io/$GCLOUD_PROJECT/procuration:$CIRCLE_SHA1 -f prod.dockerfile .
+
+            # Push the images to Google Cloud
+            - sudo /opt/google-cloud-sdk/bin/gcloud docker -- push eu.gcr.io/$GCLOUD_PROJECT/procuration:$CIRCLE_SHA1
+
+            # Deploy to staging
+            - sudo /opt/google-cloud-sdk/bin/gcloud --quiet components update kubectl
+            - sudo /opt/google-cloud-sdk/bin/gcloud container clusters get-credentials $GCLOUD_CLUSTER --project $GCLOUD_PROJECT --zone europe-west1-d
+            - sudo GOOGLE_APPLICATION_CREDENTIALS=${HOME}/gcloud-service-key.json /opt/google-cloud-sdk/bin/kubectl set image deployment/staging-procuration-app enmarche=eu.gcr.io/$GCLOUD_PROJECT/procuration:$CIRCLE_SHA1
