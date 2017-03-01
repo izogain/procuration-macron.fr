@@ -29,6 +29,9 @@ services:
             - "@form.factory"
             - "%app.form.type.procuration_assignation%"
             - "@doctrine.orm.entity_manager"
+            - "@app.fpdi.writer"
+            - "@filesystem"
+            - "%cerfa_output_root_path%"
 
     app.form.handler.subscription.address:
         class: AppBundle\Form\Handler\Subscription\SubscriptionAddressFormHandler
@@ -90,6 +93,11 @@ services:
             - name: form.type
         arguments:
             - "%app.model.election%"
+
+    app.fpdi.writer:
+        class: AppBundle\FPDI\FPDIWriter
+        arguments:
+            - "%cerfa_source_file_path%"
 
     app.mediator.procuration:
         class: AppBundle\Mediator\ProcurationMediator

@@ -9,6 +9,9 @@ parameters:
     locale: fr
     transactional_sender_email:  'contact@en-marche.fr'
     transactional_sender_name:   'En Marche !'
+    cerfa_data_root_path:        "%kernel.root_dir%/../data"
+    cerfa_source_file_path:      "%cerfa_data_root_path%/cerfa_14952-01.pdf"
+    cerfa_output_root_path:        "%cerfa_data_root_path%/generated_cerfa"
 
 framework:
     #esi:             ~

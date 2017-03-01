@@ -32,7 +32,8 @@
         "doctrine/doctrine-fixtures-bundle": "^2.3",
         "stof/doctrine-extensions-bundle": "^1.2",
         "twig/extensions": "^1.4",
-        "misd/phone-number-bundle": "^1.2"
+        "misd/phone-number-bundle": "^1.2",
+        "setasign/fpdi-fpdf": "^1.6"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^3.0"

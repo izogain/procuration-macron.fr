@@ -60,4 +60,24 @@ class AddressMediator
 
         return $output;
     }
+
+    /**
+     * @param int $streetRepeater
+     *
+     * @return string
+     */
+    public static function getStreetRepeaterLabel($streetRepeater)
+    {
+        return static::getStreetRepeaters()[$streetRepeater] ?? '';
+    }
+
+    /**
+     * @param int $streetType
+     *
+     * @return string
+     */
+    public static function getStreetTypeLabel($streetType)
+    {
+        return static::getStreetTypes()[$streetType] ?? '';
+    }
 }
