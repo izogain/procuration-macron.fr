@@ -10,8 +10,31 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
 </head>
-<body>
+<body data-autocomplete-src="{{ path('subscribe_voting_office_results') }}">
     {% block body %}
     {% endblock %}
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script>
+        $("input.autocomplete").autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: $("body").data('autocomplete-src'),
+                    data: {
+                        term: request.term
+                    },
+                    success: function(data) {
+                        response($.map(data, function(item) {
+                            return {
+                                label: item.name,
+                                value: item.id
+                            }
+                        }));
+                    }
+                })
+            }
+        });
+    </script>
+    {% block javascripts %}{% endblock %}
 </body>
 </html>

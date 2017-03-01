@@ -42,7 +42,7 @@ class Address
     /**
      * @var string
      */
-    protected $countryCode;
+    protected $countryCode = 'FR';
 
     /**
      * @return int|null

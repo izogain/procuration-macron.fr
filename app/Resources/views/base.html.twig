@@ -1,5 +1,8 @@
 {% set is_super_admin = is_granted('ROLE_SUPER_ADMIN') %}
 {% set is_admin = is_granted('ROLE_ADMIN') %}
+{% if form is defined %}
+    {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+{% endif %}
 
 <!DOCTYPE html>
 <html lang="{{ app.request.locale }}">

@@ -4,6 +4,8 @@ namespace AppBundle\Form\Type;
 
 use AppBundle\Entity\VotingAvailability;
 use AppBundle\Repository\VotingAvailabilityRepository;
+use libphonenumber\PhoneNumberFormat;
+use libphonenumber\PhoneNumberUtil;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -46,16 +48,17 @@ class ProcurationAssignationType extends AbstractType
         $voterOfficeAddress = $procuration->getRequester()->getVotingOffice()->getAddress();
         $countryCode = $voterOfficeAddress->getCountryCode();
         $cityPostalCode = $voterOfficeAddress->getPostalCode();
+        $phoneNumberUtil = PhoneNumberUtil::getInstance();
 
         $builder->add('votingAvailability', EntityType::class, [
             'class' => $options['voting_availability_data_class'],
-            'query_builder' => function(VotingAvailabilityRepository $votingAvailabilityRepository) use ($election, $countryCode, $cityPostalCode) {
+            'query_builder' => function (VotingAvailabilityRepository $votingAvailabilityRepository) use ($election, $countryCode, $cityPostalCode) {
                 return $votingAvailabilityRepository->getQueryBuilderForAvailableForElectionInArea($election->getId(), $countryCode, $cityPostalCode);
             },
-            'choice_label' => function(VotingAvailability $votingAvailability) {
+            'choice_label' => function (VotingAvailability $votingAvailability) use ($phoneNumberUtil) {
                 $voter = $votingAvailability->getVoter();
 
-                return sprintf('%s — %s (%s)', $voter->getVotingOffice()->getName(), $voter, $voter->getPhoneNumber());
+                return sprintf('%s — %s (%s)', $voter->getVotingOffice()->getName(), $voter, $phoneNumberUtil->format($voter->getPhoneNumber(), PhoneNumberFormat::INTERNATIONAL));
             }
         ]);
     }

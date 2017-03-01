@@ -1,0 +1,27 @@
+{% extends 'default/_form_step.html.twig' %}
+
+{% block form_content %}
+    <p class="text-medium center">{{ app.request.session.flashBag.get('firstName')[0] }}, Nous vous remercions de votre <span class="nowrap">confiance !</span></p>
+    <p class="center form-desc">Votre demande de procuration a bien été enregistrée. Un mandataire vous contactera dans les 3 jours pour finaliser la procuration.</p>
+    <div class="form-group">
+        <p class="form-text">En attendant, partagez ce dispositif auprès de vos proches</p>
+        <div class="form-copy-box">
+            <input class="form-input" type="text" value="www.procuration-macron.fr" name="procuration-link" id="procuration-link">
+            <button class="btn js-btn-clipboard" data-clipboard-target="#procuration-link">copier lien</button>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-rsx-box">
+            <button class="btn btn--large btn--facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://procuration-macron.fr', 'name', 'width=600, height=400')"><span class="fa fa-facebook-official btn-icon"></span>Partager</button>
+            <button class="btn btn--large btn--twitter" onclick="window.open('https://twitter.com/intent/tweet?url=http://procuration-macron.fr&text=Ne gâchez pas votre vote, faîtes procuration&via=enmarchefr', 'name', 'width=600, height=400')"><span class="fa fa-twitter btn-icon"></span> Tweeter</button>
+        </div>
+    </div>
+    <p class="form-note">En cas de question, n’hésitez pas à nous contacter au <a class="nowrap" href="tel:0193939437">01 93 93 94 37</a> ou à <a href="mailto:procuration@en-marche.fr">procuration@en-marche.fr</a></p>
+{% endblock %}
+
+
+
+{% block javascripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.6.0/clipboard.min.js"></script>
+    <script>(function() {new Clipboard('.js-btn-clipboard');})();</script>
+{% endblock %}

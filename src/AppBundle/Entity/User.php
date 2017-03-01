@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
+use libphonenumber\PhoneNumber;
 
 class User extends BaseUser
 {
@@ -28,7 +29,7 @@ class User extends BaseUser
     protected $birthDate;
 
     /**
-     * @var string
+     * @var PhoneNumber
      */
     protected $phoneNumber;
 
@@ -142,7 +143,7 @@ class User extends BaseUser
     }
 
     /**
-     * @return string
+     * @return PhoneNumber
      */
     public function getPhoneNumber()
     {
@@ -150,9 +151,9 @@ class User extends BaseUser
     }
 
     /**
-     * @param string $phoneNumber
+     * @param PhoneNumber $phoneNumber
      */
-    public function setPhoneNumber(string $phoneNumber)
+    public function setPhoneNumber(PhoneNumber $phoneNumber)
     {
         $this->phoneNumber = $phoneNumber;
     }

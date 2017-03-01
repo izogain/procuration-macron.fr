@@ -1,9 +1,15 @@
 # Learn more about services, parameters and containers at
 # http://symfony.com/doc/current/service_container.html
 parameters:
+    app.form.type.address: AppBundle\Form\Type\AddressType
     app.form.type.election: AppBundle\Form\Type\ElectionType
     app.form.type.procuration_assignation: AppBundle\Form\Type\ProcurationAssignationType
+    app.form.type.search_office: AppBundle\Form\Type\SearchOfficeType
+    app.form.type.subscription.election: AppBundle\Form\Type\Subscription\SubscriptionElectionType
+    app.form.type.subscription.user_informations: AppBundle\Form\Type\Subscription\SubscriptionUserInformationsType
+    app.form.type.subscription.reason: AppBundle\Form\Type\Subscription\SubscriptionReasonType
 
+    app.model.address: AppBundle\Entity\Address
     app.model.election: AppBundle\Entity\Election
     app.model.office: AppBundle\Entity\Office
     app.model.procuration: AppBundle\Entity\Procuration
@@ -24,6 +30,43 @@ services:
             - "%app.form.type.procuration_assignation%"
             - "@doctrine.orm.entity_manager"
 
+    app.form.handler.subscription.address:
+        class: AppBundle\Form\Handler\Subscription\SubscriptionAddressFormHandler
+        arguments:
+            - "@form.factory"
+            - "%app.form.type.address%"
+    app.form.handler.subscription:
+        class: AppBundle\Form\Handler\Subscription\SubscriptionFormHandler
+    app.form.handler.subscription.election:
+        class: AppBundle\Form\Handler\Subscription\SubscriptionElectionFormHandler
+        arguments:
+            - "@form.factory"
+            - "%app.form.type.subscription.election%"
+            - "@doctrine.orm.entity_manager"
+    app.form.handler.subscription.contact_informations:
+        class: AppBundle\Form\Handler\Subscription\SubscriptionContactInformationsFormHandler
+        arguments:
+            - "@form.factory"
+            - "%app.form.type.subscription.user_informations%"
+    app.form.handler.subscription.search_office:
+        class: AppBundle\Form\Handler\Subscription\SubscriptionSearchOfficeHandler
+        arguments:
+            - "@form.factory"
+            - "%app.form.type.search_office%"
+    app.form.handler.subscription.reason:
+        class: AppBundle\Form\Handler\Subscription\SubscriptionReasonFormHandler
+        arguments:
+            - "@form.factory"
+            - "%app.form.type.subscription.reason%"
+            - "@fos_user.user_manager"
+            - "@doctrine.orm.entity_manager"
+
+    app.form.type.address:
+        class: "%app.form.type.address%"
+        tags:
+            - name: "form.type"
+        arguments:
+            - "%app.model.address%"
     app.form.type.election:
         class: "%app.form.type.election%"
         tags:
@@ -37,6 +80,16 @@ services:
         arguments:
             - "%app.model.procuration%"
             - "%app.model.voting_availability%"
+    app.form.type.search_office:
+        class: "%app.form.type.search_office%"
+        tags:
+            - name: form.type
+    app.form.type.subscription.election:
+        class: "%app.form.type.subscription.election%"
+        tags:
+            - name: form.type
+        arguments:
+            - "%app.model.election%"
 
     app.mediator.procuration:
         class: AppBundle\Mediator\ProcurationMediator
@@ -84,6 +137,11 @@ services:
             - { name: twig.extension }
         arguments:
             - "@app.form.handler.procuration_assignation"
+    app.twig.ui_extension:
+        class: AppBundle\Twig\UiExtension
+        public: false
+        tags:
+            - { name: twig.extension }
     twig.extension.intl:
         class: Twig_Extensions_Extension_Intl
         public: false

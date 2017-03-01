@@ -3,6 +3,7 @@
 namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\Procuration;
+use AppBundle\Mediator\ProcurationMediator;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -30,6 +31,7 @@ class LoadProcurationData extends AbstractFixture implements DependentFixtureInt
         $procuration = new Procuration();
         $procuration->setRequester($requester);
         $procuration->setElection($this->getReference('election-0'));
+        $procuration->setReason(static::getRandomReason());
 
         $manager->persist($procuration);
         $this->addReference('procuration-0', $procuration);
@@ -37,9 +39,18 @@ class LoadProcurationData extends AbstractFixture implements DependentFixtureInt
         $pendingProcuration = new Procuration();
         $pendingProcuration->setRequester($requester);
         $pendingProcuration->setElection($this->getReference('election-1'));
+        $pendingProcuration->setReason(static::getRandomReason());
 
         $manager->persist($pendingProcuration);
 
         $manager->flush();
+    }
+
+    /**
+     * @return int
+     */
+    private static function getRandomReason()
+    {
+        return mt_rand(0, count(ProcurationMediator::getReasons()) - 1);
     }
 }

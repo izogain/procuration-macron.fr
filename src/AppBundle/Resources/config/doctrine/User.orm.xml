@@ -12,7 +12,7 @@
         <field name="firstName" length="80" />
         <field name="lastName" length="80" />
         <field name="birthDate" type="date" />
-        <field name="phoneNumber" length="15" />
+        <field name="phoneNumber" type="phone_number" />
         <embedded name="address" class="AppBundle\Entity\Address" />
 
         <one-to-many target-entity="AppBundle\Entity\Procuration" mapped-by="requester" field="procurations">

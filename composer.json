@@ -31,7 +31,8 @@
         "friendsofsymfony/user-bundle": "^2.0.0",
         "doctrine/doctrine-fixtures-bundle": "^2.3",
         "stof/doctrine-extensions-bundle": "^1.2",
-        "twig/extensions": "^1.4"
+        "twig/extensions": "^1.4",
+        "misd/phone-number-bundle": "^1.2"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^3.0"

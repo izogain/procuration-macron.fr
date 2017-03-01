@@ -15,6 +15,11 @@ class Procuration
     protected $requester;
 
     /**
+     * @var int
+     */
+    protected $reason;
+
+    /**
      * @var Election
      */
     protected $election;
@@ -72,6 +77,22 @@ class Procuration
     public function getElection()
     {
         return $this->election;
+    }
+
+    /**
+     * @return int
+     */
+    public function getReason()
+    {
+        return $this->reason;
+    }
+
+    /**
+     * @param int $reason
+     */
+    public function setReason($reason)
+    {
+        $this->reason = $reason;
     }
 
     /**

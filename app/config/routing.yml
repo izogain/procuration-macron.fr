@@ -25,6 +25,43 @@ fos_user_resetting:
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 
+subscribe_my_address:
+    path: /inscription/mon-adresse
+    defaults: { _controller: AppBundle:Default:myAddress }
+    methods: GET|POST
+
+subscribe_voting_office_results:
+    path: /inscription/mon-bureau-de-vote
+    defaults: { _controller: AppBundle:Default:officeResults }
+    methods: POST
+    condition: request.isXmlHttpRequest()
+
+subscribe_voting_office:
+    path: /inscription/mon-bureau-de-vote
+    defaults: { _controller: AppBundle:Default:votingOffice }
+    methods: GET
+
+subscribe_elections:
+    path: /inscription/choix-des-elections
+    defaults: { _controller: AppBundle:Default:elections }
+    methods: GET|POST
+
+subscribe_contact_informations:
+    path: /inscription/mes-informations
+    defaults: { _controller: AppBundle:Default:contactInformations }
+    methods: GET|POST
+
+subscribe_reason:
+    path: /inscription/motif
+    defaults: { _controller: AppBundle:Default:reason }
+    methods: GET|POST
+
+subscribe_confirmation:
+    path: /inscription/confirmation
+    defaults: { _controller: AppBundle:Default:confirmation }
+    methods: GET
+
 homepage:
     path: /
     defaults: { _controller: AppBundle:Default:index }
+

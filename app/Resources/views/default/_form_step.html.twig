@@ -1,0 +1,26 @@
+{% extends '::public.html.twig' %}
+
+{% block body %}
+    <div class="test-form-container">
+        <div class="l-container">
+            <form class="form-box" method="post" action="{{ form_path|default('#') }}">
+                <div class="form-content">
+                    {% block form_content %}
+                        <div class="form-steps">
+                            {% for i in 1..5 %}
+                                <div class="form-step {{ pagination_class(i) }}">{{ i }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div>
+                            {% block step_body %}{% endblock %}
+                        </div>
+                        <div class="center">
+                            <button class="form-btn">Je continue</button>
+                        </div>
+                    {% endblock %}
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

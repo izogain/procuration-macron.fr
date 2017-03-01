@@ -3,11 +3,15 @@
 namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\Address;
+use AppBundle\Entity\User;
 use AppBundle\Mediator\AddressMediator;
 use AppBundle\Mediator\UserMediator;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use libphonenumber\PhoneNumber;
+use libphonenumber\PhoneNumberFormat;
+use libphonenumber\PhoneNumberUtil;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -44,6 +48,7 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface, D
     {
         $userManager = $this->container->get('fos_user.user_manager');
 
+        /** @var User $superAdmin */
         $superAdmin = $userManager->createUser();
         $superAdmin->setUsername('admin@en-marche.fr');
         $superAdmin->setPlainPassword('admin1234');
@@ -53,7 +58,7 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface, D
         $superAdmin->setFirstName('Super');
         $superAdmin->setLastName('Admin');
         $superAdmin->setBirthDate(new \DateTime('1900-01-01'));
-        $superAdmin->setPhoneNumber('0101010101');
+        $superAdmin->setPhoneNumber($this->generatePhoneNumber());
         /** @var \AppBundle\Entity\Address $superAdminAddress */
         $superAdminAddress = $superAdmin->getAddress();
         $superAdminAddress->setStreetType(AddressMediator::STREET_TYPE_STREET);
@@ -67,6 +72,7 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface, D
         $userManager->updateUser($superAdmin);
         $this->addReference('user-admin', $superAdmin);
 
+        /** @var User $referent */
         $referent = $userManager->createUser();
         $referent->setUsername('referent-ain@en-marche.fr');
         $referent->setPlainPassword('referent1234');
@@ -76,7 +82,7 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface, D
         $referent->setFirstName('jean-françois');
         $referent->setLastName('dupuis');
         $referent->setBirthDate(new \DateTime('1986-02-29'));
-        $referent->setPhoneNumber('0101010101');
+        $referent->setPhoneNumber($this->generatePhoneNumber());
         $referent->setVotingOffice($this->getLyonVotingOffice());
         /** @var \AppBundle\Entity\Address $referentAddress */
         $referentAddress = $referent->getAddress();
@@ -87,6 +93,7 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface, D
 
         $userManager->updateUser($referent);
 
+        /** @var User $referentRhone */
         $referentRhone = $userManager->createUser();
         $referentRhone->setUsername('referent-rhone@en-marche.fr');
         $referentRhone->setPlainPassword('referent1234');
@@ -96,7 +103,7 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface, D
         $referentRhone->setFirstName('Jeanine');
         $referentRhone->setLastName('Montrabé');
         $referentRhone->setBirthDate(new \DateTime('1986-02-29'));
-        $referentRhone->setPhoneNumber('0101010101');
+        $referentRhone->setPhoneNumber($this->generatePhoneNumber());
         $referentRhone->setVotingOffice($this->getLyonVotingOffice());
         /** @var \AppBundle\Entity\Address $referentRhoneAddress */
         $referentRhoneAddress = $referentRhone->getAddress();
@@ -109,6 +116,7 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface, D
         $userManager->updateUser($referentRhone);
         $this->addReference('user-referent-rhone', $referent);
 
+        /** @var User $requester */
         $requester = $userManager->createUser();
         $requester->setUsername('requester@provider.com');
         $requester->setPlainPassword('requester');
@@ -116,7 +124,7 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface, D
         $requester->setFirstName('John');
         $requester->setLastName('Doe');
         $requester->setBirthDate(new \DateTime('1985-09-21'));
-        $requester->setPhoneNumber('0101010101');
+        $requester->setPhoneNumber($this->generatePhoneNumber());
         $requester->setEnabled(true);
         $requester->setVotingOffice($this->getLyonVotingOffice());
         /** @var \AppBundle\Entity\Address $requesterAddress */
@@ -129,6 +137,7 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface, D
         $userManager->updateUser($requester);
         $this->addReference('user-requester', $requester);
 
+        /** @var User $availableVoter */
         $availableVoter = $userManager->createUser();
         $availableVoter->setUsername('available@en-marche.fr');
         $availableVoter->setPlainPassword('voter1234');
@@ -137,7 +146,7 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface, D
         $availableVoter->setFirstName('Vo');
         $availableVoter->setLastName('ter');
         $availableVoter->setBirthDate(new \DateTime('1975-02-24'));
-        $availableVoter->setPhoneNumber('0606060606');
+        $availableVoter->setPhoneNumber($this->generatePhoneNumber('0606060606'));
         $availableVoter->setVotingOffice($this->getLyonVotingOffice());
         /** @var \AppBundle\Entity\Address $availableVoterAddress */
         $availableVoterAddress = $availableVoter->getAddress();
@@ -167,5 +176,15 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface, D
     private function getLyonVotingOffice()
     {
         return $this->getReference('office-lyon');
+    }
+
+    /**
+     * @param string $number
+     *
+     * @return PhoneNumber
+     */
+    private function generatePhoneNumber($number = '0101010101')
+    {
+        return (PhoneNumberUtil::getInstance())->parse($number, 'FR');
     }
 }

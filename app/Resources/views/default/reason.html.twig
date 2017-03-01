@@ -1,0 +1,12 @@
+{% extends 'default/_form_step.html.twig' %}
+
+{% block step_body %}
+    <p class="text-medium center">Pour finir</p>
+    <div class="form-group">
+        <p class="form-text">Pour quelle raison faîtes vous <span class="nowrap">procuration ?</span></p>
+        {{ form_errors(form) }}
+        {{ form_widget(form.reason, {'attr': {'class': 'form-select'}}) }}
+        <p class="form-select-hint">Ce n’est pas de l’indiscrétion, cette question figure dans le document <abbr title="Centre d'enregistrement et de révision des formulaires administratifs">CERFA</abbr> :)</p>
+        {{ form_rest(form) }}
+    </div>
+{% endblock %}

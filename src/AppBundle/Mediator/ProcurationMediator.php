@@ -9,6 +9,31 @@ use Doctrine\ORM\EntityManager;
 
 class ProcurationMediator
 {
+    const REASON_PROFESSIONAL = 0;
+    const REASON_HANDICAP = 1;
+    const REASON_HEALTH = 2;
+    const REASON_REQUIRES_ASSISTANCE = 3;
+    const REASON_FORMATION = 4;
+    const REASON_HOLIDAYS = 5;
+    const REASON_OTHER_LIVING_PLACE = 6;
+
+    /**
+     * Get the possible reasons for requesting procuration.
+     *
+     * @return array
+     */
+    public static function getReasons()
+    {
+        return [
+            static::REASON_PROFESSIONAL => 'En raison d’obligations professionnelles',
+            static::REASON_HANDICAP => 'En raison d’un handicap',
+            static::REASON_HEALTH => 'Pour raison de santé',
+            static::REASON_REQUIRES_ASSISTANCE => 'En raison d’assistance apportée à une personne malade ou infirme',
+            static::REASON_FORMATION => 'En raison d’obligations de formation',
+            static::REASON_HOLIDAYS => 'Parce que je suis en vacances',
+            static::REASON_OTHER_LIVING_PLACE => 'Parce que je réside dans une commune différente de celle où je suis inscrit(e) sur une liste électorale',
+        ];
+    }
     /**
      * @var ProcurationRepository
      */

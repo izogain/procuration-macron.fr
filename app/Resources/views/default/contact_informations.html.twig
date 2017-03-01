@@ -1,0 +1,23 @@
+{% extends 'default/_form_step.html.twig' %}
+
+{% block step_body %}
+    <p class="text-medium center">Mes coordonées</p>
+    <div class="form-group">
+        <p class="form-text">Pour me contacter</p>
+        {{ form_widget(form.civility, {'attr': {'class': 'form-select'}}) }}
+        {{ form_widget(form.lastName, {'attr': {'class': 'form-input', 'placeholder': 'Votre nom de naissance'}}) }}
+        {{ form_widget(form.firstName, {'attr': {'class': 'form-input', 'placeholder': 'Votre prénom'}}) }}
+        {{ form_widget(form.phoneNumber, {'attr': {'class': 'form-input', 'placeholder': 'Votre numéro de téléphone'}}) }}
+        {{ form_errors(form.phoneNumber) }}
+        {{ form_widget(form.email, {'attr': {'class': 'form-input', 'placeholder': 'Votre adresse email'}}) }}
+
+        <div class="form-group">
+            <p class="form-text">Votre date de naissance</p>
+            {{ form_widget(form.birthDate.day, {'attr': {'class': 'form-select'}}) }}
+            {{ form_widget(form.birthDate.month, {'attr': {'class': 'form-select'}}) }}
+            {{ form_widget(form.birthDate.year, {'attr': {'class': 'form-select'}}) }}
+        </div>
+
+        {{ form_rest(form) }}
+    </div>
+{% endblock %}

@@ -9,6 +9,8 @@
             <generator strategy="AUTO"/>
         </id>
 
+        <field name="reason" type="integer" />
+
         <field name="createdAt" type="datetime">
             <gedmo:timestampable on="create" />
         </field>
@@ -17,9 +19,13 @@
             <gedmo:timestampable on="update" />
         </field>
 
-        <many-to-one target-entity="AppBundle\Entity\User" field="requester" inversed-by="procurations" />
+        <many-to-one target-entity="AppBundle\Entity\User" field="requester" inversed-by="procurations">
+            <join-column on-delete="CASCADE" />
+        </many-to-one>
 
-        <many-to-one target-entity="AppBundle\Entity\Election" field="election" />
+        <many-to-one target-entity="AppBundle\Entity\Election" field="election">
+            <join-column on-delete="CASCADE" />
+        </many-to-one>
 
         <one-to-one target-entity="AppBundle\Entity\VotingAvailability" field="votingAvailability" inversed-by="procuration">
             <cascade>
