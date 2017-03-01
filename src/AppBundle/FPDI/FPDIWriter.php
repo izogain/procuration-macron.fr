@@ -8,6 +8,7 @@ use AppBundle\Mediator\AddressMediator;
 use AppBundle\Mediator\ProcurationMediator;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Intl\Intl;
 
 class FPDIWriter
@@ -18,18 +19,31 @@ class FPDIWriter
     protected $sourceFile;
 
     /**
-     * @param string $sourceFile
+     * @var ProcurationMediator
      */
-    public function __construct($sourceFile)
+    protected $procurationMediator;
+
+    /**
+     * @var Filesystem
+     */
+    protected $fileSystem;
+
+    /**
+     * @param string              $sourceFile
+     * @param ProcurationMediator $procurationMediator
+     * @param Filesystem          $filesystem
+     */
+    public function __construct($sourceFile, ProcurationMediator $procurationMediator, Filesystem $filesystem)
     {
         $this->sourceFile = $sourceFile;
+        $this->procurationMediator = $procurationMediator;
+        $this->fileSystem = $filesystem;
     }
 
     /**
-     * @param string      $outputFilePath
      * @param Procuration $procuration
      */
-    public function generateForProcuration($outputFilePath, Procuration $procuration)
+    public function generateForProcuration(Procuration $procuration)
     {
         $requester = $procuration->getRequester();
         $requesterVotingOffice = $requester->getVotingOffice();
@@ -124,7 +138,17 @@ class FPDIWriter
 
         $this->writeTextAtPos($pdf, $requesterAddress->getCity(), 112.5, 258);
 
+        $outputFilePath = $this->procurationMediator->generateOutputFilePath($procuration);
+        $this->createOutputDir($outputFilePath);
         $pdf->Output('F', $outputFilePath);
+    }
+
+    /**
+     * @param string $outputFilePath
+     */
+    protected function createOutputDir($outputFilePath)
+    {
+        $this->fileSystem->mkdir([dirname($outputFilePath)]);
     }
 
     /**

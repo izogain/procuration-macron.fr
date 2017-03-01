@@ -5,7 +5,6 @@ namespace AppBundle\Form\Handler;
 use AppBundle\Entity\Procuration;
 use AppBundle\FPDI\FPDIWriter;
 use Doctrine\ORM\EntityManager;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,37 +32,21 @@ class ProcurationAssignationFormHandler
     protected $fpdiWriter;
 
     /**
-     * @var Filesystem
-     */
-    protected $fileSystem;
-
-    /**
-     * @var string
-     */
-    protected $cerfaOutputRootDir;
-
-    /**
      * @param FormFactoryInterface $formFactory
      * @param string               $formClassName
      * @param EntityManager        $doctrinEntityManager
      * @param FPDIWriter           $fpdiWriter
-     * @param Filesystem           $filesystem
-     * @param string               $cerfaOutputRootDir
      */
     public function __construct(
         FormFactoryInterface $formFactory,
         $formClassName,
         EntityManager $doctrinEntityManager,
-        FPDIWriter $fpdiWriter,
-        Filesystem $filesystem,
-        $cerfaOutputRootDir
+        FPDIWriter $fpdiWriter
     ) {
         $this->formFactory = $formFactory;
         $this->formClassName = $formClassName;
         $this->doctrinEntityManager = $doctrinEntityManager;
         $this->fpdiWriter = $fpdiWriter;
-        $this->fileSystem = $filesystem;
-        $this->cerfaOutputRootDir = $cerfaOutputRootDir;
     }
 
     /**
@@ -106,22 +89,8 @@ class ProcurationAssignationFormHandler
         $this->doctrinEntityManager->persist($procuration);
         $this->doctrinEntityManager->flush();
 
-        $outputFilePath = $this->generateOutputFilePath($procuration);
-        $this->fileSystem->mkdir([dirname($outputFilePath)]);
-        $this->fpdiWriter->generateForProcuration($outputFilePath, $procuration);
+        $this->fpdiWriter->generateForProcuration($procuration);
 
         return true;
-    }
-
-    /**
-     * @param Procuration $procuration
-     *
-     * @return string
-     */
-    private function generateOutputFilePath(Procuration $procuration)
-    {
-        $procurationId = $procuration->getId();
-
-        return $this->cerfaOutputRootDir.'/'. ($procurationId%8).'/'.$procurationId.'.pdf';
     }
 }

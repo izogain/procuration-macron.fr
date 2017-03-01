@@ -45,15 +45,23 @@ class ProcurationMediator
     protected $entityManager;
 
     /**
+     * @var string
+     */
+    protected $cerfaOutputRootDir;
+
+    /**
      * @param ProcurationRepository $procurationRepository
      * @param EntityManager         $entityManager
+     * @param string                $cerfaOutputRootDir
      */
     public function __construct(
         ProcurationRepository $procurationRepository,
-        EntityManager $entityManager
+        EntityManager $entityManager,
+        $cerfaOutputRootDir
     ) {
         $this->procurationRepository = $procurationRepository;
         $this->entityManager = $entityManager;
+        $this->cerfaOutputRootDir = $cerfaOutputRootDir;
     }
 
     /**
@@ -108,5 +116,17 @@ class ProcurationMediator
         if ($withFlush) {
             $this->entityManager->flush();
         }
+    }
+
+    /**
+     * @param Procuration $procuration
+     *
+     * @return string
+     */
+    public function generateOutputFilePath(Procuration $procuration)
+    {
+        $procurationId = $procuration->getId();
+
+        return $this->cerfaOutputRootDir.'/'. ($procurationId%8).'/'.$procurationId.'.pdf';
     }
 }

@@ -30,8 +30,6 @@ services:
             - "%app.form.type.procuration_assignation%"
             - "@doctrine.orm.entity_manager"
             - "@app.fpdi.writer"
-            - "@filesystem"
-            - "%cerfa_output_root_path%"
 
     app.form.handler.subscription.address:
         class: AppBundle\Form\Handler\Subscription\SubscriptionAddressFormHandler
@@ -98,12 +96,15 @@ services:
         class: AppBundle\FPDI\FPDIWriter
         arguments:
             - "%cerfa_source_file_path%"
+            - "@app.mediator.procuration"
+            - "@filesystem"
 
     app.mediator.procuration:
         class: AppBundle\Mediator\ProcurationMediator
         arguments:
             - "@app.repository.procuration"
             - "@doctrine.orm.entity_manager"
+            - "%cerfa_output_root_path%"
 
     app.mediator.voting_availability:
         class: AppBundle\Mediator\VotingAvailabilityMediator
