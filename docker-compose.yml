@@ -1,0 +1,38 @@
+version: "2"
+
+services:
+    app:
+        build:
+            context: .
+            dockerfile: dev.dockerfile
+        depends_on:
+            - db
+        volumes:
+            - .:/app
+            - /app/var/cache
+            - /app/var/sessions
+
+    db:
+        image: mysql:5.7
+        environment:
+            MYSQL_ROOT_PASSWORD: enmarche
+            MYSQL_DATABASE: enmarche
+            MYSQL_USER: enmarche
+            MYSQL_PASSWORD: enmarche
+#
+#    testdb:
+#        image: mysql:5.7
+#        environment:
+#            MYSQL_ROOT_PASSWORD: enmarche_test
+#            MYSQL_DATABASE: enmarche_test
+#            MYSQL_USER: enmarche_test
+#            MYSQL_PASSWORD: enmarche_test
+#
+#    tools:
+#        build:
+#            context: .
+#            dockerfile: tools.dockerfile
+#        depends_on:
+#            - db
+#        volumes_from:
+#            - app

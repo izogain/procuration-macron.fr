@@ -1,7 +1,10 @@
 /app/config/parameters.yml
 /build/
+/docker-compose.override.yml
 /phpunit.xml
 /node_modules
+/supervisord.log
+/supervisord.pid
 /var/*
 !/var/cache
 /var/cache/*
