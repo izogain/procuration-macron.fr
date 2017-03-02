@@ -16,7 +16,7 @@ class LoadProcurationData extends AbstractFixture implements DependentFixtureInt
     public function getDependencies()
     {
         return [
-            'AppBundle\DataFixtures\ORM\LoadElectionData',
+            'AppBundle\DataFixtures\ORM\LoadElectionRoundData',
             'AppBundle\DataFixtures\ORM\LoadUserData',
         ];
     }
@@ -30,7 +30,7 @@ class LoadProcurationData extends AbstractFixture implements DependentFixtureInt
 
         $procuration = new Procuration();
         $procuration->setRequester($requester);
-        $procuration->setElection($this->getReference('election-0'));
+        $procuration->setElectionRound($this->getReference('election-round-pres-1'));
         $procuration->setReason(static::getRandomReason());
 
         $manager->persist($procuration);
@@ -38,7 +38,7 @@ class LoadProcurationData extends AbstractFixture implements DependentFixtureInt
 
         $pendingProcuration = new Procuration();
         $pendingProcuration->setRequester($requester);
-        $pendingProcuration->setElection($this->getReference('election-1'));
+        $pendingProcuration->setElectionRound($this->getReference('election-round-pres-2'));
         $pendingProcuration->setReason(static::getRandomReason());
 
         $manager->persist($pendingProcuration);

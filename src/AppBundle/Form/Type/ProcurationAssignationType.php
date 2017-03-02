@@ -43,7 +43,7 @@ class ProcurationAssignationType extends AbstractType
     {
         /** @var \AppBundle\Entity\Procuration $procuration */
         $procuration = $builder->getData();
-        $election = $procuration->getElection();
+        $electionRoundId = $procuration->getElectionRound()->getId();
         // TODO use country code when city is not in France
         $voterOfficeAddress = $procuration->getRequester()->getVotingOffice()->getAddress();
         $countryCode = $voterOfficeAddress->getCountryCode();
@@ -52,8 +52,8 @@ class ProcurationAssignationType extends AbstractType
 
         $builder->add('votingAvailability', EntityType::class, [
             'class' => $options['voting_availability_data_class'],
-            'query_builder' => function (VotingAvailabilityRepository $votingAvailabilityRepository) use ($election, $countryCode, $cityPostalCode) {
-                return $votingAvailabilityRepository->getQueryBuilderForAvailableForElectionInArea($election->getId(), $countryCode, $cityPostalCode);
+            'query_builder' => function (VotingAvailabilityRepository $votingAvailabilityRepository) use ($electionRoundId, $countryCode, $cityPostalCode) {
+                return $votingAvailabilityRepository->getQueryBuilderForAvailableForElectionInArea($electionRoundId, $countryCode, $cityPostalCode);
             },
             'choice_label' => function (VotingAvailability $votingAvailability) use ($phoneNumberUtil) {
                 $voter = $votingAvailability->getVoter();

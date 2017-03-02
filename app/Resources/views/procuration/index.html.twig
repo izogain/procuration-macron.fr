@@ -20,13 +20,13 @@
         </thead>
         <tbody>
             {% for procuration in procurations if procurations|length %}
-                {% set election = procuration.election %}
+                {% set electionRound = procuration.electionRound %}
                 {% set requester = procuration.requester %}
                 {% set has_voter = procuration.votingAvailability is not null %}
                 <tr>
                     <td>{{ procuration.id }}</td>
                     <td>{{ procuration.createdAt|localizeddate(timeFormat='none') }}</td>
-                    <td>{{ election }} ({{ election.performanceDate|localizeddate(timeFormat='none') }})</td>
+                    <td>{{ electionRound.election }} ({{ electionRound.performanceDate|localizeddate(timeFormat='none') }})</td>
                     <td>{{ requester.votingOffice }}</td>
                     <td>{{ requester }}</td>
                     <td>
@@ -58,7 +58,7 @@
                                 <a href="{{ path('procuration_download', {'id': procuration.id}) }}" class="btn btn-info" title="Télécharger le CERFA" target="_blank">
                                     <span class="glyphicon glyphicon-download-alt"></span>
                                 </a>
-                                <a href="{{ path('procuration_unbind', {'id': procuration.id}) }}" class="unbind-procuration btn btn-warning" data-requester="{{ requester }}" data-voter="{{ procuration.votingAvailability.voter }}" data-election-date="{{ procuration.election.performanceDate|localizeddate(timeFormat='none') }}" title="Annuler le choix du remplaçant">
+                                <a href="{{ path('procuration_unbind', {'id': procuration.id}) }}" class="unbind-procuration btn btn-warning" data-requester="{{ requester }}" data-voter="{{ procuration.votingAvailability.voter }}" data-election-date="{{ electionRound.performanceDate|localizeddate(timeFormat='none') }}" title="Annuler le choix du remplaçant">
                                     <span class="glyphicon glyphicon-log-out"></span>
                                 </a>
                             {% else %}

@@ -7,15 +7,15 @@ namespace AppBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class ElectionController extends AbstractController
+class ElectionRoundController extends AbstractController
 {
     /**
      * @return Response
      */
     public function indexAction(): Response
     {
-        return $this->render('election/index.html.twig', [
-            'elections' => $this->getElectionRepository()->findAllByDateDesc(),
+        return $this->render('election-round/index.html.twig', [
+            'election_rounds' => $this->getElectionRoundRepository()->findAllByDateDesc(),
         ]);
     }
 
@@ -30,10 +30,10 @@ class ElectionController extends AbstractController
         $form = $formHandler->createForm();
 
         if ($formHandler->process($form, $request)) {
-            return $this->redirectToRoute('election_index');
+            return $this->redirectToRoute('election_round_index');
         }
 
-        return $this->render('election/new.html.twig', [
+        return $this->render('election-round/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -46,18 +46,18 @@ class ElectionController extends AbstractController
      */
     public function editAction(Request $request, $id): Response
     {
-        if (!$election = $this->getElectionRepository()->find($id)) {
-            throw $this->createNotFoundException(sprintf('No election with ID "%s"', $id));
+        if (!$election = $this->getElectionRoundRepository()->findOneWithRelations($id)) {
+            throw $this->createNotFoundException(sprintf('No election round with ID "%s"', $id));
         }
 
         $formHandler = $this->getElectionFormHandler();
         $form = $formHandler->createForm($election);
 
         if ($formHandler->process($form, $request)) {
-            return $this->redirectToRoute('election_index');
+            return $this->redirectToRoute('election_round_index');
         }
 
-        return $this->render('election/edit.html.twig', [
+        return $this->render('election-round/edit.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -69,28 +69,28 @@ class ElectionController extends AbstractController
      */
     public function deleteAction($id): Response
     {
-        if (!$election = $this->getElectionRepository()->find($id)) {
-            throw $this->createNotFoundException(sprintf('No election with ID "%s"', $id));
+        if (!$election = $this->getElectionRoundRepository()->find($id)) {
+            throw $this->createNotFoundException(sprintf('No election round with ID "%s"', $id));
         }
 
         $this->deleteEntity($election);
 
-        return $this->redirectToRoute('election_index');
+        return $this->redirectToRoute('election_round_index');
     }
 
     /**
-     * @return \AppBundle\Repository\ElectionRepository
+     * @return \AppBundle\Repository\ElectionRoundRepository
      */
-    private function getElectionRepository()
+    private function getElectionRoundRepository()
     {
-        return $this->get('app.repository.election');
+        return $this->get('app.repository.election_round');
     }
 
     /**
-     * @return \AppBundle\Form\Handler\ElectionFormHandler
+     * @return \AppBundle\Form\Handler\ElectionRoundFormHandler
      */
     private function getElectionFormHandler()
     {
-        return $this->get('app.form.handler.election');
+        return $this->get('app.form.handler.election_round');
     }
 }

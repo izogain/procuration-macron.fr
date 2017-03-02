@@ -15,18 +15,19 @@ class VotingAvailabilityRepository extends EntityRepository
     public function findAllWithRelationships()
     {
         return $this->createQueryBuilder('v')
-            ->select('v', 'u', 'o', 'e', 'p')
+            ->select('v', 'u', 'o', 'r', 'e', 'p')
             ->innerJoin('v.voter', 'u')
                 ->innerJoin('u.votingOffice', 'o')
-            ->innerJoin('v.election', 'e')
+            ->innerJoin('v.electionRound', 'r')
+                ->innerJoin('r.election', 'e')
             ->leftJoin('v.procuration', 'p')
             ->where('u.enabled = :enabled')
-            ->andWhere('e.active = :active_election')
+            ->andWhere('r.active = :active_round')
             ->setParameters([
                 'enabled' => true,
-                'active_election' => true,
+                'active_round' => true,
             ])
-            ->orderBy('e.performanceDate', 'ASC')
+            ->orderBy('r.performanceDate', 'ASC')
             ->addOrderBy('o.name', 'ASC')
             ->addOrderBy('u.firstName', 'ASC')
             ->getQuery()
@@ -41,21 +42,22 @@ class VotingAvailabilityRepository extends EntityRepository
     public function findByUserArea($userId)
     {
         return $this->createQueryBuilder('v')
-            ->select('v', 'u', 'o', 'ref', 'e', 'p')
+            ->select('v', 'u', 'o', 'ref', 'r', 'e', 'p')
             ->innerJoin('v.voter', 'u')
                 ->innerJoin('u.votingOffice', 'o')
                     ->innerJoin('o.referents', 'ref')
-            ->innerJoin('v.election', 'e')
+            ->innerJoin('v.electionRound', 'r')
+                ->innerJoin('r.election', 'e')
             ->leftJoin('v.procuration', 'p')
             ->where('ref.id = :user_id')
             ->andWhere('u.enabled = :enabled')
-            ->andWhere('e.active = :active_election')
+            ->andWhere('r.active = :active_round')
             ->setParameters([
                 'user_id' => $userId,
                 'enabled' => true,
-                'active_election' => true,
+                'active_round' => true,
             ])
-            ->orderBy('e.performanceDate', 'ASC')
+            ->orderBy('r.performanceDate', 'ASC')
             ->addOrderBy('o.name', 'ASC')
             ->addOrderBy('u.firstName', 'ASC')
             ->getQuery()
@@ -75,11 +77,12 @@ class VotingAvailabilityRepository extends EntityRepository
             ->select('v', 'voter', 'vo')
             ->innerJoin('v.voter', 'voter')
                 ->innerJoin('voter.votingOffice', 'vo')
-            ->innerJoin('v.election', 'e')
+            ->innerJoin('v.electionRound', 'r')
+                ->innerJoin('r.election', 'e')
             ->leftJoin('v.procuration', 'p')
             ->where('p.id IS NULL')
-            ->andWhere('e.id = :election_id')
-            ->setParameter('election_id', $electionId);
+            ->andWhere('r.id = :round_id')
+            ->setParameter('round_id', $electionId);
 
         if ($countryCode != 'FR') {
             $queryBuilder->andWhere('vo.address.countryCode = :country_code')

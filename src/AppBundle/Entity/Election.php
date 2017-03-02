@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 class Election
 {
     /**
@@ -15,18 +17,18 @@ class Election
     protected $label;
 
     /**
-     * @var \DateTime
+     * @var ElectionRound[]|ArrayCollection
      */
-    protected $performanceDate;
+    protected $rounds;
 
-    /**
-     * @var bool
-     */
-    protected $active = true;
+    public function __construct()
+    {
+        $this->rounds = new ArrayCollection();
+    }
 
     public function __toString()
     {
-        return (string) $this->getLabel();
+        return $this->getLabel();
     }
 
     /**
@@ -62,34 +64,18 @@ class Election
     }
 
     /**
-     * @return \DateTime
+     * @return ElectionRound[]|ArrayCollection
      */
-    public function getPerformanceDate()
+    public function getRounds()
     {
-        return $this->performanceDate;
+        return $this->rounds;
     }
 
     /**
-     * @param \DateTime $performanceDate
+     * @param ElectionRound[]|ArrayCollection $rounds
      */
-    public function setPerformanceDate(\DateTime $performanceDate)
+    public function setRounds($rounds)
     {
-        $this->performanceDate = $performanceDate;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isActive()
-    {
-        return $this->active;
-    }
-
-    /**
-     * @param bool $active
-     */
-    public function setActive(bool $active)
-    {
-        $this->active = $active;
+        $this->rounds = $rounds;
     }
 }

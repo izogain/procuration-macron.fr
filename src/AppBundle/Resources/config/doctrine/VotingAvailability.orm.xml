@@ -17,7 +17,7 @@
             <join-column on-delete="CASCADE" />
         </many-to-one>
 
-        <many-to-one target-entity="AppBundle\Entity\Election" field="election">
+        <many-to-one target-entity="AppBundle\Entity\ElectionRound" field="electionRound">
             <join-column on-delete="CASCADE" />
         </many-to-one>
     </entity>

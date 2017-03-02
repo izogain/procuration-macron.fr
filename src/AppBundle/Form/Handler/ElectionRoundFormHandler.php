@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace AppBundle\Form\Handler;
 
-use AppBundle\Entity\Election;
+use AppBundle\Entity\ElectionRound;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class ElectionFormHandler
+class ElectionRoundFormHandler
 {
     /**
      * @var FormFactoryInterface
@@ -40,14 +40,13 @@ class ElectionFormHandler
     }
 
     /**
-     * @param Election|null $data
-     * @param array         $options
+     * @param ElectionRound|null $data
      *
      * @return FormInterface
      */
-    public function createForm(Election $data = null, array $options = []): FormInterface
+    public function createForm(ElectionRound $data = null): FormInterface
     {
-        return $this->formFactory->create($this->formClassName, $data, $options);
+        return $this->formFactory->create($this->formClassName, $data);
     }
 
     /**

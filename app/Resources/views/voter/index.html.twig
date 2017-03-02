@@ -20,12 +20,12 @@
         <tbody>
             {% for voting_availability in voting_availabilities if voting_availabilities|length %}
                 {% set procuration = voting_availability.procuration %}
-                {% set election = voting_availability.election %}
+                {% set electionRound = voting_availability.electionRound %}
                 {% set voter = voting_availability.voter %}
                 {% set voterVotingOffice = voter.votingOffice %}
                 <tr>
                     <td>{{ voter }}</td>
-                    <td>{{ election }} ({{ election.performanceDate|localizeddate(timeFormat='none') }})</td>
+                    <td>{{ electionRound.election }} ({{ electionRound.performanceDate|localizeddate(timeFormat='none') }})</td>
                     <td>{{ voterVotingOffice }} ({{ voter.votingOffice.address.postalCode }} {{ voter.votingOffice.address.city }})</td>
                     <td>
                         {% if procuration is null %}
@@ -37,8 +37,8 @@
                     <td>
                         <a href="{{ path('voting_availability_delete', {'id': voting_availability.id}) }}"
                            class="delete-voting-availability btn btn-xs btn-danger{% if procuration is not null %} disabled{% endif %}"
-                           data-voter="{{ voter }}" data-election="{{ election }}"
-                           data-election-date="{{ election.performanceDate|localizeddate(timeFormat='none') }}"
+                           data-voter="{{ voter }}" data-election="{{ electionRound.election }}"
+                           data-election-date="{{ electionRound.performanceDate|localizeddate(timeFormat='none') }}"
                            data-redirect-url="{{ path('voting_availability_index') }}"
                         >
                             <span class="glyphicon glyphicon-trash"></span>
@@ -65,7 +65,7 @@
                     return false;
                 }
 
-                if (!confirm('Etes-vous sûr de vouloir supprimer la disponibilité de '+ $this.data('voter') + ' pour ' + $this.data('election') + ' le ' + $this.data('election-date') + '?')) {
+                if (!confirm('Etes-vous sûr de vouloir supprimer la disponibilité de '+ $this.data('voter') + ' pour les élections ' + $this.data('election') + 's le ' + $this.data('election-date') + '?')) {
                     return false;
                 }
 

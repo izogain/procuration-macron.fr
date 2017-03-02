@@ -10,9 +10,9 @@ office:
     prefix: /admin/offices
     resource: "routing/office.yml"
 
-election:
-    prefix: /admin/elections
-    resource: "routing/election.yml"
+election_round:
+    prefix: /admin/election-rounds
+    resource: "routing/election-round.yml"
 
 admin_index:
     path: /admin/

@@ -3,12 +3,16 @@
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <entity name="AppBundle\Entity\Election" repository-class="AppBundle\Repository\ElectionRepository">
+    <entity name="AppBundle\Entity\ElectionRound" repository-class="AppBundle\Repository\ElectionRoundRepository">
         <id name="id" type="integer" column="id">
             <generator strategy="AUTO"/>
         </id>
-        <field name="label" />
 
-        <one-to-many target-entity="AppBundle\Entity\ElectionRound" mapped-by="election" field="rounds" />
+        <field name="performanceDate" type="date" />
+        <field name="active" type="boolean" />
+
+        <many-to-one target-entity="AppBundle\Entity\Election" field="election" inversed-by="rounds">
+            <join-column on-delete="CASCADE" />
+        </many-to-one>
     </entity>
 </doctrine-mapping>

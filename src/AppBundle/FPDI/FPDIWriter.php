@@ -3,6 +3,7 @@
 namespace AppBundle\FPDI;
 
 use AppBundle\Entity\Address;
+use AppBundle\Entity\ElectionRound;
 use AppBundle\Entity\Procuration;
 use AppBundle\Mediator\AddressMediator;
 use AppBundle\Mediator\ProcurationMediator;
@@ -98,9 +99,17 @@ class FPDIWriter
         $this->writeTextInBoxes($pdf, $this->formatDate($voter->getBirthDate()), 35, 111);
 
         // Election informations
-        $election = $procuration->getElection();
-        $electionDate = $this->formatDate($election->getPerformanceDate());
+        $electionRound = $procuration->getElectionRound();
+        $electionDate = $this->formatDate($electionRound->getPerformanceDate());
         $this->checkABox($pdf, 19.7, 129.3, 3.7);
+        $this->writeTextAtPos($pdf, $electionRound->getElection()->getLabel(), 48, 131);
+
+        if ($this->isFirstRound($electionRound)) {
+            $this->checkABox($pdf, 25, 137, 2.5);
+        } else {
+            $this->checkABox($pdf, 25, 141, 2.5);
+        }
+
         $this->writeTextInBoxes($pdf, $electionDate, 95, 131);
 
         // Conformity part
@@ -293,5 +302,27 @@ class FPDIWriter
     private function formatDate(\DateTime $dateTime)
     {
         return $dateTime->format('dmY');
+    }
+
+    /**
+     * @param ElectionRound $electionRound
+     *
+     * @return bool
+     */
+    private function isFirstRound(ElectionRound $electionRound)
+    {
+        $possibleRounds = $electionRound->getElection()->getRounds();
+
+        foreach ($possibleRounds as $possibleRound) {
+            if ($possibleRound->getId() == $electionRound->getId()) {
+                continue;
+            }
+
+            if ($possibleRound->getPerformanceDate() < $electionRound->getPerformanceDate()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

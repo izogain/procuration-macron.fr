@@ -3,6 +3,7 @@
 parameters:
     app.form.type.address: AppBundle\Form\Type\AddressType
     app.form.type.election: AppBundle\Form\Type\ElectionType
+    app.form.type.election_round: AppBundle\Form\Type\ElectionRoundType
     app.form.type.office: AppBundle\Form\Type\OfficeType
     app.form.type.procuration_assignation: AppBundle\Form\Type\ProcurationAssignationType
     app.form.type.search_office: AppBundle\Form\Type\SearchOfficeType
@@ -12,16 +13,17 @@ parameters:
 
     app.model.address: AppBundle\Entity\Address
     app.model.election: AppBundle\Entity\Election
+    app.model.election_round: AppBundle\Entity\ElectionRound
     app.model.office: AppBundle\Entity\Office
     app.model.procuration: AppBundle\Entity\Procuration
     app.model.voting_availability: AppBundle\Entity\VotingAvailability
 
 services:
-    app.form.handler.election:
-        class: AppBundle\Form\Handler\ElectionFormHandler
+    app.form.handler.election_round:
+        class: AppBundle\Form\Handler\ElectionRoundFormHandler
         arguments:
             - "@form.factory"
-            - "%app.form.type.election%"
+            - "%app.form.type.election_round%"
             - "@doctrine.orm.entity_manager"
     app.form.handler.procuration_assignation:
         class: AppBundle\Form\Handler\ProcurationAssignationFormHandler
@@ -80,6 +82,12 @@ services:
             - name: "form.type"
         arguments:
             - "%app.model.election%"
+    app.form.type.election_round:
+        class: "%app.form.type.election_round%"
+        tags:
+            - name: "form.type"
+        arguments:
+            - "%app.model.election_round%"
     app.form.type.office:
         class: "%app.form.type.office%"
         tags:
@@ -135,6 +143,11 @@ services:
         factory: ["@doctrine.orm.entity_manager", getRepository]
         arguments:
             - "%app.model.election%"
+    app.repository.election_round:
+        class: AppBundle\Repository\ElectionRoundRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - "%app.model.election_round%"
     app.repository.office:
         class: AppBundle\Repository\OfficeRepository
         factory: ["@doctrine.orm.entity_manager", getRepository]

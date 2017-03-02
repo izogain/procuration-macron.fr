@@ -15,9 +15,9 @@ class VotingAvailability
     protected $voter;
 
     /**
-     * @var Election
+     * @var ElectionRound
      */
-    protected $election;
+    protected $electionRound;
 
     /**
      * @var Procuration|null
@@ -57,19 +57,19 @@ class VotingAvailability
     }
 
     /**
-     * @return Election
+     * @return ElectionRound
      */
-    public function getElection()
+    public function getElectionRound()
     {
-        return $this->election;
+        return $this->electionRound;
     }
 
     /**
-     * @param Election $election
+     * @param ElectionRound $electionRound
      */
-    public function setElection(Election $election)
+    public function setElectionRound(ElectionRound $electionRound)
     {
-        $this->election = $election;
+        $this->electionRound = $electionRound;
     }
 
     /**

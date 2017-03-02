@@ -88,7 +88,6 @@ class ProcurationAssignationFormHandler
 
         $this->doctrinEntityManager->persist($procuration);
         $this->doctrinEntityManager->flush();
-
         $this->fpdiWriter->generateForProcuration($procuration);
 
         return true;

@@ -77,7 +77,7 @@ class SubscriptionReasonFormHandler extends AbstractFormHandler
         /** @var \AppBundle\Entity\Election $election */
         foreach ($data['elections'] as $election) {
             $procuration = new Procuration();
-            $procuration->setElection($this->entityManager->merge($election));
+            $procuration->setElectionRound($this->entityManager->merge($election));
             $procuration->setRequester($user);
             $procuration->setReason($reason);
 

@@ -28,13 +28,13 @@ class LoadVotingAvailabilityData extends AbstractFixture implements DependentFix
     {
         $votingAvailability = new VotingAvailability();
         $votingAvailability->setVoter($this->getVoterInLyon());
-        $votingAvailability->setElection($this->getReference('election-0'));
+        $votingAvailability->setElectionRound($this->getReference('election-round-pres-1'));
 
         $manager->persist($votingAvailability);
 
         $votingAvailability = new VotingAvailability();
         $votingAvailability->setVoter($this->getVoterInLyon());
-        $votingAvailability->setElection($this->getReference('election-3'));
+        $votingAvailability->setElectionRound($this->getReference('election-round-leg-1'));
 
         $manager->persist($votingAvailability);
 
@@ -44,7 +44,7 @@ class LoadVotingAvailabilityData extends AbstractFixture implements DependentFix
         for ($i = 0; $i < 5; ++$i) {
             $votingAvailability = new VotingAvailability();
             $votingAvailability->setVoter($userAdmin);
-            $votingAvailability->setElection($this->getReference('election-'.$i));
+            $votingAvailability->setElectionRound($this->getReference('election-round-pres-' . mt_rand(1, 2)));
 
             $manager->persist($votingAvailability);
         }
