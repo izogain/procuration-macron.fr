@@ -1,0 +1,53 @@
+{% extends '::base.html.twig' %}
+{% set selected_nav = 'office' %}
+
+{% block body %}
+    <div class="page-header">
+        <h1>Liste des bureaux de vote <small>{{ offices|length }}</small></h1>
+    </div>
+
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Adresse</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for office in offices if offices|length %}
+                <tr>
+                    <td>{{ office.name }}</td>
+                    <td>{{ office.address|format_address }}</td>
+                    <td class="text-right">
+                        <div class="btn-group btn-group-xs">
+                            <a href="{{ path('office_edit', {'id': office.id}) }}" class="btn btn-info">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </a>
+                            <a href="{{ path('office_delete', {'id': office.id}) }}" class="btn btn-danger delete-office">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3" class="text-center">Aucun bureau dans votre secteur</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function() {
+            $("a.delete-office").click(function() {
+                if (!confirm('Etes-vous sûr de vouloir supprimer ce bureau de vote? Cette action est irreversible!')) {
+                    return false;
+                }
+            });
+        });
+    </script>
+{% endblock %}

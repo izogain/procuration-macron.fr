@@ -1,0 +1,18 @@
+office_delete:
+    path: /{id}/delete
+    methods: GET
+    defaults: { _controller: AppBundle:Office:delete }
+    requirements:
+        id: \d+
+
+office_edit:
+    path: /{id}
+    methods: GET|POST
+    defaults: { _controller: AppBundle:Office:edit }
+    requirements:
+        id: \d+
+
+office_index:
+    path: /
+    methods: GET
+    defaults: { _controller: AppBundle:Office:index }

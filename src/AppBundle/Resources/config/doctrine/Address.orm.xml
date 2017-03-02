@@ -9,7 +9,6 @@
         <field name="streetRepeater" nullable="true" type="smallint" length="2" />
         <field name="streetType" nullable="true" type="smallint" length="1" />
         <field name="streetName" />
-        <field name="extraInformations" nullable="true" />
         <field name="postalCode" length="10" />
         <field name="city" />
         <field name="countryCode" length="2" />

@@ -1,0 +1,23 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <div class="page-header">
+        <h1>Modification d'un bureau de vote</h1>
+    </div>
+
+    {{ form_errors(form) }}
+
+    <form method="post" action="{{ path('office_edit', {'id': form.vars.data.id}) }}" class="form-horizontal">
+        {{ form_row(form.name) }}
+        {{ form_row(form.regularOpeningHour) }}
+        {{ form_row(form.regularClosingHour) }}
+        {{ form_row(form.address) }}
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                {{ form_rest(form) }}
+                <input type="submit" class="btn btn-primary">
+            </div>
+        </div>
+    </form>
+{% endblock %}

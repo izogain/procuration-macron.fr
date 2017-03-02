@@ -17,6 +17,16 @@ class Office
     protected $name;
 
     /**
+     * @var int|null
+     */
+    protected $regularOpeningHour;
+
+    /**
+     * @var int|null
+     */
+    protected $regularClosingHour;
+
+    /**
      * @var Address
      */
     protected $address;
@@ -25,6 +35,16 @@ class Office
      * @var User[]|ArrayCollection
      */
     protected $referents;
+
+    /**
+     * @var \DateTime
+     */
+    protected $createdAt;
+
+    /**
+     * @var \DateTime
+     */
+    protected $updatedAt;
 
     public function __construct()
     {
@@ -67,6 +87,38 @@ class Office
     public function setName(string $name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getRegularOpeningHour()
+    {
+        return $this->regularOpeningHour;
+    }
+
+    /**
+     * @param int|null $regularOpeningHour
+     */
+    public function setRegularOpeningHour($regularOpeningHour = null)
+    {
+        $this->regularOpeningHour = $regularOpeningHour;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getRegularClosingHour()
+    {
+        return $this->regularClosingHour;
+    }
+
+    /**
+     * @param int|null $regularClosingHour
+     */
+    public function setRegularClosingHour($regularClosingHour = null)
+    {
+        $this->regularClosingHour = $regularClosingHour;
     }
 
     /**
@@ -117,5 +169,37 @@ class Office
     public function removeReferent(User $user)
     {
         $this->referents->removeElement($user);
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param \DateTime $createdAt
+     */
+    public function setCreatedAt(\DateTime $createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param \DateTime $updatedAt
+     */
+    public function setUpdatedAt(\DateTime $updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
     }
 }

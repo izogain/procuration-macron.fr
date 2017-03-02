@@ -33,7 +33,8 @@
         "stof/doctrine-extensions-bundle": "^1.2",
         "twig/extensions": "^1.4",
         "misd/phone-number-bundle": "^1.2",
-        "setasign/fpdi-fpdf": "^1.6"
+        "setasign/fpdi-fpdf": "^1.6",
+        "league/csv": "^8.2"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^3.0"

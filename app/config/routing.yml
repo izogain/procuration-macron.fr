@@ -6,6 +6,10 @@ voting_availability:
     prefix: /admin/voting-availability
     resource: "routing/voting_availability.yml"
 
+office:
+    prefix: /admin/offices
+    resource: "routing/office.yml"
+
 election:
     prefix: /admin/elections
     resource: "routing/election.yml"

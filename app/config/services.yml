@@ -3,6 +3,7 @@
 parameters:
     app.form.type.address: AppBundle\Form\Type\AddressType
     app.form.type.election: AppBundle\Form\Type\ElectionType
+    app.form.type.office: AppBundle\Form\Type\OfficeType
     app.form.type.procuration_assignation: AppBundle\Form\Type\ProcurationAssignationType
     app.form.type.search_office: AppBundle\Form\Type\SearchOfficeType
     app.form.type.subscription.election: AppBundle\Form\Type\Subscription\SubscriptionElectionType
@@ -22,7 +23,6 @@ services:
             - "@form.factory"
             - "%app.form.type.election%"
             - "@doctrine.orm.entity_manager"
-
     app.form.handler.procuration_assignation:
         class: AppBundle\Form\Handler\ProcurationAssignationFormHandler
         arguments:
@@ -30,6 +30,12 @@ services:
             - "%app.form.type.procuration_assignation%"
             - "@doctrine.orm.entity_manager"
             - "@app.fpdi.writer"
+    app.form.handler.office:
+        class: AppBundle\Form\Handler\OfficeFormHandler
+        arguments:
+            - "@form.factory"
+            - "%app.form.type.office%"
+            - "@doctrine.orm.entity_manager"
 
     app.form.handler.subscription.address:
         class: AppBundle\Form\Handler\Subscription\SubscriptionAddressFormHandler
@@ -74,6 +80,12 @@ services:
             - name: "form.type"
         arguments:
             - "%app.model.election%"
+    app.form.type.office:
+        class: "%app.form.type.office%"
+        tags:
+            - name: "form.type"
+        arguments:
+            - "%app.model.office%"
     app.form.type.procuration_assignation:
         class: "%app.form.type.procuration_assignation%"
         tags:
@@ -92,6 +104,7 @@ services:
         arguments:
             - "%app.model.election%"
 
+
     app.fpdi.writer:
         class: AppBundle\FPDI\FPDIWriter
         arguments:
@@ -99,18 +112,23 @@ services:
             - "@app.mediator.procuration"
             - "@filesystem"
 
+
     app.mediator.procuration:
         class: AppBundle\Mediator\ProcurationMediator
         arguments:
             - "@app.repository.procuration"
             - "@doctrine.orm.entity_manager"
             - "%cerfa_output_root_path%"
-
     app.mediator.voting_availability:
         class: AppBundle\Mediator\VotingAvailabilityMediator
         arguments:
             - "@app.repository.voting_availability"
             - "@doctrine.orm.entity_manager"
+    app.mediator.office:
+        class: AppBundle\Mediator\OfficeMediator
+        arguments:
+            - "@app.repository.office"
+
 
     app.repository.election:
         class: AppBundle\Repository\ElectionRepository
@@ -139,6 +157,11 @@ services:
             - "%app.model.voting_availability%"
 
 
+    app.twig.address_extension:
+        class: AppBundle\Twig\AddressExtension
+        public: false
+        tags:
+            - { name: twig.extension }
     app.twig.procuration_extension:
         class: AppBundle\Twig\ProcurationExtension
         public: false

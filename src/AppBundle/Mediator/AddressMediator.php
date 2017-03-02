@@ -12,6 +12,9 @@ class AddressMediator
     const STREET_TYPE_VOICE = 5; // Yeah... sorry for this ...
     const STREET_TYPE_ROAD = 6;
     const STREET_TYPE_DOCK = 7;
+    const STREET_TYPE_PLACE = 8;
+    const STREET_TYPE_BOULEVARD = 9;
+    const STREET_TYPE_COURSE = 10; // Yeah... sorry for this ...
 
     const STREET_REPEATER_BIS = 0;
     const STREET_REPEATER_TER = 1;
@@ -28,12 +31,15 @@ class AddressMediator
         return [
             static::STREET_TYPE_STREET => 'Rue',
             static::STREET_TYPE_AVENUE => 'Avenue',
+            static::STREET_TYPE_BOULEVARD => 'Boulevard',
             static::STREET_TYPE_ALLEY => 'Allée',
             static::STREET_TYPE_PATH => 'Chemin',
             static::STREET_TYPE_IMPASSE => 'Impasse',
             static::STREET_TYPE_VOICE => 'Voie',
             static::STREET_TYPE_ROAD => 'Route',
             static::STREET_TYPE_DOCK => 'Quais',
+            static::STREET_TYPE_PLACE => 'Place',
+            static::STREET_TYPE_COURSE => 'Cours',
         ];
     }
 

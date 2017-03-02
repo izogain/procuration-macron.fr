@@ -21,6 +21,13 @@ abstract class AbstractController extends Controller
     }
 
     /**
+     * @return \AppBundle\Mediator\OfficeMediator
+     */
+    public function getOfficeMediator()
+    {
+        return $this->get('app.mediator.office');
+    }
+    /**
      * @return \AppBundle\Form\Handler\ProcurationAssignationFormHandler
      */
     protected function getProcurationAssignationFormHandler()

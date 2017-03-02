@@ -25,11 +25,6 @@ class Address
     protected $streetName;
 
     /**
-     * @var string|null
-     */
-    protected $extraInformations;
-
-    /**
      * @var string
      */
     protected $postalCode;
@@ -106,22 +101,6 @@ class Address
     public function setStreetName(string $streetName)
     {
         $this->streetName = $streetName;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getExtraInformations()
-    {
-        return $this->extraInformations;
-    }
-
-    /**
-     * @param null|string $extraInformations
-     */
-    public function setExtraInformations($extraInformations = null)
-    {
-        $this->extraInformations = $extraInformations;
     }
 
     /**
