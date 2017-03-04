@@ -52,7 +52,7 @@ gulp.task('watch', ['css', 'js'], function() {
     gulp.watch(devDir + 'js/*.js', ['js']).on('change', reload);
 });
 
-gulp.task('default', ['watch']);
+gulp.task('default', ['watch', 'css', 'js']);
 
 
 
