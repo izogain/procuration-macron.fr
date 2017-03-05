@@ -10,6 +10,10 @@ office:
     prefix: /admin/offices
     resource: "routing/office.yml"
 
+voter-invitation:
+    prefix: /admin/voter-invitations
+    resource: "routing/voter-invitation.yml"
+
 election_round:
     prefix: /admin/election-rounds
     resource: "routing/election-round.yml"

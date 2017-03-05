@@ -10,6 +10,7 @@ parameters:
     app.form.type.subscription.election: AppBundle\Form\Type\Subscription\SubscriptionElectionType
     app.form.type.subscription.user_informations: AppBundle\Form\Type\Subscription\SubscriptionUserInformationsType
     app.form.type.subscription.reason: AppBundle\Form\Type\Subscription\SubscriptionReasonType
+    app.form.type.voter_invitation: AppBundle\Form\Type\VoterInvitationType
 
     app.model.address: AppBundle\Entity\Address
     app.model.election: AppBundle\Entity\Election
@@ -17,6 +18,7 @@ parameters:
     app.model.office: AppBundle\Entity\Office
     app.model.procuration: AppBundle\Entity\Procuration
     app.model.voting_availability: AppBundle\Entity\VotingAvailability
+    app.model.voter_invitation: AppBundle\Entity\VoterInvitation
 
 services:
     app.form.handler.election_round:
@@ -69,6 +71,12 @@ services:
             - "%app.form.type.subscription.reason%"
             - "@fos_user.user_manager"
             - "@doctrine.orm.entity_manager"
+    app.form.handler.voter_invitation:
+        class: AppBundle\Form\Handler\VoterInvitationFormHandler
+        arguments:
+            - "@form.factory"
+            - "%app.form.type.voter_invitation%"
+            - "@doctrine.orm.entity_manager"
 
     app.form.type.address:
         class: "%app.form.type.address%"
@@ -111,7 +119,12 @@ services:
             - name: form.type
         arguments:
             - "%app.model.election%"
-
+    app.form.type.voter_invitation:
+        class: "%app.form.type.voter_invitation%"
+        tags:
+            - name: form.type
+        arguments:
+            - "%app.model.voter_invitation%"
 
     app.fpdi.writer:
         class: AppBundle\FPDI\FPDIWriter
@@ -136,38 +149,6 @@ services:
         class: AppBundle\Mediator\OfficeMediator
         arguments:
             - "@app.repository.office"
-
-
-    app.repository.election:
-        class: AppBundle\Repository\ElectionRepository
-        factory: ["@doctrine.orm.entity_manager", getRepository]
-        arguments:
-            - "%app.model.election%"
-    app.repository.election_round:
-        class: AppBundle\Repository\ElectionRoundRepository
-        factory: ["@doctrine.orm.entity_manager", getRepository]
-        arguments:
-            - "%app.model.election_round%"
-    app.repository.office:
-        class: AppBundle\Repository\OfficeRepository
-        factory: ["@doctrine.orm.entity_manager", getRepository]
-        arguments:
-            - "%app.model.office%"
-    app.repository.procuration:
-        class: AppBundle\Repository\ProcurationRepository
-        factory: ["@doctrine.orm.entity_manager", getRepository]
-        arguments:
-            - "%app.model.procuration%"
-    app.repository.user:
-        class: AppBundle\Repository\UserRepository
-        factory: ["@doctrine.orm.entity_manager", getRepository]
-        arguments:
-            - "%fos_user.model.user.class%"
-    app.repository.voting_availability:
-        class: AppBundle\Repository\VotingAvailabilityRepository
-        factory: ["@doctrine.orm.entity_manager", getRepository]
-        arguments:
-            - "%app.model.voting_availability%"
 
 
     app.twig.address_extension:
