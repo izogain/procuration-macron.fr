@@ -20,7 +20,7 @@ class Address
     protected $streetType;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $streetName;
 
@@ -88,7 +88,7 @@ class Address
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getStreetName()
     {
@@ -96,9 +96,9 @@ class Address
     }
 
     /**
-     * @param string $streetName
+     * @param string|null $streetName
      */
-    public function setStreetName(string $streetName)
+    public function setStreetName($streetName = null)
     {
         $this->streetName = $streetName;
     }

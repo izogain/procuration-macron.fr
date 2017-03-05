@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+
+        <service id="en_marche_mailjet.transport.transactional" class="EnMarche\Bundle\MailjetBundle\Transport\MailjetApiTransport" public="false">
+            <argument type="service" id="csa_guzzle.client.mailjet_api"/>
+            <argument>%en_marche_mailjet.public_key%</argument>
+            <argument>%en_marche_mailjet.private_key%</argument>
+        </service>
+
+        <service id="en_marche_mailjet.transport.null" class="EnMarche\Bundle\MailjetBundle\Transport\MailjetNullTransport" public="false">
+            <argument type="service" id="logger" />
+        </service>
+    </services>
+</container>

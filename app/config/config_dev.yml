@@ -1,6 +1,11 @@
 imports:
     - { resource: config.yml }
 
+en_marche_mailjet:
+    clients:
+        transactional:
+            transport: "null"
+
 framework:
     ide: 'phpstorm://open?file=%%f&line=%%l'
     router:

@@ -4,7 +4,9 @@ namespace AppBundle\Form\Handler;
 
 use AppBundle\Entity\Procuration;
 use AppBundle\FPDI\FPDIWriter;
+use AppBundle\Message\ProcurationAssignationMessage;
 use Doctrine\ORM\EntityManager;
+use EnMarche\Bundle\MailjetBundle\Client\MailjetClient;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,21 +34,29 @@ class ProcurationAssignationFormHandler
     protected $fpdiWriter;
 
     /**
-     * @param FormFactoryInterface $formFactory
-     * @param string               $formClassName
-     * @param EntityManager        $doctrinEntityManager
-     * @param FPDIWriter           $fpdiWriter
+     * @var MailjetClient
+     */
+    protected $mailjetClient;
+
+    /**
+     * @param FormFactoryInterface        $formFactory
+     * @param string                      $formClassName
+     * @param EntityManager               $doctrinEntityManager
+     * @param FPDIWriter                  $fpdiWriter
+     * @param MailjetClient               $mailjetClient
      */
     public function __construct(
         FormFactoryInterface $formFactory,
         $formClassName,
         EntityManager $doctrinEntityManager,
-        FPDIWriter $fpdiWriter
+        FPDIWriter $fpdiWriter,
+        MailjetClient $mailjetClient
     ) {
         $this->formFactory = $formFactory;
         $this->formClassName = $formClassName;
         $this->doctrinEntityManager = $doctrinEntityManager;
         $this->fpdiWriter = $fpdiWriter;
+        $this->mailjetClient = $mailjetClient;
     }
 
     /**
@@ -80,7 +90,7 @@ class ProcurationAssignationFormHandler
     {
         $form->handleRequest($request);
 
-        if (!$form->isValid()) {
+        if (!$form->isSubmitted() || !$form->isValid()) {
             return false;
         }
 
@@ -89,6 +99,8 @@ class ProcurationAssignationFormHandler
         $this->doctrinEntityManager->persist($procuration);
         $this->doctrinEntityManager->flush();
         $this->fpdiWriter->generateForProcuration($procuration);
+
+        $this->mailjetClient->sendMessage(ProcurationAssignationMessage::createFromModel($procuration));
 
         return true;
     }

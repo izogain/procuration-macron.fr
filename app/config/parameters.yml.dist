@@ -10,5 +10,3 @@ parameters:
 
     env(MAILJET_TRANSACTIONAL_PUBLIC_KEY):     ''
     env(MAILJET_TRANSACTIONAL_PRIVATE_KEY):    ''
-    env(MAILJET_CAMPAIGN_PUBLIC_KEY):          ''
-    env(MAILJET_CAMPAIGN_PRIVATE_KEY):         ''

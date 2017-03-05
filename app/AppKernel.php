@@ -19,6 +19,8 @@ class AppKernel extends Kernel
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new Csa\Bundle\GuzzleBundle\CsaGuzzleBundle(),
+            new EnMarche\Bundle\MailjetBundle\EnMarcheMailjetBundle(),
             new AppBundle\AppBundle(),
         ];
 

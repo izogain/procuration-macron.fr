@@ -4,8 +4,10 @@ namespace AppBundle\Mediator;
 
 use AppBundle\Entity\Procuration;
 use AppBundle\Entity\User;
+use AppBundle\Message\ProcurationUnbindingMessage;
 use AppBundle\Repository\ProcurationRepository;
 use Doctrine\ORM\EntityManager;
+use EnMarche\Bundle\MailjetBundle\Client\MailjetClient;
 
 class ProcurationMediator
 {
@@ -50,18 +52,26 @@ class ProcurationMediator
     protected $cerfaOutputRootDir;
 
     /**
+     * @var MailjetClient
+     */
+    protected $mailjetClient;
+
+    /**
      * @param ProcurationRepository $procurationRepository
      * @param EntityManager         $entityManager
      * @param string                $cerfaOutputRootDir
+     * @param MailjetClient         $mailjetClient
      */
     public function __construct(
         ProcurationRepository $procurationRepository,
         EntityManager $entityManager,
-        $cerfaOutputRootDir
+        $cerfaOutputRootDir,
+        MailjetClient $mailjetClient
     ) {
         $this->procurationRepository = $procurationRepository;
         $this->entityManager = $entityManager;
         $this->cerfaOutputRootDir = $cerfaOutputRootDir;
+        $this->mailjetClient = $mailjetClient;
     }
 
     /**
@@ -99,8 +109,6 @@ class ProcurationMediator
         if ($withFlush) {
             $this->entityManager->flush();
         }
-
-        // TODO send email to $procuration->getRequester()
     }
 
     /**
@@ -116,6 +124,8 @@ class ProcurationMediator
         if ($withFlush) {
             $this->entityManager->flush();
         }
+
+        $this->mailjetClient->sendMessage(ProcurationUnbindingMessage::createFromModel($procuration));
     }
 
     /**
