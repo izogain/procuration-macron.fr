@@ -17,10 +17,19 @@
                 <th class="text-center">Confirmé</th>
             </tr>
         </thead>
+        <tfoot>
+            <tr>
+                <td colspan="7" class="text-right">
+                    <a href="{{ path('voter-invitation_new') }}" class="btn btn-info" title="Envoyer une demande">
+                        <span class="glyphicon glyphicon-share-alt"></span>
+                    </a>
+                </td>
+            </tr>
+        </tfoot>
         <tbody>
             {% for voter_invitation in voter_invitations if voter_invitations|length %}
                 <tr>
-                    <td>{{ voter_invitation.civility }}</td>
+                    <td>{{ voter_invitation.civility|gender }}</td>
                     <td>{{ voter_invitation.lastName|upper }}</td>
                     <td>{{ voter_invitation.firstName|lower|capitalize }}</td>
                     <td>{{ voter_invitation.createdAt|localizeddate }}</td>

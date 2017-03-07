@@ -134,6 +134,8 @@ services:
             - "@filesystem"
 
 
+    app.mediator.user:
+        class: AppBundle\Mediator\UserMediator
     app.mediator.procuration:
         class: AppBundle\Mediator\ProcurationMediator
         arguments:
@@ -168,6 +170,8 @@ services:
         public: false
         tags:
             - { name: twig.extension }
+        arguments:
+            - "@app.mediator.user"
     twig.extension.intl:
         class: Twig_Extensions_Extension_Intl
         public: false
