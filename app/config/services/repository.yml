@@ -1,0 +1,42 @@
+services:
+    app.repository.election:
+        class: AppBundle\Repository\ElectionRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - "%app.model.election%"
+
+    app.repository.election_round:
+        class: AppBundle\Repository\ElectionRoundRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - "%app.model.election_round%"
+
+    app.repository.office:
+        class: AppBundle\Repository\OfficeRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - "%app.model.office%"
+
+    app.repository.procuration:
+        class: AppBundle\Repository\ProcurationRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - "%app.model.procuration%"
+
+    app.repository.user:
+        class: AppBundle\Repository\UserRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - "%fos_user.model.user.class%"
+
+    app.repository.voting_availability:
+        class: AppBundle\Repository\VotingAvailabilityRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - "%app.model.voting_availability%"
+
+    app.repository.voter_invitation:
+        class: AppBundle\Repository\VoterInvitationRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - "%app.model.voter_invitation%"
