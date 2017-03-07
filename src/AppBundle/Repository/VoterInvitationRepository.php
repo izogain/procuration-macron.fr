@@ -19,4 +19,14 @@ class VoterInvitationRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    /**
+     * @param string $hash
+     *
+     * @return VoterInvitation|null
+     */
+    public function findOneActiveByHash($hash)
+    {
+        return $this->findOneBy(['hash' => $hash, 'active' => true]);
+    }
 }

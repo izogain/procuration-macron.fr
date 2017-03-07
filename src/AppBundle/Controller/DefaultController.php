@@ -92,7 +92,7 @@ class DefaultController extends AbstractController
      */
     public function electionsAction(Request $request): Response
     {
-        $formHandler = $this->get('app.form.handler.subscription.election');
+        $formHandler = $this->get('app.form.handler.subscription.election_round');
         $form = $formHandler->createForm();
 
         if ($formHandler->process($form, $request)) {

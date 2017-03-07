@@ -1,17 +1,6 @@
 # Learn more about services, parameters and containers at
 # http://symfony.com/doc/current/service_container.html
 parameters:
-    app.form.type.address: AppBundle\Form\Type\AddressType
-    app.form.type.election: AppBundle\Form\Type\ElectionType
-    app.form.type.election_round: AppBundle\Form\Type\ElectionRoundType
-    app.form.type.office: AppBundle\Form\Type\OfficeType
-    app.form.type.procuration_assignation: AppBundle\Form\Type\ProcurationAssignationType
-    app.form.type.search_office: AppBundle\Form\Type\SearchOfficeType
-    app.form.type.subscription.election: AppBundle\Form\Type\Subscription\SubscriptionElectionType
-    app.form.type.subscription.user_informations: AppBundle\Form\Type\Subscription\SubscriptionUserInformationsType
-    app.form.type.subscription.reason: AppBundle\Form\Type\Subscription\SubscriptionReasonType
-    app.form.type.voter_invitation: AppBundle\Form\Type\VoterInvitationType
-
     app.model.address: AppBundle\Entity\Address
     app.model.election: AppBundle\Entity\Election
     app.model.election_round: AppBundle\Entity\ElectionRound
@@ -21,111 +10,6 @@ parameters:
     app.model.voter_invitation: AppBundle\Entity\VoterInvitation
 
 services:
-    app.form.handler.election_round:
-        class: AppBundle\Form\Handler\ElectionRoundFormHandler
-        arguments:
-            - "@form.factory"
-            - "%app.form.type.election_round%"
-            - "@doctrine.orm.entity_manager"
-    app.form.handler.procuration_assignation:
-        class: AppBundle\Form\Handler\ProcurationAssignationFormHandler
-        arguments:
-            - "@form.factory"
-            - "%app.form.type.procuration_assignation%"
-            - "@doctrine.orm.entity_manager"
-            - "@app.fpdi.writer"
-    app.form.handler.office:
-        class: AppBundle\Form\Handler\OfficeFormHandler
-        arguments:
-            - "@form.factory"
-            - "%app.form.type.office%"
-            - "@doctrine.orm.entity_manager"
-
-    app.form.handler.subscription.address:
-        class: AppBundle\Form\Handler\Subscription\SubscriptionAddressFormHandler
-        arguments:
-            - "@form.factory"
-            - "%app.form.type.address%"
-    app.form.handler.subscription:
-        class: AppBundle\Form\Handler\Subscription\SubscriptionFormHandler
-    app.form.handler.subscription.election:
-        class: AppBundle\Form\Handler\Subscription\SubscriptionElectionFormHandler
-        arguments:
-            - "@form.factory"
-            - "%app.form.type.subscription.election%"
-            - "@doctrine.orm.entity_manager"
-    app.form.handler.subscription.contact_informations:
-        class: AppBundle\Form\Handler\Subscription\SubscriptionContactInformationsFormHandler
-        arguments:
-            - "@form.factory"
-            - "%app.form.type.subscription.user_informations%"
-    app.form.handler.subscription.search_office:
-        class: AppBundle\Form\Handler\Subscription\SubscriptionSearchOfficeHandler
-        arguments:
-            - "@form.factory"
-            - "%app.form.type.search_office%"
-    app.form.handler.subscription.reason:
-        class: AppBundle\Form\Handler\Subscription\SubscriptionReasonFormHandler
-        arguments:
-            - "@form.factory"
-            - "%app.form.type.subscription.reason%"
-            - "@fos_user.user_manager"
-            - "@doctrine.orm.entity_manager"
-    app.form.handler.voter_invitation:
-        class: AppBundle\Form\Handler\VoterInvitationFormHandler
-        arguments:
-            - "@form.factory"
-            - "%app.form.type.voter_invitation%"
-            - "@doctrine.orm.entity_manager"
-
-    app.form.type.address:
-        class: "%app.form.type.address%"
-        tags:
-            - name: "form.type"
-        arguments:
-            - "%app.model.address%"
-    app.form.type.election:
-        class: "%app.form.type.election%"
-        tags:
-            - name: "form.type"
-        arguments:
-            - "%app.model.election%"
-    app.form.type.election_round:
-        class: "%app.form.type.election_round%"
-        tags:
-            - name: "form.type"
-        arguments:
-            - "%app.model.election_round%"
-    app.form.type.office:
-        class: "%app.form.type.office%"
-        tags:
-            - name: "form.type"
-        arguments:
-            - "%app.model.office%"
-    app.form.type.procuration_assignation:
-        class: "%app.form.type.procuration_assignation%"
-        tags:
-            - name: form.type
-        arguments:
-            - "%app.model.procuration%"
-            - "%app.model.voting_availability%"
-    app.form.type.search_office:
-        class: "%app.form.type.search_office%"
-        tags:
-            - name: form.type
-    app.form.type.subscription.election:
-        class: "%app.form.type.subscription.election%"
-        tags:
-            - name: form.type
-        arguments:
-            - "%app.model.election%"
-    app.form.type.voter_invitation:
-        class: "%app.form.type.voter_invitation%"
-        tags:
-            - name: form.type
-        arguments:
-            - "%app.model.voter_invitation%"
-
     app.fpdi.writer:
         class: AppBundle\FPDI\FPDIWriter
         arguments:
@@ -134,23 +18,27 @@ services:
             - "@filesystem"
 
 
-    app.mediator.user:
-        class: AppBundle\Mediator\UserMediator
+    app.mediator.office:
+        class: AppBundle\Mediator\OfficeMediator
+        arguments:
+            - "@app.repository.office"
     app.mediator.procuration:
         class: AppBundle\Mediator\ProcurationMediator
         arguments:
             - "@app.repository.procuration"
             - "@doctrine.orm.entity_manager"
             - "%cerfa_output_root_path%"
+    app.mediator.user:
+        class: AppBundle\Mediator\UserMediator
+    app.mediator.voter_invitation:
+        class: AppBundle\Mediator\VoterInvitationMediator
+        arguments:
+            - "@doctrine.orm.entity_manager"
     app.mediator.voting_availability:
         class: AppBundle\Mediator\VotingAvailabilityMediator
         arguments:
             - "@app.repository.voting_availability"
             - "@doctrine.orm.entity_manager"
-    app.mediator.office:
-        class: AppBundle\Mediator\OfficeMediator
-        arguments:
-            - "@app.repository.office"
 
 
     app.twig.address_extension:

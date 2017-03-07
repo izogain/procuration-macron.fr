@@ -17,15 +17,4 @@ class ElectionRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
-
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function queryAllEnabledByDateAsc()
-    {
-        return $this->createQueryBuilder('e')
-            ->where('e.active = :active')
-            ->orderBy('e.performanceDate', 'ASC')
-            ->setParameter('active', true);
-    }
 }

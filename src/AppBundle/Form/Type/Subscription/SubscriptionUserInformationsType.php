@@ -8,6 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -22,17 +23,25 @@ class SubscriptionUserInformationsType extends AbstractType
         $builder
             ->add('civility', ChoiceType::class, [
                 'choices' => array_flip(UserMediator::getCivilities()),
+                'label' => 'Civilité',
             ])
-            ->add('firstName')
-            ->add('lastName')
+            ->add('firstName', TextType::class, [
+                'label' => 'Prénom',
+            ])
+            ->add('lastName', TextType::class, [
+                'label' => 'Nom',
+            ])
             ->add('birthDate', DateType::class, [
                 'years' => $this->generateYears(),
+                'label' => 'Date de naissance',
             ])
             ->add('phoneNumber', PhoneNumberType::class, [
                 'default_region' => 'FR',
+                'label' => 'Téléphone',
             ])
-            ->add('email', EmailType::class)
-            ;
+            ->add('email', EmailType::class, [
+                'label' => 'Adresse email',
+            ]);
     }
 
     /**

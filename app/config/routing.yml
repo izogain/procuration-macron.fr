@@ -69,6 +69,16 @@ subscribe_confirmation:
     defaults: { _controller: AppBundle:Default:confirmation }
     methods: GET
 
+registration_confirmation:
+    path: /registration/confirmation
+    defaults: { _controller: AppBundle:Registration:confirmation }
+    methods: GET
+
+registration:
+    path: /registration/{hash}
+    defaults: { _controller: AppBundle:Registration:register }
+    methods: GET|POST
+
 homepage:
     path: /
     defaults: { _controller: AppBundle:Default:index }

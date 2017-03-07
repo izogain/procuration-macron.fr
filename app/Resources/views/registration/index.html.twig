@@ -1,0 +1,42 @@
+{% extends 'public.html.twig' %}
+{% form_theme form '_form.html.twig' %}
+
+
+{% block body %}
+    <div class="l-container">
+        <div class="form-group">
+            <h1 class="form-text">Inscription en tant que mandataire</h1>
+            {{ form_errors(form) }}
+
+            <form method="post" action="{{ path('registration', {'hash': hash}) }}">
+                {{ form_widget(form.civility, {'attr': {'class': 'form-input form-input--bis'}}) }}
+                {{ form_errors(form.civility) }}
+                {{ form_widget(form.lastName, {'attr': {'class': 'form-input form-input--street'}}) }}
+                {{ form_errors(form.lastName) }}
+                {{ form_widget(form.firstName, {'attr': {'class': 'form-input form-input--street'}}) }}
+                {{ form_errors(form.firstName) }}
+                {{ form_widget(form.email, {'attr': {'class': 'form-input form-input--street'}}) }}
+                {{ form_errors(form.email) }}
+                {{ form_widget(form.phoneNumber, {'attr': {'class': 'form-input', 'placeholder': 'Votre numéro de téléphone'}}) }}
+                {{ form_errors(form.phoneNumber) }}
+                {% include '_birthdate_form.html.twig' with {'birthDateForm': form.birthDate} %}
+                <div class="form-group">
+                    <p class="form-text">Votre adresse postale</p>
+                    {% include '_address_form.html.twig' with {'form': form.address} %}
+                </div>
+
+                <div class="form-group">
+                    <p class="form-text">Vos disponibilités</p>
+                    {{ form_widget(form.elections, {'attr': {'class': 'form-checkbox'}}) }}
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        {{ form_rest(form) }}
+                        <input type="submit" class="btn btn-success">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

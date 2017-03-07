@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class SubscriptionElectionFormHandler extends AbstractFormHandler
+class SubscriptionElectionRoundFormHandler extends AbstractFormHandler
 {
     const STEP_KEY_NAME = 'elections';
 
@@ -53,10 +53,10 @@ class SubscriptionElectionFormHandler extends AbstractFormHandler
 
         $data = [];
 
-        foreach ($form->getData()['elections'] as $election) {
-            $this->entityManager->detach($election);
+        foreach ($form->getData()['elections_round'] as $electionRound) {
+            $this->entityManager->detach($electionRound);
 
-            $data[] = $election;
+            $data[] = $electionRound;
         }
 
         $this->appendToSession($request, static::getStepKeyName(), $data);

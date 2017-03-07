@@ -30,7 +30,11 @@
             </cascade>
         </one-to-many>
 
-        <one-to-many target-entity="AppBundle\Entity\VotingAvailability" mapped-by="voter" field="votingAvailabilities" />
+        <one-to-many target-entity="AppBundle\Entity\VotingAvailability" mapped-by="voter" field="votingAvailabilities">
+            <cascade>
+                <cascade-all/>
+            </cascade>
+        </one-to-many>
 
         <many-to-one target-entity="AppBundle\Entity\Office" field="votingOffice">
             <join-column on-delete="SET NULL" nullable="true" />
