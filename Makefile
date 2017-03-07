@@ -44,9 +44,15 @@ clear-all:      ## Deeply clean the application (remove all the cache, the logs,
 	$(APP) rm -rf var/sessions/*
 	$(APP) rm -rf supervisord.log supervisord.pid npm-debug.log .tmp
 
-clean:         ## Removes all generated files
+clean:          ## Removes all generated files
 	- @make clear-all
 	$(APP) rm -rf vendor node_modules
 
 perm:           ## Fix the application cache and logs permissions
 	$(APP) chmod 777 -R var
+
+import-offices: ## Import the voting offices and log the error into data/output.log file
+	$(CONSOLE) procuration:offices:import > data/output.log
+
+test-php:       ## Run the PHP tests suite
+	$(APP) vendor/bin/phpunit
