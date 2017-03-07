@@ -20,7 +20,6 @@ services:
             - "%app.form.type.procuration_assignation%"
             - "@doctrine.orm.entity_manager"
             - "@app.fpdi.writer"
-            - "@en_marche_mailjet.client.transactional"
 
     app.form.handler.registration:
         class: AppBundle\Form\Handler\RegistrationFormHandler
