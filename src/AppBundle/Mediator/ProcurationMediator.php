@@ -117,6 +117,7 @@ class ProcurationMediator
      */
     public function unbind(Procuration $procuration, $withFlush = true)
     {
+        $message = ProcurationUnbindingMessage::createFromModel($procuration);
         $procuration->setVotingAvailability(null);
 
         $this->entityManager->persist($procuration);
@@ -125,7 +126,7 @@ class ProcurationMediator
             $this->entityManager->flush();
         }
 
-        $this->mailjetClient->sendMessage(ProcurationUnbindingMessage::createFromModel($procuration));
+        $this->mailjetClient->sendMessage($message);
     }
 
     /**
