@@ -4,6 +4,7 @@ parameters:
     app.form.type.election_round: AppBundle\Form\Type\ElectionRoundType
     app.form.type.election_round_choice: AppBundle\Form\Type\ElectionRoundChoiceType
     app.form.type.office: AppBundle\Form\Type\OfficeType
+    app.form.type.office_choice: AppBundle\Form\Type\OfficeChoiceType
     app.form.type.procuration_assignation: AppBundle\Form\Type\ProcurationAssignationType
     app.form.type.registration: AppBundle\Form\Type\RegistrationType
     app.form.type.search_office: AppBundle\Form\Type\SearchOfficeType
@@ -45,6 +46,15 @@ services:
         class: "%app.form.type.office%"
         tags:
             - name: "form.type"
+        arguments:
+            - "%app.model.office%"
+            - "@security.token_storage"
+            - "%fos_user.model.user.class%"
+
+    app.form.type.office_choice:
+        class: "%app.form.type.office_choice%"
+        tags:
+            - name: form.type
         arguments:
             - "%app.model.office%"
 

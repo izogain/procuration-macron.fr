@@ -2,16 +2,11 @@
 
 namespace AppBundle\Form\Type;
 
-use AppBundle\Entity\ElectionRound;
 use AppBundle\Form\Type\Subscription\SubscriptionUserInformationsType;
-use AppBundle\Repository\ElectionRepository;
-use AppBundle\Repository\ElectionRoundRepository;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Count;
 
 class RegistrationType extends AbstractType
 {
@@ -41,6 +36,14 @@ class RegistrationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('address', AddressType::class)
+            ->add('votingOffice', OfficeChoiceType::class, [
+                'label' => 'Mon bureau de vote',
+            ])
+            ->add('agreement', CheckboxType::class, [
+                'required' => true,
+                'mapped' => false,
+                'label' => 'En cochant cette case, je m\'engage à voter selon les voeux du mandant.',
+            ])
             ->add('elections', ElectionRoundChoiceType::class, [
                 'mapped' => false,
             ]);

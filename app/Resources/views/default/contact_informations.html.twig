@@ -11,7 +11,13 @@
         {{ form_errors(form.phoneNumber) }}
         {{ form_widget(form.email, {'attr': {'class': 'form-input', 'placeholder': 'Votre adresse email'}}) }}
 
-        {
+        <div class="form-group">
+            <p class="form-text">Votre date de naissance</p>
+            {{ form_widget(form.birthDate.day, {'attr': {'class': 'form-select'}}) }}
+            {{ form_widget(form.birthDate.month, {'attr': {'class': 'form-select'}}) }}
+            {{ form_widget(form.birthDate.year, {'attr': {'class': 'form-select'}}) }}
+        </div>
+
         {{ form_rest(form) }}
     </div>
 {% endblock %}
