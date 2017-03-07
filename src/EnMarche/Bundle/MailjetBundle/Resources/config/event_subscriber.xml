@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+
+        <service id="en_marche_mailjet.mailjet_email_doctrine_backup_subscriber" class="EnMarche\Bundle\MailjetBundle\EventSubscriber\MailjetEmailDoctrineBackupEventSubscriber">
+            <tag name="kernel.event_subscriber"/>
+
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="en_marche_mailjet.repository.mailjet_email"/>
+        </service>
+
+    </services>
+</container>

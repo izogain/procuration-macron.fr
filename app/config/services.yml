@@ -28,6 +28,7 @@ services:
             - "@app.repository.procuration"
             - "@doctrine.orm.entity_manager"
             - "%cerfa_output_root_path%"
+            - "@en_marche_mailjet.client.transactional"
     app.mediator.user:
         class: AppBundle\Mediator\UserMediator
     app.mediator.voter_invitation:

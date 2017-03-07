@@ -1,0 +1,15 @@
+{
+    "name": "en-marche/mailjet-bundle",
+    "description": "Symfony bundle which allows Mailjet API integration",
+    "keywords": ["email", "mail", "mailjet", "symfony"],
+    "homepage": "https://github.com/EnMarche",
+    "license": "GPL-3.0",
+    "type": "symfony-bundle",
+    "require": {
+        "php": "^7.1",
+        "doctrine/orm": "^2.5",
+        "doctrine/doctrine-bundle": "^1.6",
+        "ramsey/uuid-doctrine": "^1.2",
+        "csa/guzzle-bundle": "^2.2"
+    }
+}

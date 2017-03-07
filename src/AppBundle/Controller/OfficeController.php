@@ -59,11 +59,16 @@ class OfficeController extends AbstractController
      */
     private function getValidOffice($id)
     {
-        if (!$office = $this->getOfficeRepository()->find($id)) {
+        if (!$office = $this->getOfficeRepository()->findWithReferents($id)) {
             throw $this->createNotFoundException();
         }
 
-        // TODO add restriction based on user credentials
+        $currentUser = $this->getUser();
+
+        if (!$currentUser->isSuperAdmin() && !$office->getReferents()->contains($currentUser)) {
+            throw $this->createAccessDeniedException();
+        }
+
         return $office;
     }
 

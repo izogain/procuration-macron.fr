@@ -12,6 +12,9 @@
         {{ form_row(form.regularOpeningHour) }}
         {{ form_row(form.regularClosingHour) }}
         {{ form_row(form.address) }}
+        {% if form.referents is defined %}
+            {{ form_row(form.referents) }}
+        {% endif %}
 
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
