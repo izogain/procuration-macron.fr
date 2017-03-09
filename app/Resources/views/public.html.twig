@@ -8,31 +8,57 @@
     <meta name="description" content="Procuration Macron">
     <meta name="author" content="En Marche !">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+    <link href="https://code.jquery.com/ui/1.12.1/themes/flick/jquery-ui.css" rel="stylesheet">
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
 </head>
-<body data-autocomplete-src="{{ path('subscribe_voting_office_results') }}">
-    {% block body %}
-    {% endblock %}
+<body>
+    {% block body %}{% endblock %}
+
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-    <script>
-        $("input.autocomplete").autocomplete({
-            source: function(request, response) {
-                $.ajax({
-                    url: $("body").data('autocomplete-src'),
-                    data: {
-                        term: request.term
+    <script type="text/javascript">
+        $(function() {
+            var searchForms = $('.search-office-form');
+
+            searchForms.each(function(key, item) {
+                item = $(item);
+                item.find('.city-autocomplete').autocomplete({
+                    minLength: 2,
+                    source: function(request, response) {
+                        $.ajax({
+                            url: '{{ path('subscribe_voting_city_results') }}',
+                            method: 'POST',
+                            data: { term: request.term },
+                            success: response
+                        });
                     },
-                    success: function(data) {
-                        response($.map(data, function(item) {
-                            return {
-                                label: item.name,
-                                value: item.id
+                    select: function(event, ui) {
+                        var select = item.find('.office-select');
+                        select.addClass('office-select-loading');
+
+                        $.ajax({
+                            url: '{{ path('subscribe_voting_office_results') }}',
+                            method: 'POST',
+                            data: {
+                                city: ui.item.city,
+                                postalCode: ui.item.postalCode
+                            },
+                            success: function(data) {
+                                select.removeClass('office-select-loading');
+                                select.empty();
+
+                                $.each(data, function(key, office) {
+                                    var option = $('<option>');
+                                    option.attr('value', office.id);
+                                    option.text(office.name);
+
+                                    select.append(option);
+                                });
                             }
-                        }));
+                        });
                     }
-                })
-            }
+                });
+            });
         });
     </script>
     {% block javascripts %}{% endblock %}

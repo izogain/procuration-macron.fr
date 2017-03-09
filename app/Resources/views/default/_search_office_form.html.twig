@@ -1,11 +1,14 @@
-<p class="text-medium center">Mon lieu de vote</p>
-<div class="form-group">
-    {{ form_label(form.city) }}
-    {{ form_widget(form.city) }}
-</div>
-<div class="form-group">
-    {{ form_label(form.office) }}
-    {{ form_widget(form.office) }}
-</div>
+<div class="search-office-form">
+    <p class="text-medium center">Mon lieu de vote</p>
 
-{{ form_rest(form) }}
+    <div class="form-group">
+        {{ form_label(form.city) }}
+        {{ form_widget(form.city, {'attr': {'class': 'form-input city-autocomplete'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.office) }}
+        {{ form_widget(form.office, {'attr': {'class': 'form-select office-select'}}) }}
+    </div>
+
+    {{ form_rest(form) }}
+</div>
