@@ -1,24 +1,9 @@
 {% extends 'default/_form_step.html.twig' %}
 {% set form_path = path('subscribe_elections') %}
-{% form_theme form _self %}
-
-{%- block checkbox_widget -%}
-    <input class="form-checkbox" type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
-{%- endblock checkbox_widget -%}
-
-{% block _subscription_election_elections_row %}
-    {{ form_errors(form) }}
-    {% for election in form %}
-        <div class="form-group">
-            {{ form_widget(election) }}
-            <label class="form-label" for="{{ election.vars.id }}">{{ election.vars.label }}</label>
-            <p class="form-label-hint">({{ form.vars.choices[election.vars.value].data.performanceDate|localizeddate(timeFormat='none', dateFormat='full') }})</p>
-        </div>
-    {% endfor %}
-{% endblock %}
+{% form_theme form '_form.html.twig' %}
 
 {% block step_body %}
     <p class="text-medium center">Je fais procuration</p>
-    {{ form_row(form.elections) }}
+    {{ form_widget(form.elections) }}
     {{ form_rest(form) }}
 {% endblock %}

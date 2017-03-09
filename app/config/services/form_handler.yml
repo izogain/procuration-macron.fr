@@ -1,0 +1,74 @@
+services:
+    app.form.handler.election_round:
+        class: AppBundle\Form\Handler\ElectionRoundFormHandler
+        arguments:
+            - "@form.factory"
+            - "%app.form.type.election_round%"
+            - "@doctrine.orm.entity_manager"
+
+    app.form.handler.office:
+        class: AppBundle\Form\Handler\OfficeFormHandler
+        arguments:
+            - "@form.factory"
+            - "%app.form.type.office%"
+            - "@doctrine.orm.entity_manager"
+
+    app.form.handler.procuration_assignation:
+        class: AppBundle\Form\Handler\ProcurationAssignationFormHandler
+        arguments:
+            - "@form.factory"
+            - "%app.form.type.procuration_assignation%"
+            - "@doctrine.orm.entity_manager"
+            - "@app.fpdi.writer"
+            - "@en_marche_mailjet.client.transactional"
+
+    app.form.handler.registration:
+        class: AppBundle\Form\Handler\RegistrationFormHandler
+        arguments:
+            - "@form.factory"
+            - "%app.form.type.registration%"
+            - "@doctrine.orm.entity_manager"
+            - "@app.mediator.voter_invitation"
+
+    app.form.handler.subscription.address:
+        class: AppBundle\Form\Handler\Subscription\SubscriptionAddressFormHandler
+        arguments:
+            - "@form.factory"
+            - "%app.form.type.address%"
+
+    app.form.handler.subscription:
+        class: AppBundle\Form\Handler\Subscription\SubscriptionFormHandler
+
+    app.form.handler.subscription.election_round:
+        class: AppBundle\Form\Handler\Subscription\SubscriptionElectionRoundFormHandler
+        arguments:
+            - "@form.factory"
+            - "%app.form.type.subscription.election_round%"
+            - "@doctrine.orm.entity_manager"
+
+    app.form.handler.subscription.contact_informations:
+        class: AppBundle\Form\Handler\Subscription\SubscriptionContactInformationsFormHandler
+        arguments:
+            - "@form.factory"
+            - "%app.form.type.subscription.user_informations%"
+
+    app.form.handler.subscription.search_office:
+        class: AppBundle\Form\Handler\Subscription\SubscriptionSearchOfficeHandler
+        arguments:
+            - "@form.factory"
+            - "%app.form.type.search_office%"
+
+    app.form.handler.subscription.reason:
+        class: AppBundle\Form\Handler\Subscription\SubscriptionReasonFormHandler
+        arguments:
+            - "@form.factory"
+            - "%app.form.type.subscription.reason%"
+            - "@fos_user.user_manager"
+            - "@doctrine.orm.entity_manager"
+
+    app.form.handler.voter_invitation:
+        class: AppBundle\Form\Handler\VoterInvitationFormHandler
+        arguments:
+            - "@form.factory"
+            - "%app.form.type.voter_invitation%"
+            - "@doctrine.orm.entity_manager"

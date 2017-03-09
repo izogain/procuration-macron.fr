@@ -1,7 +1,9 @@
+.idea
 /app/config/parameters.yml
 /build/
 /data/generated_cerfa/*
 !data/generated_cerfa/.gitkeep
+/data/output.log
 /docker-compose.override.yml
 /phpunit.xml
 /node_modules

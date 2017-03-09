@@ -1,0 +1,94 @@
+parameters:
+    app.form.type.address: AppBundle\Form\Type\AddressType
+    app.form.type.election: AppBundle\Form\Type\ElectionType
+    app.form.type.election_round: AppBundle\Form\Type\ElectionRoundType
+    app.form.type.election_round_choice: AppBundle\Form\Type\ElectionRoundChoiceType
+    app.form.type.office: AppBundle\Form\Type\OfficeType
+    app.form.type.office_choice: AppBundle\Form\Type\OfficeChoiceType
+    app.form.type.procuration_assignation: AppBundle\Form\Type\ProcurationAssignationType
+    app.form.type.registration: AppBundle\Form\Type\RegistrationType
+    app.form.type.search_office: AppBundle\Form\Type\SearchOfficeType
+    app.form.type.subscription.election_round: AppBundle\Form\Type\Subscription\SubscriptionElectionRoundType
+    app.form.type.subscription.user_informations: AppBundle\Form\Type\Subscription\SubscriptionUserInformationsType
+    app.form.type.subscription.reason: AppBundle\Form\Type\Subscription\SubscriptionReasonType
+    app.form.type.voter_invitation: AppBundle\Form\Type\VoterInvitationType
+
+services:
+    app.form.type.address:
+        class: "%app.form.type.address%"
+        tags:
+            - name: "form.type"
+        arguments:
+            - "%app.model.address%"
+
+    app.form.type.election:
+        class: "%app.form.type.election%"
+        tags:
+            - name: "form.type"
+        arguments:
+            - "%app.model.election%"
+
+    app.form.type.election_round:
+        class: "%app.form.type.election_round%"
+        tags:
+            - name: "form.type"
+        arguments:
+            - "%app.model.election_round%"
+
+    app.form.type.election_round_choice:
+        class: "%app.form.type.election_round_choice%"
+        tags:
+            - name: form.type
+        arguments:
+            - "%app.model.election_round%"
+
+    app.form.type.office:
+        class: "%app.form.type.office%"
+        tags:
+            - name: "form.type"
+        arguments:
+            - "%app.model.office%"
+            - "@security.token_storage"
+            - "%fos_user.model.user.class%"
+
+    app.form.type.office_choice:
+        class: "%app.form.type.office_choice%"
+        tags:
+            - name: form.type
+        arguments:
+            - "%app.model.office%"
+
+    app.form.type.registration:
+        class: "%app.form.type.registration%"
+        tags:
+            - name: form.type
+        arguments:
+            - "%fos_user.model.user.class%"
+            - "%app.model.election_round%"
+
+    app.form.type.procuration_assignation:
+        class: "%app.form.type.procuration_assignation%"
+        tags:
+            - name: form.type
+        arguments:
+            - "%app.model.procuration%"
+            - "%app.model.voting_availability%"
+
+    app.form.type.search_office:
+        class: "%app.form.type.search_office%"
+        tags:
+            - name: form.type
+
+    app.form.type.subscription.election_round:
+        class: "%app.form.type.subscription.election_round%"
+        tags:
+            - name: form.type
+        arguments:
+            - "%app.model.election_round%"
+
+    app.form.type.voter_invitation:
+        class: "%app.form.type.voter_invitation%"
+        tags:
+            - name: form.type
+        arguments:
+            - "%app.model.voter_invitation%"

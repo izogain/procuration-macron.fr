@@ -10,6 +10,20 @@ use Doctrine\ORM\EntityRepository;
 class OfficeRepository extends EntityRepository
 {
     /**
+     * @param int $id
+     *
+     * @return Office|null
+     */
+    public function findWithReferents($id)
+    {
+        return $this->createQueryBuilder('o')
+            ->leftJoin('o.referents', 'r')
+            ->where('o.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+    /**
      * @param User $user
      *
      * @return Office[]|ArrayCollection

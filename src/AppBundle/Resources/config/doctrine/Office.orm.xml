@@ -21,6 +21,10 @@
 
         <embedded name="address" class="AppBundle\Entity\Address" />
 
-        <many-to-many target-entity="AppBundle\Entity\User" field="referents" mapped-by="officesInCharge" />
+        <many-to-many target-entity="AppBundle\Entity\User" field="referents" mapped-by="officesInCharge">
+            <cascade>
+                <cascade-all/>
+            </cascade>
+        </many-to-many>
     </entity>
 </doctrine-mapping>

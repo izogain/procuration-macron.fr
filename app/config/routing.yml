@@ -10,6 +10,10 @@ office:
     prefix: /admin/offices
     resource: "routing/office.yml"
 
+voter-invitation:
+    prefix: /admin/voter-invitations
+    resource: "routing/voter-invitation.yml"
+
 election_round:
     prefix: /admin/election-rounds
     resource: "routing/election-round.yml"
@@ -64,6 +68,16 @@ subscribe_confirmation:
     path: /inscription/confirmation
     defaults: { _controller: AppBundle:Default:confirmation }
     methods: GET
+
+registration_confirmation:
+    path: /registration/confirmation
+    defaults: { _controller: AppBundle:Registration:confirmation }
+    methods: GET
+
+registration:
+    path: /registration/{hash}
+    defaults: { _controller: AppBundle:Registration:register }
+    methods: GET|POST
 
 homepage:
     path: /

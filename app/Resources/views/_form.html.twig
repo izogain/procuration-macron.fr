@@ -1,0 +1,15 @@
+{%- block _registration_elections_entry_widget -%}
+    <input class="form-checkbox" type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+{%- endblock _registration_elections_entry_widget -%}
+
+{% block election_round_choice_widget %}
+    {{ form_errors(form) }}
+
+    {% for election_round in form %}
+        <div class="form-group">
+            {{ form_widget(election_round, {'attr': {'class': 'form-checkbox'}}) }}
+            <label class="form-label" for="{{ election_round.vars.id }}">{{ election_round.vars.label }}</label>
+            <p class="form-label-hint">{{ form.vars.choices[election_round.vars.value].data.performanceDate|localizeddate(timeFormat='none', dateFormat='full') }}</p>
+        </div>
+    {% endfor %}
+{% endblock %}

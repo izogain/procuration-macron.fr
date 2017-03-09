@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <parameters>
+        <parameter key="en_marche_mailjet.model.mailjet_email">EnMarche\Bundle\MailjetBundle\Entity\MailjetEmail</parameter>
+    </parameters>
+
+    <services>
+
+        <service id="en_marche_mailjet.repository.mailjet_email" class="EnMarche\Bundle\MailjetBundle\Repository\MailjetEmailRepository" public="false">
+            <argument>%en_marche_mailjet.model.mailjet_email%</argument>
+            <factory service="doctrine" method="getRepository"/>
+        </service>
+
+    </services>
+</container>

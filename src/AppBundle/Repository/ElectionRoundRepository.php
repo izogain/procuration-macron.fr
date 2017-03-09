@@ -36,4 +36,19 @@ class ElectionRoundRepository extends EntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    /**
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function queryAllUpcomingEnabledByDateAsc()
+    {
+        return $this->createQueryBuilder('r')
+            ->select('r', 'e')
+            ->innerJoin('r.election', 'e')
+            ->where('r.active = :active')
+            ->andWhere('r.performanceDate > :today')
+            ->orderBy('r.performanceDate', 'ASC')
+            ->setParameter('active', true)
+            ->setParameter('today', new \DateTime());
+    }
 }

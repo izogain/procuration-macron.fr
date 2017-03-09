@@ -17,7 +17,7 @@
         }
     },
     "require": {
-        "php": ">=5.5.9",
+        "php": "^7.1",
         "symfony/symfony": "3.2.*",
         "doctrine/orm": "^2.5",
         "doctrine/doctrine-bundle": "^1.6",
@@ -34,10 +34,13 @@
         "twig/extensions": "^1.4",
         "misd/phone-number-bundle": "^1.2",
         "setasign/fpdi-fpdf": "^1.6",
-        "league/csv": "^8.2"
+        "league/csv": "^8.2",
+        "csa/guzzle-bundle": "^2.2",
+        "ramsey/uuid-doctrine": "^1.2"
     },
     "require-dev": {
-        "symfony/phpunit-bridge": "^3.0"
+        "symfony/phpunit-bridge": "^3.0",
+        "phpunit/phpunit": "^6.0"
     },
     "scripts": {
         "symfony-scripts": [

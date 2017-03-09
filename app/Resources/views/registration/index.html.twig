@@ -1,0 +1,58 @@
+{% extends 'public.html.twig' %}
+{% form_theme form '_form.html.twig' %}
+
+
+{% block body %}
+    <div class="l-container">
+        <div class="form-group">
+            {{ form_errors(form) }}
+
+            <form method="post" action="{{ path('registration', {'hash': hash}) }}">
+                <p class="form-text">Mes informations</p>
+                <div class="form-inputs-address">
+                    {{ form_widget(form.civility, {'attr': {'class': 'form-input form-input--bis'}}) }}
+                    {{ form_errors(form.civility) }}
+                    {{ form_widget(form.lastName, {'attr': {'class': 'form-input form-input--street'}}) }}
+                    {{ form_errors(form.lastName) }}
+                    {{ form_widget(form.firstName, {'attr': {'class': 'form-input form-input--street'}}) }}
+                    {{ form_errors(form.firstName) }}
+                </div>
+                {{ form_widget(form.email, {'attr': {'class': 'form-input form-input--street'}}) }}
+                {{ form_errors(form.email) }}
+                <div class="form-inputs-address">
+                    {{ form_widget(form.birthDate.day, {'attr': {'class': 'form-select'}}) }}
+                    {{ form_widget(form.birthDate.month, {'attr': {'class': 'form-select'}}) }}
+                    {{ form_widget(form.birthDate.year, {'attr': {'class': 'form-select'}}) }}
+                </div>
+                {{ form_widget(form.phoneNumber, {'attr': {'class': 'form-input', 'placeholder': 'Votre numéro de téléphone'}}) }}
+                {{ form_errors(form.phoneNumber) }}
+                <div class="form-inputs-address">
+                    {% include '_address_form.html.twig' with {'form': form.address} %}
+                </div>
+
+                {{ form_widget(form.votingOffice, {'attr': {'class': 'form-select'}}) }}
+                {{ form_errors(form.votingOffice) }}
+
+                <div class="form-group">
+                    <p class="form-text">Je peux être mandataire</p>
+                    {{ form_widget(form.elections, {'attr': {'class': 'form-checkbox'}}) }}
+                </div>
+
+                <div class="form-group">
+                    <p class="form-text">Charte</p>
+                    <div class="form-group">
+                        {{ form_widget(form.agreement) }}
+                        {{ form_label(form.agreement) }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        {{ form_rest(form) }}
+                        <input type="submit" class="btn btn-success">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

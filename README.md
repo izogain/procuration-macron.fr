@@ -2,6 +2,9 @@
 
 Plateforme de mise en relation entre citoyens souhaitant faire procuration et citoyens pouvant voter en leur nom
 
+## Backend doc
+See Makefile
+
 ## Front doc
 ### Requirements
 - Node.js (v6.9.5)

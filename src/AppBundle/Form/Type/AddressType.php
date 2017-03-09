@@ -34,20 +34,31 @@ class AddressType extends AbstractType
                 'attr' => [
                     'min' => 1,
                 ],
+                'label' => 'N°',
             ])
             ->add('streetRepeater', FormType\ChoiceType::class, [
                 'required' => false,
                 'choices' => array_flip(AddressMediator::getStreetRepeaters()),
+                'label' => false,
             ])
             ->add('streetType', FormType\ChoiceType::class, [
                 'required' => false,
                 'choices' => array_flip(AddressMediator::getStreetTypes()),
+                'label' => 'Type de voie',
             ])
-            ->add('streetName')
+            ->add('streetName', FormType\TextType::class, [
+                'label' => 'Nom de la voie',
+            ])
 //            ->add('extraInformations', FormType\TextType::class, ['required' => false])
-            ->add('postalCode')
-            ->add('city')
-            ->add('countryCode', FormType\CountryType::class);
+            ->add('postalCode', FormType\TextType::class, [
+                'label' => 'Code postal',
+            ])
+            ->add('city', FormType\TextType::class, [
+                'label' => 'Ville'
+            ])
+            ->add('countryCode', FormType\CountryType::class, [
+                'label' => 'Pays'
+            ]);
     }
 
     /**

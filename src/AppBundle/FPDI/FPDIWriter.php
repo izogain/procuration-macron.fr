@@ -141,6 +141,12 @@ class FPDIWriter
         $this->checkABox($pdf, 62, 205.5, 3.5);
         $this->writeTextInBoxes($pdf, $electionDate, 115, 207.5);
 
+        if ($this->isFirstRound($electionRound)) {
+            $this->checkABox($pdf, 65, 216.5, 2.5);
+        } else {
+            $this->checkABox($pdf, 65, 221.5, 2.5);
+        }
+
         $this->writeTextInBoxes($pdf, $this->formatDate($currentDate), 71.5, 251);
         $this->writeTextInBoxes($pdf, $currentDate->format('H'), 118, 251);
         $this->writeTextInBoxes($pdf, $currentDate->format('i'), 129.5, 251);

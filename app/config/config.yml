@@ -2,6 +2,9 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
+    - { resource: services/repository.yml }
+    - { resource: services/form_type.yml }
+    - { resource: services/form_handler.yml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -13,6 +16,54 @@ parameters:
     cerfa_source_file_path:      "%data_root_path%/cerfa_14952-01.pdf"
     cerfa_output_root_path:      "%data_root_path%/generated_cerfa"
     offices_csv_file_path:       "%data_root_path%/offices_fr.csv"
+    email_signature_name:        "Procuration-Macron.fr"
+
+csa_guzzle:
+    profiler: '%kernel.debug%'
+    logger: true
+    clients:
+        mailjet_api:
+            config:
+                base_uri: 'https://api.mailjet.com/v3/'
+                timeout: 2.0
+                headers:
+                    Content-Type: 'application/json'
+doctrine:
+    dbal:
+        driver:           pdo_mysql
+        charset:          UTF8
+        host:             "%env(DATABASE_HOST)%"
+        port:             "%env(DATABASE_PORT)%"
+        dbname:           "%env(DATABASE_NAME)%"
+        user:             "%env(DATABASE_USER)%"
+        password:         "%env(DATABASE_PASSWORD)%"
+        unix_socket:      "%env(DATABASE_SOCKET)%"
+        server_version:   5.7
+        types:
+            uuid:         Ramsey\Uuid\Doctrine\UuidType
+            phone_number: Misd\PhoneNumberBundle\Doctrine\DBAL\Types\PhoneNumberType
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+
+en_marche_mailjet:
+    public_key: "%env(MAILJET_TRANSACTIONAL_PUBLIC_KEY)%"
+    private_key: "%env(MAILJET_TRANSACTIONAL_PRIVATE_KEY)%"
+    clients:
+        transactional:
+            sender_email: "%transactional_sender_email%"
+            sender_name: "%transactional_sender_name%"
+
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: AppBundle\Entity\User
+    from_email:
+        address: "%transactional_sender_email%"
+        sender_name: "%transactional_sender_name%"
+    service:
+        mailer: fos_user.mailer.noop
 
 framework:
     #esi:             ~
@@ -39,40 +90,13 @@ framework:
     php_errors:
         log: true
 
-twig:
-    debug:            "%kernel.debug%"
-    strict_variables: "%kernel.debug%"
-
-# Doctrine Configuration
-doctrine:
-    dbal:
-        driver:           pdo_mysql
-        charset:          UTF8
-        host:             "%env(DATABASE_HOST)%"
-        port:             "%env(DATABASE_PORT)%"
-        dbname:           "%env(DATABASE_NAME)%"
-        user:             "%env(DATABASE_USER)%"
-        password:         "%env(DATABASE_PASSWORD)%"
-        unix_socket:      "%env(DATABASE_SOCKET)%"
-        server_version:   5.7
-        types:
-            phone_number: Misd\PhoneNumberBundle\Doctrine\DBAL\Types\PhoneNumberType
-    orm:
-        auto_generate_proxy_classes: "%kernel.debug%"
-        naming_strategy: doctrine.orm.naming_strategy.underscore
-        auto_mapping: true
-
-fos_user:
-    db_driver: orm
-    firewall_name: main
-    user_class: AppBundle\Entity\User
-    from_email:
-        address: "%transactional_sender_email%"
-        sender_name: "%transactional_sender_name%"
-    service:
-        mailer: fos_user.mailer.noop
-
 stof_doctrine_extensions:
     orm:
         default:
             timestampable: true
+
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+    globals:
+        email_signature_name: "%email_signature_name%"

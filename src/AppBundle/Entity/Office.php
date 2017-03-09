@@ -158,6 +158,8 @@ class Office
      */
     public function addReferent(User $user)
     {
+        $user->addOfficeInCharge($this);
+
         if (!$this->referents->contains($user)) {
             $this->referents->add($user);
         }
@@ -168,6 +170,7 @@ class Office
      */
     public function removeReferent(User $user)
     {
+        $user->removeOfficeInCharge($this);
         $this->referents->removeElement($user);
     }
 

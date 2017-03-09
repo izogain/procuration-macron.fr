@@ -17,4 +17,16 @@ class UserMediator
             static::CIVILITY_MISTER => 'M',
         ];
     }
+
+    /**
+     * @param int $value
+     *
+     * @return string
+     */
+    public function getCivility($value)
+    {
+        $civilities = static::getCivilities();
+
+        return $civilities[$value] ?? '';
+    }
 }
