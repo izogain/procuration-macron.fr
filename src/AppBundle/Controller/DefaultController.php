@@ -32,17 +32,26 @@ class DefaultController extends AbstractController
      *
      * @return JsonResponse
      */
+    public function cityResultsAction(Request $request): JsonResponse
+    {
+        $term = $request->request->get('term');
+        $results = $this->get('app.repository.office')->searchCity($term);
+
+        return new JsonResponse($results);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
     public function officeResultsAction(Request $request): JsonResponse
     {
-        $term = $request->query->get('term');
+        $city = $request->request->get('city');
+        $postalCode = $request->request->get('postalCode');
+        $results = $this->get('app.repository.office')->findByCityAndPostalCode($city, $postalCode);
 
-        // TODO take office city into consideration
-        return new JsonResponse(array_map(function (Office $office) {
-            return [
-                'id' => $office->getId(),
-                'name' => $office->getName(),
-            ];
-        }, $this->get('app.repository.office')->findAll()));
+        return new JsonResponse($results);
     }
 
     /**

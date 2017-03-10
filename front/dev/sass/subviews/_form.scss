@@ -102,6 +102,17 @@
     border: 1px solid $silver;
 }
 
+.ui-autocomplete-loading {
+    background: url('/img/loader-sm.gif') no-repeat 95% 50% white;
+}
+.office-select {
+    background: #d6d6d6;
+
+    &-loading {
+        background: url('/img/loader-sm.gif') no-repeat 90% 50% #d6d6d6;
+    }
+}
+
 .form-select-hint {
     margin: 15px 18px 0;
     font-size: 12px;

@@ -42,6 +42,12 @@ subscribe_my_address:
     defaults: { _controller: AppBundle:Default:myAddress }
     methods: GET|POST
 
+subscribe_voting_city_results:
+    path: /inscription/ma-ville
+    defaults: { _controller: AppBundle:Default:cityResults }
+    methods: POST
+    condition: request.isXmlHttpRequest()
+
 subscribe_voting_office_results:
     path: /inscription/mon-bureau-de-vote
     defaults: { _controller: AppBundle:Default:officeResults }
