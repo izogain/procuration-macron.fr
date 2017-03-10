@@ -1,0 +1,32 @@
+<fieldset>
+    {{ form_row(form.civility) }}
+    {{ form_row(form.firstName) }}
+    {{ form_row(form.lastName) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.phoneNumber) }}
+    {{ form_row(form.birthDate) }}
+    {{ form_row(form.address) }}
+</fieldset>
+
+<fieldset>
+    {% if form.officesInCharge is defined %}
+        {{ form_row(form.officesInCharge) }}
+    {% endif %}
+</fieldset>
+
+<fieldset>
+    {% if form.superAdmin is defined %}
+        {{ form_row(form.superAdmin) }}
+    {% endif %}
+    {% if form.enabled is defined %}
+        {{ form_row(form.enabled) }}
+    {% endif %}
+</fieldset>
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        {{ form_rest(form) }}
+        <input type="submit" class="btn btn-primary">
+        <a class="btn btn-link" href="{{ path('user_index') }}">Retour</a>
+    </div>
+</div>

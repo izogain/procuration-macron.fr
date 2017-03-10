@@ -25,7 +25,7 @@ class ProcurationAssignationType extends AbstractType
 
     /**
      * @param string $procurationEntityDataClass
-     * @param        $votingAvailabillityEntityDataClass
+     * @param string $votingAvailabillityEntityDataClass
      */
     public function __construct(
         $procurationEntityDataClass,
@@ -44,7 +44,6 @@ class ProcurationAssignationType extends AbstractType
         /** @var \AppBundle\Entity\Procuration $procuration */
         $procuration = $builder->getData();
         $electionRoundId = $procuration->getElectionRound()->getId();
-        // TODO use country code when city is not in France
         $voterOfficeAddress = $procuration->getRequester()->getVotingOffice()->getAddress();
         $countryCode = $voterOfficeAddress->getCountryCode();
         $cityPostalCode = $voterOfficeAddress->getPostalCode();

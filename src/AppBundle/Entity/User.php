@@ -8,6 +8,13 @@ use libphonenumber\PhoneNumber;
 
 class User extends BaseUser
 {
+    const ROLE_ADMIN = 'ROLE_ADMIN';
+
+    /**
+     * @var bool
+     */
+    protected $superAdmin = false;
+
     /**
      * @var int
      */
@@ -86,6 +93,74 @@ class User extends BaseUser
     public function __toString()
     {
         return sprintf('%s %s', ucwords($this->getFirstName()), mb_strtoupper($this->getLastName()));
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSuperAdmin()
+    {
+        return $this->superAdmin;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setSuperAdmin($boolean)
+    {
+        $this->superAdmin = (bool) $boolean;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        return 0 < count($this->getOfficesInCharge());
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function hasRole($role)
+    {
+        if (static::ROLE_SUPER_ADMIN == $role) {
+            return $this->isSuperAdmin();
+        }
+
+        if (static::ROLE_ADMIN == $role) {
+            return $this->isAdmin();
+        }
+
+        throw new \InvalidArgumentException(sprintf('Role "%s" is not supported', $role));
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getRoles()
+    {
+        $roles = [];
+
+        if ($this->isSuperAdmin()) {
+            $roles[] = static::ROLE_SUPER_ADMIN;
+        }
+
+        if ($this->isAdmin()) {
+            $roles[] = static::ROLE_ADMIN;
+        }
+
+        return $roles;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setRoles(array $roles)
+    {
+        throw new \RuntimeException(sprintf('%s should not be called', __METHOD__));
     }
 
     /**

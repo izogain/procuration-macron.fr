@@ -9,6 +9,7 @@
             <generator strategy="AUTO"/>
         </id>
 
+        <field name="superAdmin" type="boolean" />
         <field name="civility" type="smallint" length="1" />
         <field name="firstName" length="80" />
         <field name="lastName" length="80" />

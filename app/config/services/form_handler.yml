@@ -66,6 +66,13 @@ services:
             - "@fos_user.user_manager"
             - "@doctrine.orm.entity_manager"
 
+    app.form.handler.user:
+        class: AppBundle\Form\Handler\UserFormHandler
+        arguments:
+            - "@form.factory"
+            - "%app.form.type.user%"
+            - "@doctrine.orm.entity_manager"
+
     app.form.handler.voter_invitation:
         class: AppBundle\Form\Handler\VoterInvitationFormHandler
         arguments:

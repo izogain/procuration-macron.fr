@@ -30,11 +30,21 @@ class OfficeRepository extends EntityRepository
      */
     public function findAllForReferent(User $user)
     {
-        return $this->createQueryBuilder('o')
-            ->innerJoin('o.referents', 'r')
-            ->where('r = :user')
-            ->setParameter('user', $user)
+        return $this->getQueryBuilderAllForReferent($user)
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @param User $user
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getQueryBuilderAllForReferent(User $user)
+    {
+        return $this->createQueryBuilder('o')
+             ->innerJoin('o.referents', 'r')
+             ->where('r = :user')
+             ->setParameter('user', $user);
     }
 }

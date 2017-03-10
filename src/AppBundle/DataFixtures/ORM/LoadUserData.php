@@ -77,7 +77,6 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface, D
         $referent->setUsername('referent-ain@en-marche.fr');
         $referent->setPlainPassword('referent1234');
         $referent->setEnabled(true);
-        $referent->addRole('ROLE_ADMIN');
         $referent->setCivility(UserMediator::CIVILITY_MISTER);
         $referent->setFirstName('jean-françois');
         $referent->setLastName('dupuis');
@@ -98,7 +97,6 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface, D
         $referentRhone->setUsername('referent-rhone@en-marche.fr');
         $referentRhone->setPlainPassword('referent1234');
         $referentRhone->setEnabled(true);
-        $referentRhone->addRole('ROLE_ADMIN');
         $referentRhone->setCivility(UserMediator::CIVILITY_MADAM);
         $referentRhone->setFirstName('Jeanine');
         $referentRhone->setLastName('Montrabé');
@@ -125,7 +123,6 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface, D
         $requester->setLastName('Doe');
         $requester->setBirthDate(new \DateTime('1985-09-21'));
         $requester->setPhoneNumber($this->generatePhoneNumber());
-        $requester->setEnabled(true);
         $requester->setVotingOffice($this->getLyonVotingOffice());
         /** @var \AppBundle\Entity\Address $requesterAddress */
         $requesterAddress = $requester->getAddress();
@@ -141,7 +138,6 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface, D
         $availableVoter = $userManager->createUser();
         $availableVoter->setUsername('available@en-marche.fr');
         $availableVoter->setPlainPassword('voter1234');
-        $availableVoter->setEnabled(true);
         $availableVoter->setCivility(UserMediator::CIVILITY_MISTER);
         $availableVoter->setFirstName('Vo');
         $availableVoter->setLastName('ter');

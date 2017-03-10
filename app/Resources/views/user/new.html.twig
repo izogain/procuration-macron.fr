@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% set selected_nav = 'user' %}
+
+
+{% block body %}
+    <div class="page-header">
+        <h1>Création de compte</h1>
+    </div>
+
+    {{ form_errors(form) }}
+
+    <form method="post" action="{{ path('user_new') }}" class="form-horizontal">
+        {% include 'user/_form.html.twig' %}
+    </form>
+{% endblock %}

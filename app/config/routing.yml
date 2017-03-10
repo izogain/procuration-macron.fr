@@ -18,6 +18,10 @@ election_round:
     prefix: /admin/election-rounds
     resource: "routing/election-round.yml"
 
+user:
+    prefix: /admin/users
+    resource: "routing/user.yml"
+
 admin_index:
     path: /admin/
     defaults: { _controller: AppBundle:Admin:index }

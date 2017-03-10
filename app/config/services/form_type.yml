@@ -11,6 +11,7 @@ parameters:
     app.form.type.subscription.election_round: AppBundle\Form\Type\Subscription\SubscriptionElectionRoundType
     app.form.type.subscription.user_informations: AppBundle\Form\Type\Subscription\SubscriptionUserInformationsType
     app.form.type.subscription.reason: AppBundle\Form\Type\Subscription\SubscriptionReasonType
+    app.form.type.user: AppBundle\Form\Type\UserType
     app.form.type.voter_invitation: AppBundle\Form\Type\VoterInvitationType
 
 services:
@@ -85,6 +86,14 @@ services:
             - name: form.type
         arguments:
             - "%app.model.election_round%"
+
+    app.form.type.user:
+        class: "%app.form.type.user%"
+        tags:
+            - name: form.type
+        arguments:
+            - "%fos_user.model.user.class%"
+            - "%app.model.office%"
 
     app.form.type.voter_invitation:
         class: "%app.form.type.voter_invitation%"

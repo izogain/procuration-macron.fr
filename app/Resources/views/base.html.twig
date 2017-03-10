@@ -41,6 +41,7 @@
                                 <li{% if selected_nav|default('') == 'voter' %} class="active"{% endif %}><a href="{{ path('voting_availability_index') }}">Remplaçants</a></li>
                                 <li{% if selected_nav|default('') == 'office' %} class="active"{% endif %}><a href="{{ path('office_index') }}">Bureaux de vote</a></li>
                                 <li{% if selected_nav|default('') == 'voter-invitation' %} class="active"{% endif %}><a href="{{ path('voter-invitation_index') }}">Appel aux mandataires</a></li>
+                                <li{% if selected_nav|default('') == 'user' %} class="active"{% endif %}><a href="{{ path('user_index') }}">Utilisateurs</a></li>
                                 {% if is_super_admin %}
                                     <li{% if selected_nav|default('') == 'election_round' %} class="active"{% endif %}><a href="{{ path('election_round_index') }}">Elections</a></li>
                                 {% endif %}

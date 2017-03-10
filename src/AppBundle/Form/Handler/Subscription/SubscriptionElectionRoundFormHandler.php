@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SubscriptionElectionRoundFormHandler extends AbstractFormHandler
 {
-    const STEP_KEY_NAME = 'elections';
+    const STEP_KEY_NAME = 'election_rounds';
 
     /**
      * @inheritdoc
@@ -53,7 +53,7 @@ class SubscriptionElectionRoundFormHandler extends AbstractFormHandler
 
         $data = [];
 
-        foreach ($form->getData()['elections_round'] as $electionRound) {
+        foreach ($form->getData()['election_rounds'] as $electionRound) {
             $this->entityManager->detach($electionRound);
 
             $data[] = $electionRound;

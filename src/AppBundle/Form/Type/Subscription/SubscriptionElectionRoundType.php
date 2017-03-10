@@ -14,6 +14,6 @@ class SubscriptionElectionRoundType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('elections', ElectionRoundChoiceType::class);
+        $builder->add('election_rounds', ElectionRoundChoiceType::class);
     }
 }

@@ -31,6 +31,8 @@ services:
             - "@en_marche_mailjet.client.transactional"
     app.mediator.user:
         class: AppBundle\Mediator\UserMediator
+        arguments:
+            - "@app.repository.user"
     app.mediator.voter_invitation:
         class: AppBundle\Mediator\VoterInvitationMediator
         arguments:
