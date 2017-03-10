@@ -79,6 +79,8 @@ services:
         class: "%app.form.type.search_office%"
         tags:
             - name: form.type
+        arguments:
+            - "@app.repository.office"
 
     app.form.type.subscription.election_round:
         class: "%app.form.type.subscription.election_round%"

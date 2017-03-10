@@ -57,7 +57,7 @@ subscribe_voting_office_results:
 subscribe_voting_office:
     path: /inscription/mon-bureau-de-vote
     defaults: { _controller: AppBundle:Default:votingOffice }
-    methods: GET
+    methods: GET|POST
 
 subscribe_elections:
     path: /inscription/choix-des-elections

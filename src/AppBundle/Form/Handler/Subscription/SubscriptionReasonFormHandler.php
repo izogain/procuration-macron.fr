@@ -60,8 +60,7 @@ class SubscriptionReasonFormHandler extends AbstractFormHandler
 
         /** @var User $user */
         $user = $this->userManager->createUser();
-        // TODO
-//        $user->setVotingOffice($data['office']);
+        $user->setVotingOffice($this->entityManager->merge($data['office']['office']));
         $user->setCivility($data['contact']['civility']);
         $user->setFirstName($data['contact']['firstName']);
         $user->setLastName($data['contact']['lastName']);
@@ -75,7 +74,7 @@ class SubscriptionReasonFormHandler extends AbstractFormHandler
         $reason = $data['reason']['reason'];
 
         /** @var \AppBundle\Entity\Election $election */
-        foreach ($data['elections'] as $election) {
+        foreach ($data['election_rounds'] as $election) {
             $procuration = new Procuration();
             $procuration->setElectionRound($this->entityManager->merge($election));
             $procuration->setRequester($user);
