@@ -3,3 +3,8 @@
     padding: 0 15px;
     max-width: $max-width + 2 * 15px;
 }
+
+l-container--slim {
+    margin: 0 auto;
+    max-width: $bp-small;
+}
