@@ -16,6 +16,8 @@ services:
             - "%cerfa_source_file_path%"
             - "@app.mediator.procuration"
             - "@filesystem"
+    app.generator.password:
+        class: AppBundle\Generator\PasswordGenerator
 
     app.twig.address_extension:
         class: AppBundle\Twig\AddressExtension

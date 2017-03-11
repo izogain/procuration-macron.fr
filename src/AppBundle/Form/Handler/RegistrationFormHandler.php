@@ -5,6 +5,7 @@ namespace AppBundle\Form\Handler;
 use AppBundle\Entity\User;
 use AppBundle\Entity\VoterInvitation;
 use AppBundle\Entity\VotingAvailability;
+use AppBundle\Generator\GeneratorInterface;
 use AppBundle\Mediator\VoterInvitationMediator;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -34,21 +35,29 @@ class RegistrationFormHandler
     protected $voterInvitationMediator;
 
     /**
+     * @var GeneratorInterface
+     */
+    protected $passwordGenerator;
+
+    /**
      * @param FormFactoryInterface    $formFactory
      * @param string                  $formClassName
      * @param EntityManager           $entityManager
      * @param VoterInvitationMediator $voterInvitationMediator
+     * @param GeneratorInterface      $passwordGenerator
      */
     public function __construct(
         FormFactoryInterface $formFactory,
         $formClassName,
         EntityManager $entityManager,
-        VoterInvitationMediator $voterInvitationMediator
+        VoterInvitationMediator $voterInvitationMediator,
+        GeneratorInterface $passwordGenerator
     ) {
         $this->formFactory = $formFactory;
         $this->formClassName = $formClassName;
         $this->entityManager = $entityManager;
         $this->voterInvitationMediator = $voterInvitationMediator;
+        $this->passwordGenerator = $passwordGenerator;
     }
 
     /**
@@ -65,7 +74,7 @@ class RegistrationFormHandler
             $user->setUsername($voterInvitation->getEmail());
             $user->setFirstName($voterInvitation->getFirstName());
             $user->setLastName($voterInvitation->getLastName());
-            $user->setPlainPassword(sha1(mt_rand(10000, 498954385).time()));
+            $user->setPlainPassword($this->passwordGenerator->generate());
         }
 
         return $this->formFactory->create($this->formClassName, $user);

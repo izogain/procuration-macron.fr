@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class UserMediator
 {
+    const ROLE_ADMIN = 'ROLE_ADMIN';
+
     const CIVILITY_MADAM = 0;
     const CIVILITY_MISTER = 1;
 

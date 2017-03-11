@@ -13,14 +13,8 @@ class UserRepository extends EntityRepository
     public function queryBuilderAllByName()
     {
         return $this->createQueryBuilder('u')
-            ->where('COUNT(u.officesInCharge) > 0')
-            ->orWhere('u.sup')
             ->orderBy('u.lastName', 'ASC')
-            ->addOrderBy('u.firstName', 'ASC')
-            ->setParameters([
-                'role_admin' => '%ROLE_ADMIN%',
-                'role_super_admin' => '%ROLE_SUPER_ADMIN%',
-            ]);
+            ->addOrderBy('u.firstName', 'ASC');
     }
 
     /**
@@ -44,7 +38,7 @@ class UserRepository extends EntityRepository
     {
         return $this->createQueryBuilder('u')
             ->select('u', 'o')
-            ->innerJoin('u.officesInCharge', 'o')
+            ->innerJoin('u.votingOffice', 'o')
                 ->innerJoin('o.referents', 'r')
             ->where('r.id = :user')
             ->setParameter('user', $user)

@@ -48,7 +48,7 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface, D
 
         /** @var User $superAdmin */
         $superAdmin = $userManager->createUser();
-        $superAdmin->setUsername('admin@en-marche.fr');
+        $superAdmin->setEmail('admin@en-marche.fr');
         $superAdmin->setPlainPassword('admin1234');
         $superAdmin->setSuperAdmin(true);
         $superAdmin->setEnabled(true);
@@ -72,7 +72,7 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface, D
 
         /** @var User $referent */
         $referent = $userManager->createUser();
-        $referent->setUsername('referent-ain@en-marche.fr');
+        $referent->setEmail('referent-ain@en-marche.fr');
         $referent->setPlainPassword('referent1234');
         $referent->setEnabled(true);
         $referent->setCivility(UserMediator::CIVILITY_MISTER);
@@ -92,7 +92,7 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface, D
 
         /** @var User $referentRhone */
         $referentRhone = $userManager->createUser();
-        $referentRhone->setUsername('referent-rhone@en-marche.fr');
+        $referentRhone->setEmail('referent-rhone@en-marche.fr');
         $referentRhone->setPlainPassword('referent1234');
         $referentRhone->setEnabled(true);
         $referentRhone->setCivility(UserMediator::CIVILITY_MADAM);
@@ -114,7 +114,7 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface, D
 
         /** @var User $requester */
         $requester = $userManager->createUser();
-        $requester->setUsername('requester@provider.com');
+        $requester->setEmail('requester@provider.com');
         $requester->setPlainPassword('requester');
         $requester->setCivility(UserMediator::CIVILITY_MADAM);
         $requester->setFirstName('John');
@@ -134,7 +134,7 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface, D
 
         /** @var User $availableVoter */
         $availableVoter = $userManager->createUser();
-        $availableVoter->setUsername('available@en-marche.fr');
+        $availableVoter->setEmail('available@en-marche.fr');
         $availableVoter->setPlainPassword('voter1234');
         $availableVoter->setCivility(UserMediator::CIVILITY_MISTER);
         $availableVoter->setFirstName('Vo');
@@ -155,19 +155,22 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface, D
         $userManager->updateUser($availableVoter, false);
         $this->addReference('user-voter', $availableVoter);
 
+        $phoneNumber = $this->generatePhoneNumber('0606060606');
+        $lyonVotingOffice = $this->getLyonVotingOffice();
+
         for ($i = 0; $i < 150; ++$i) {
             /** @var User $user */
             $user = $userManager->createUser();
             $user->setLastName('Doe');
             $user->setFirstName('John #'.$i);
-            $user->setUsername('john.doe+'.$i.'@test.com');
+            $user->setEmail('john.doe+'.$i.'@test.com');
             $user->setPlainPassword('voter1234');
             $user->setCivility(UserMediator::CIVILITY_MISTER);
             $user->setFirstName('Vo');
             $user->setLastName('ter');
             $user->setBirthDate(new \DateTime('1975-02-24'));
-            $user->setPhoneNumber($this->generatePhoneNumber('0606060606'));
-            $user->setVotingOffice($this->getLyonVotingOffice());
+            $user->setPhoneNumber($phoneNumber);
+            $user->setVotingOffice($lyonVotingOffice);
             /** @var \AppBundle\Entity\Address $userAddress */
             $userAddress = $user->getAddress();
             $userAddress->setStreetNumber(54);

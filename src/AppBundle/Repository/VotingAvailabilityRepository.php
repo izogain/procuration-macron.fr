@@ -3,6 +3,7 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Election;
+use AppBundle\Entity\User;
 use AppBundle\Entity\VotingAvailability;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityRepository;
@@ -61,13 +62,14 @@ class VotingAvailabilityRepository extends EntityRepository
     }
 
     /**
+     * @param User   $requester      To ensure a user can't be his own voter
      * @param int    $electionId
      * @param string $countryCode
      * @param string $cityPostalCode
      *
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getQueryBuilderForAvailableForElectionInArea($electionId, $countryCode, $cityPostalCode)
+    public function getQueryBuilderForAvailableForElectionInArea(User $requester, $electionId, $countryCode, $cityPostalCode)
     {
         $queryBuilder = $this->createQueryBuilder('v')
             ->select('v', 'voter', 'vo')
@@ -78,7 +80,9 @@ class VotingAvailabilityRepository extends EntityRepository
             ->leftJoin('v.procuration', 'p')
             ->where('p.id IS NULL')
             ->andWhere('r.id = :round_id')
-            ->setParameter('round_id', $electionId);
+            ->andWhere('voter <> :requester')
+            ->setParameter('round_id', $electionId)
+            ->setParameter('requester', $requester);
 
         if ($countryCode != 'FR') {
             $queryBuilder->andWhere('vo.address.countryCode = :country_code')

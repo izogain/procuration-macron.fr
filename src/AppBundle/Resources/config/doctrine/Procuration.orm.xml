@@ -5,6 +5,11 @@
                   xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping">
 
     <entity name="AppBundle\Entity\Procuration" repository-class="AppBundle\Repository\ProcurationRepository">
+        <unique-constraints>
+            <unique-constraint columns="requester_id,election_round_id" />
+            <unique-constraint columns="voting_availability_id,election_round_id" />
+        </unique-constraints>
+
         <id name="id" type="integer" column="id">
             <generator strategy="AUTO"/>
         </id>

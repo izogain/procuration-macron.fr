@@ -29,6 +29,7 @@ services:
             - "%app.form.type.registration%"
             - "@doctrine.orm.entity_manager"
             - "@app.mediator.voter_invitation"
+            - "@app.generator.password"
 
     app.form.handler.subscription.address:
         class: AppBundle\Form\Handler\Subscription\SubscriptionAddressFormHandler
@@ -64,6 +65,7 @@ services:
             - "@form.factory"
             - "%app.form.type.subscription.reason%"
             - "@fos_user.user_manager"
+            - "@app.repository.user"
             - "@doctrine.orm.entity_manager"
 
     app.form.handler.user:
@@ -72,6 +74,7 @@ services:
             - "@form.factory"
             - "%app.form.type.user%"
             - "@doctrine.orm.entity_manager"
+            - "@app.generator.password"
 
     app.form.handler.voter_invitation:
         class: AppBundle\Form\Handler\VoterInvitationFormHandler

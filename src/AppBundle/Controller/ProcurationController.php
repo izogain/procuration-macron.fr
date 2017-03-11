@@ -70,6 +70,11 @@ class ProcurationController extends AbstractController
     public function downloadAction($id): BinaryFileResponse
     {
         $procuration = $this->getValidProcuration($id);
+
+        if (!$procuration->getVotingAvailability()) {
+            throw $this->createNotFoundException(sprintf('Procuration %s has not voter assigned', $id));
+        }
+
         $filePath = $this->getProcurationMediator()->generateOutputFilePath($procuration);
 
         try {

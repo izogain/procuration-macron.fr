@@ -25,13 +25,22 @@ class OfficeRepository extends EntityRepository
     }
 
     /**
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getQueryBuilderByPostalCode()
+    {
+        return $this->createQueryBuilder('o')
+            ->orderBy('o.address.postalCode', 'ASC');
+    }
+
+    /**
      * @param User $user
      *
      * @return \Doctrine\ORM\QueryBuilder
      */
     public function getQueryBuilderAllForReferent(User $user)
     {
-        return $this->createQueryBuilder('o')
+        return $this->getQueryBuilderByPostalCode()
             ->innerJoin('o.referents', 'r')
             ->where('r = :user')
             ->setParameter('user', $user);

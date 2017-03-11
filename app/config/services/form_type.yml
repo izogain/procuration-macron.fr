@@ -49,8 +49,6 @@ services:
             - name: "form.type"
         arguments:
             - "%app.model.office%"
-            - "@security.token_storage"
-            - "%fos_user.model.user.class%"
 
     app.form.type.office_choice:
         class: "%app.form.type.office_choice%"

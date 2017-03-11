@@ -5,6 +5,11 @@ office_delete:
     requirements:
         id: \d+
 
+office_new:
+    path: /new
+    methods: GET|POST
+    defaults: { _controller: AppBundle:Office:new }
+
 office_edit:
     path: /{id}
     methods: GET|POST

@@ -4,6 +4,7 @@ namespace AppBundle\Form\Handler\Subscription;
 
 use AppBundle\Entity\Procuration;
 use AppBundle\Entity\User;
+use AppBundle\Repository\UserRepository;
 use Doctrine\ORM\EntityManager;
 use FOS\UserBundle\Model\UserManager;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -20,6 +21,11 @@ class SubscriptionReasonFormHandler extends AbstractFormHandler
     protected $userManager;
 
     /**
+     * @var UserRepository
+     */
+    protected $userRepository;
+
+    /**
      * @var EntityManager
      */
     protected $entityManager;
@@ -31,11 +37,13 @@ class SubscriptionReasonFormHandler extends AbstractFormHandler
         FormFactoryInterface $formFactory,
         $formClassName,
         UserManager $userManager,
+        UserRepository $userRepository,
         EntityManager $entityManager
     ) {
         parent::__construct($formFactory, $formClassName);
 
         $this->userManager = $userManager;
+        $this->userRepository = $userRepository;
         $this->entityManager = $entityManager;
     }
 
@@ -59,17 +67,20 @@ class SubscriptionReasonFormHandler extends AbstractFormHandler
         $data = $this->getStoredData($request);
 
         /** @var User $user */
-        $user = $this->userManager->createUser();
-        $user->setVotingOffice($this->entityManager->merge($data['office']['office']));
-        $user->setCivility($data['contact']['civility']);
-        $user->setFirstName($data['contact']['firstName']);
-        $user->setLastName($data['contact']['lastName']);
-        $user->setBirthDate($data['contact']['birthDate']);
-        $user->setPhoneNumber($data['contact']['phoneNumber']);
-        $user->setUsername($data['contact']['email']);
-        $user->setAddress($data['address']);
-        $user->setPlainPassword(mt_rand(PHP_INT_MIN, (int) (PHP_INT_MIN - mt_rand(10000, 12000))).time());
-        $this->userManager->updateUser($user);
+        if (!$user = $this->userRepository->findOneByEmail($data['contact']['email'])) {
+            $user = $this->userManager->createUser();
+            $user->setVotingOffice($this->entityManager->merge($data['office']['office']));
+            $user->setCivility($data['contact']['civility']);
+            $user->setFirstName($data['contact']['firstName']);
+            $user->setLastName($data['contact']['lastName']);
+            $user->setBirthDate($data['contact']['birthDate']);
+            $user->setPhoneNumber($data['contact']['phoneNumber']);
+            $user->setEmail($data['contact']['email']);
+            $user->setAddress($data['address']);
+            $user->setPlainPassword(mt_rand(PHP_INT_MIN, (int) (PHP_INT_MIN - mt_rand(10000, 12000))).time());
+
+            $this->userManager->updateUser($user);
+        }
 
         $reason = $data['reason']['reason'];
 

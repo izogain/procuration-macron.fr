@@ -44,15 +44,16 @@ class ProcurationAssignationType extends AbstractType
         /** @var \AppBundle\Entity\Procuration $procuration */
         $procuration = $builder->getData();
         $electionRoundId = $procuration->getElectionRound()->getId();
-        $voterOfficeAddress = $procuration->getRequester()->getVotingOffice()->getAddress();
+        $requester = $procuration->getRequester();
+        $voterOfficeAddress = $requester->getVotingOffice()->getAddress();
         $countryCode = $voterOfficeAddress->getCountryCode();
         $cityPostalCode = $voterOfficeAddress->getPostalCode();
         $phoneNumberUtil = PhoneNumberUtil::getInstance();
 
         $builder->add('votingAvailability', EntityType::class, [
             'class' => $options['voting_availability_data_class'],
-            'query_builder' => function (VotingAvailabilityRepository $votingAvailabilityRepository) use ($electionRoundId, $countryCode, $cityPostalCode) {
-                return $votingAvailabilityRepository->getQueryBuilderForAvailableForElectionInArea($electionRoundId, $countryCode, $cityPostalCode);
+            'query_builder' => function (VotingAvailabilityRepository $votingAvailabilityRepository) use ($requester, $electionRoundId, $countryCode, $cityPostalCode) {
+                return $votingAvailabilityRepository->getQueryBuilderForAvailableForElectionInArea($requester, $electionRoundId, $countryCode, $cityPostalCode);
             },
             'choice_label' => function (VotingAvailability $votingAvailability) use ($phoneNumberUtil) {
                 $voter = $votingAvailability->getVoter();

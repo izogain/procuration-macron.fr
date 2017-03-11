@@ -3,6 +3,7 @@
 namespace AppBundle\Form\Handler;
 
 use AppBundle\Entity\User;
+use AppBundle\Generator\GeneratorInterface;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -27,18 +28,26 @@ class UserFormHandler
     protected $entityManager;
 
     /**
+     * @var GeneratorInterface
+     */
+    protected $passwordGenerator;
+
+    /**
      * @param FormFactoryInterface $formFactory
      * @param string               $formClassName
      * @param EntityManager        $entityManager
+     * @param GeneratorInterface   $passwordGenerator
      */
     public function __construct(
         FormFactoryInterface $formFactory,
         $formClassName,
-        EntityManager $entityManager
+        EntityManager $entityManager,
+        GeneratorInterface $passwordGenerator
     ) {
         $this->formFactory = $formFactory;
         $this->formClassName = $formClassName;
         $this->entityManager = $entityManager;
+        $this->passwordGenerator = $passwordGenerator;
     }
 
     /**
@@ -51,6 +60,7 @@ class UserFormHandler
     {
         if (!$user) {
             $user = new User();
+            $user->setPlainPassword($this->passwordGenerator->generate());
         }
 
         return $this->formFactory->create($this->formClassName, $user, ['editor' => $editor]);

@@ -2,14 +2,13 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Mediator\UserMediator;
 use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
 use libphonenumber\PhoneNumber;
 
 class User extends BaseUser
 {
-    const ROLE_ADMIN = 'ROLE_ADMIN';
-
     /**
      * @var bool
      */
@@ -130,7 +129,7 @@ class User extends BaseUser
             return $this->isSuperAdmin();
         }
 
-        if (static::ROLE_ADMIN == $role) {
+        if (UserMediator::ROLE_ADMIN == $role) {
             return $this->isAdmin();
         }
 
@@ -149,7 +148,7 @@ class User extends BaseUser
         }
 
         if ($this->isAdmin()) {
-            $roles[] = static::ROLE_ADMIN;
+            $roles[] = UserMediator::ROLE_ADMIN;
         }
 
         return $roles;
@@ -276,15 +275,13 @@ class User extends BaseUser
     }
 
     /**
-     * @param string $username
-     *
-     * @return $this
+     * {@inheritdoc}
      */
-    public function setUsername($username)
+    public function setEmail($email)
     {
-        parent::setUsername($username);
+        parent::setEmail($email);
 
-        return $this->setEmail($username);
+        return $this->setUsername($email);
     }
 
     /**

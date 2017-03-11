@@ -79,21 +79,27 @@ class UserType extends AbstractType
             }
 
             // List only offices the user can supervise
+            $form->add('votingOffice', EntityType::class, [
+                'class' => $this->officeObjectClassName,
+                'label' => 'Bureau de vote',
+                'query_builder' => function (OfficeRepository $officeRepository) use ($editor) {
+                    return $this->getOfficesQueryBuilderForEditor($officeRepository, $editor);
+                },
+                'choice_label' => function (Office $office) {
+                    return $this->formatOfficeName($office);
+                },
+            ]);
+
+            // List only offices the user can supervise
             $form->add('officesInCharge', EntityType::class, [
                 'required' => false,
                 'class' => $this->officeObjectClassName,
                 'multiple' => true,
                 'query_builder' => function (OfficeRepository $officeRepository) use ($editor) {
-                    if ($editor->isSuperAdmin()) {
-                        return;
-                    }
-
-                    return $officeRepository->getQueryBuilderAllForReferent($editor);
+                    return $this->getOfficesQueryBuilderForEditor($officeRepository, $editor);
                 },
                 'choice_label' => function (Office $office) {
-                    $officeAddress = $office->getAddress();
-
-                    return sprintf('%s (%s %s)', $office->getName(), $officeAddress->getPostalCode(), $officeAddress->getCity());
+                    return $this->formatOfficeName($office);
                 },
                 'label' => 'Bureaux en charge',
             ]);
@@ -139,6 +145,10 @@ class UserType extends AbstractType
 
         $userOfficesInCharge = $user->getOfficesInCharge();
 
+        if (!count($userOfficesInCharge)) {
+            return $editor->getOfficesInCharge()->contains($user->getVotingOffice());
+        }
+
         foreach ($editor->getOfficesInCharge() as $editorOfficeInCharge) {
             foreach ($userOfficesInCharge as $userOfficeInCharge) {
                 if ($userOfficeInCharge->getId() == $editorOfficeInCharge->getId()) {
@@ -148,5 +158,32 @@ class UserType extends AbstractType
         }
 
         return false;
+    }
+
+    /**
+     * @param OfficeRepository $officeRepository
+     * @param User             $editor
+     *
+     * @return \Doctrine\ORM\QueryBuilder|null
+     */
+    private function getOfficesQueryBuilderForEditor(OfficeRepository $officeRepository, User $editor)
+    {
+        if ($editor->isSuperAdmin()) {
+            return $officeRepository->getQueryBuilderByPostalCode();
+        }
+
+        return $officeRepository->getQueryBuilderAllForReferent($editor);
+    }
+
+    /**
+     * @param Office $office
+     *
+     * @return string
+     */
+    private function formatOfficeName(Office $office)
+    {
+        $officeAddress = $office->getAddress();
+
+        return sprintf('%s %s - %s', $officeAddress->getPostalCode(), $officeAddress->getCity(), $office->getName());
     }
 }

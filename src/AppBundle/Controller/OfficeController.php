@@ -42,6 +42,25 @@ class OfficeController extends AbstractController
     }
 
     /**
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function newAction(Request $request): Response
+    {
+        $formHandler = $this->getOfficeFormHandler();
+        $form = $formHandler->createForm();
+
+        if ($formHandler->process($form, $request)) {
+            return $this->redirectToRoute('office_index');
+        }
+
+        return $this->render('office/new.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
      * @param string $id
      *
      * @return Response

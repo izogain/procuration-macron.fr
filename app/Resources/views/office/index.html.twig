@@ -1,9 +1,20 @@
 {% extends '::base.html.twig' %}
 {% set selected_nav = 'office' %}
 
+
 {% block body %}
     <div class="page-header">
-        <h1>Liste des bureaux de vote <small>{{ pagination.totalItemCount }}</small></h1>
+        <h1>
+            Liste des bureaux de vote
+            <small>
+                {{ pagination.totalItemCount }}
+                {% if app.user.isSuperAdmin %}
+                    <a href="{{ path('office_new') }}" class="btn btn-xs btn-success">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </a>
+                {% endif %}
+            </small>
+        </h1>
     </div>
 
     <table class="table table-hover table-striped">

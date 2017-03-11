@@ -101,8 +101,9 @@ class FPDIWriter
         // Election informations
         $electionRound = $procuration->getElectionRound();
         $electionDate = $this->formatDate($electionRound->getPerformanceDate());
+        $electionTypeName = $electionRound->getElection()->getLabel();
         $this->checkABox($pdf, 19.7, 129.3, 3.7);
-        $this->writeTextAtPos($pdf, $electionRound->getElection()->getLabel(), 48, 131);
+        $this->writeTextAtPos($pdf, $electionTypeName, 48, 131);
 
         if ($this->isFirstRound($electionRound)) {
             $this->checkABox($pdf, 25, 137, 2.5);
@@ -139,6 +140,7 @@ class FPDIWriter
         $this->writeTextAtPos($pdf, $voterLastName, 91.5, 195.5);
         $this->writeTextAtPos($pdf, $voterFirstName, 80, 201.5);
         $this->checkABox($pdf, 62, 205.5, 3.5);
+        $this->writeTextAtPos($pdf, $electionTypeName, 88, 207.5);
         $this->writeTextInBoxes($pdf, $electionDate, 115, 207.5);
 
         if ($this->isFirstRound($electionRound)) {

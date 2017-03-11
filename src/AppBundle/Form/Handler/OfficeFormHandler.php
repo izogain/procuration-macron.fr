@@ -44,6 +44,10 @@ class OfficeFormHandler
      */
     public function createForm(Office $office = null)
     {
+        if (!$office) {
+            $office = new Office();
+        }
+
         return $this->formFactory->create($this->formClassName, $office);
     }
 
