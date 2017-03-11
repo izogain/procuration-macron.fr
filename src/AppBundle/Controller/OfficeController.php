@@ -42,7 +42,7 @@ class OfficeController extends AbstractController
     }
 
     /**
-     * @param string  $id
+     * @param string $id
      *
      * @return Response
      */

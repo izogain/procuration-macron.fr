@@ -5,7 +5,6 @@ namespace AppBundle\Mediator;
 use AppBundle\Entity\User;
 use AppBundle\Entity\VotingAvailability;
 use AppBundle\Repository\VotingAvailabilityRepository;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;

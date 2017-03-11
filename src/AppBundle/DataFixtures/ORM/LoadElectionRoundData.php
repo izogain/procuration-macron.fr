@@ -11,7 +11,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 class LoadElectionRoundData extends AbstractFixture implements DependentFixtureInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getDependencies()
     {
@@ -21,7 +21,7 @@ class LoadElectionRoundData extends AbstractFixture implements DependentFixtureI
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function load(ObjectManager $manager)
     {

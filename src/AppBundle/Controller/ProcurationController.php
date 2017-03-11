@@ -137,7 +137,7 @@ class ProcurationController extends AbstractController
     {
         try {
             $this->get('filesystem')->remove([
-                $this->getProcurationMediator()->generateOutputFilePath($procuration)
+                $this->getProcurationMediator()->generateOutputFilePath($procuration),
             ]);
         } catch (IOException $e) {
             // Silently fail

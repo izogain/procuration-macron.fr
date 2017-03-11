@@ -39,11 +39,11 @@ class ProcurationAssignationFormHandler
     protected $mailjetClient;
 
     /**
-     * @param FormFactoryInterface        $formFactory
-     * @param string                      $formClassName
-     * @param EntityManager               $doctrinEntityManager
-     * @param FPDIWriter                  $fpdiWriter
-     * @param MailjetClient               $mailjetClient
+     * @param FormFactoryInterface $formFactory
+     * @param string               $formClassName
+     * @param EntityManager        $doctrinEntityManager
+     * @param FPDIWriter           $fpdiWriter
+     * @param MailjetClient        $mailjetClient
      */
     public function __construct(
         FormFactoryInterface $formFactory,

@@ -169,7 +169,7 @@ final class MailjetTemplateEmail implements \JsonSerializable
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function jsonSerialize(): string
     {

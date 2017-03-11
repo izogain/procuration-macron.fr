@@ -54,10 +54,10 @@ class AddressType extends AbstractType
                 'label' => 'Code postal',
             ])
             ->add('city', FormType\TextType::class, [
-                'label' => 'Ville'
+                'label' => 'Ville',
             ])
             ->add('countryCode', FormType\CountryType::class, [
-                'label' => 'Pays'
+                'label' => 'Pays',
             ]);
     }
 

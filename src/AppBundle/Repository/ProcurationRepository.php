@@ -50,7 +50,7 @@ class ProcurationRepository extends EntityRepository
             ->addOrderBy('o.name', 'ASC')
             ->setParameters([
                 'active_round' => true,
-                'user_id' => $userId
+                'user_id' => $userId,
             ])
             ->getQuery()
             ->getResult();

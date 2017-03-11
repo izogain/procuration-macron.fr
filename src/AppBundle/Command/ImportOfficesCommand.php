@@ -14,7 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ImportOfficesCommand extends AbstractCommand
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function configure()
     {
@@ -25,7 +25,7 @@ class ImportOfficesCommand extends AbstractCommand
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -79,7 +79,6 @@ class ImportOfficesCommand extends AbstractCommand
             $office->setRegularOpeningHour((int) $openingHour);
             $office->setRegularClosingHour((int) $closingHour);
 
-
             if ($streetName) {
                 preg_match('/([\d]+)?([,|\s]+)?(.*)/i', $streetName, $matches);
 
@@ -111,7 +110,7 @@ class ImportOfficesCommand extends AbstractCommand
 
             $duplicateData[$officeAddress->getPostalCode()][$office->getName()] = 1;
 
-            if ($processedRowCount%$batchSize == 0) {
+            if ($processedRowCount % $batchSize == 0) {
                 $entityManager->flush();
                 $this->writeProgressInformation($output, $processedRowCount);
             }
@@ -132,11 +131,11 @@ class ImportOfficesCommand extends AbstractCommand
     private function writeProgressInformation(OutputInterface $output, $i)
     {
         $output->writeln(sprintf('<info>Commited %d rows</info>', $i));
-        $output->writeln(sprintf('%dMo peak consumption', round(memory_get_peak_usage()/1024/1024)));
+        $output->writeln(sprintf('%dMo peak consumption', round(memory_get_peak_usage() / 1024 / 1024)));
     }
 
     /**
-     * Display some stats about duplicated informations
+     * Display some stats about duplicated informations.
      *
      * @param OutputInterface $output
      * @param array           $duplicateData
@@ -173,7 +172,7 @@ class ImportOfficesCommand extends AbstractCommand
     }
 
     /**
-     * Display the number of not properly formatted rows
+     * Display the number of not properly formatted rows.
      *
      * @param OutputInterface $output
      * @param                 $invalidRowsFormat

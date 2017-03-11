@@ -33,7 +33,7 @@ class MailjetEmailDoctrineBackupEventSubscriber implements EventSubscriberInterf
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function getSubscribedEvents()
     {

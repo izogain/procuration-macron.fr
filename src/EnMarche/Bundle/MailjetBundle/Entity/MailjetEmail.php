@@ -189,7 +189,7 @@ class MailjetEmail
     }
 
     /**
-     * Return the message class name with legacy control
+     * Return the message class name with legacy control.
      *
      * @return string
      */

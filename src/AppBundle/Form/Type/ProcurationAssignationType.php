@@ -58,7 +58,7 @@ class ProcurationAssignationType extends AbstractType
                 $voter = $votingAvailability->getVoter();
 
                 return sprintf('%s — %s (%s)', $voter->getVotingOffice()->getName(), $voter, $phoneNumberUtil->format($voter->getPhoneNumber(), PhoneNumberFormat::INTERNATIONAL));
-            }
+            },
         ]);
     }
 

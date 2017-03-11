@@ -22,7 +22,7 @@ class AddressMediator
     const STREET_REPEATER_QUINQUIES = 3;
 
     /**
-     * Return the full list of possible "street" types
+     * Return the full list of possible "street" types.
      *
      * @return array
      */
@@ -44,7 +44,7 @@ class AddressMediator
     }
 
     /**
-     * Return the full list of possible street repeaters. Original list comes from impots.gouv.fr
+     * Return the full list of possible street repeaters. Original list comes from impots.gouv.fr.
      *
      * @return array
      */

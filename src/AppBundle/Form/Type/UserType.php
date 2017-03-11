@@ -37,13 +37,13 @@ class UserType extends AbstractType
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('civility', CivilityChoiceType::class)
             ->add('firstName', null, [
-                'label' => 'Prénom'
+                'label' => 'Prénom',
             ])
             ->add('lastName', null, [
                 'label' => 'Nom',
@@ -55,7 +55,7 @@ class UserType extends AbstractType
                 'label' => 'Téléphone',
             ])
             ->add('address', AddressType::class, [
-                'label' => 'Adresse'
+                'label' => 'Adresse',
             ])
         ;
 
@@ -95,7 +95,7 @@ class UserType extends AbstractType
 
                     return sprintf('%s (%s %s)', $office->getName(), $officeAddress->getPostalCode(), $officeAddress->getCity());
                 },
-                'label' => 'Bureaux en charge'
+                'label' => 'Bureaux en charge',
             ]);
 
             if ($editorIsSuperadmin) {
@@ -108,7 +108,7 @@ class UserType extends AbstractType
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -136,7 +136,6 @@ class UserType extends AbstractType
         if (!$user || !$user->getId()) {
             return true;
         }
-
 
         $userOfficesInCharge = $user->getOfficesInCharge();
 

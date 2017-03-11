@@ -10,7 +10,7 @@ class SubscriptionAddressFormHandler extends AbstractFormHandler
     const STEP_KEY_NAME = 'address';
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected static function getStepKeyName()
     {

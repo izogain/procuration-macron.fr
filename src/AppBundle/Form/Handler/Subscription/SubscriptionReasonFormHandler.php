@@ -25,7 +25,7 @@ class SubscriptionReasonFormHandler extends AbstractFormHandler
     protected $entityManager;
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function __construct(
         FormFactoryInterface $formFactory,
@@ -40,7 +40,7 @@ class SubscriptionReasonFormHandler extends AbstractFormHandler
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected static function getStepKeyName()
     {
@@ -48,7 +48,7 @@ class SubscriptionReasonFormHandler extends AbstractFormHandler
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function process(FormInterface $form, Request $request)
     {

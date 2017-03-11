@@ -10,7 +10,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 class LoadVotingAvailabilityData extends AbstractFixture implements DependentFixtureInterface
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getDependencies()
     {
@@ -22,7 +22,7 @@ class LoadVotingAvailabilityData extends AbstractFixture implements DependentFix
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function load(ObjectManager $manager)
     {
@@ -44,7 +44,7 @@ class LoadVotingAvailabilityData extends AbstractFixture implements DependentFix
         for ($i = 1; $i <= 2; ++$i) {
             $votingAvailability = new VotingAvailability();
             $votingAvailability->setVoter($userAdmin);
-            $votingAvailability->setElectionRound($this->getReference('election-round-pres-' . $i));
+            $votingAvailability->setElectionRound($this->getReference('election-round-pres-'.$i));
 
             $manager->persist($votingAvailability);
         }

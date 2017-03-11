@@ -65,14 +65,6 @@ class UserController extends AbstractController
     }
 
     /**
-     * @return \AppBundle\Repository\UserRepository
-     */
-    private function getUserRepository()
-    {
-        return $this->get('app.repository.user');
-    }
-
-    /**
      * @return \AppBundle\Form\Handler\UserFormHandler
      */
     private function getUserFormHandler()

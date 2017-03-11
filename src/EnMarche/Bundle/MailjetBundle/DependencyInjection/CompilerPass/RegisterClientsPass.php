@@ -9,7 +9,7 @@ use Symfony\Component\DependencyInjection\Definition;
 class RegisterClientsPass implements CompilerPassInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function process(ContainerBuilder $container)
     {
@@ -18,7 +18,6 @@ class RegisterClientsPass implements CompilerPassInterface
         $this->loadMessageFactories($container, $clientsConfiguration);
         $this->loadClients($container, $clientsConfiguration);
     }
-
 
     /**
      * @param ContainerBuilder $containerBuilder
@@ -30,12 +29,13 @@ class RegisterClientsPass implements CompilerPassInterface
             $messageFactoryDefinition = new Definition('EnMarche\\Bundle\\MailjetBundle\\Factory\\MailjetTemplateEmailFactory');
             $messageFactoryDefinition->setArguments([
                 $clientConfiguration['sender_email'],
-                $clientConfiguration['sender_name']
+                $clientConfiguration['sender_name'],
             ]);
 
             $containerBuilder->setDefinition('en_marche_mailjet.message_factory.'.$clientName, $messageFactoryDefinition);
         }
     }
+
     /**
      * @param ContainerBuilder $containerBuilder
      * @param array            $clientConfigurations

@@ -11,7 +11,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 class LoadProcurationData extends AbstractFixture implements DependentFixtureInterface
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getDependencies()
     {
@@ -22,7 +22,7 @@ class LoadProcurationData extends AbstractFixture implements DependentFixtureInt
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function load(ObjectManager $manager)
     {

@@ -7,7 +7,7 @@ class SubscriptionSearchOfficeHandler extends AbstractFormHandler
     const STEP_KEY_NAME = 'office';
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected static function getStepKeyName()
     {

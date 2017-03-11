@@ -25,7 +25,7 @@ class ElectionRoundChoiceType extends AbstractType
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -37,7 +37,7 @@ class ElectionRoundChoiceType extends AbstractType
                 return $repository->queryAllUpcomingEnabledByDateAsc();
             },
             'choice_label' => function (ElectionRound $electionRound) {
-                return 'Election '. $electionRound->getElection()->getLabel();
+                return 'Election '.$electionRound->getElection()->getLabel();
             },
             'required' => true,
             'constraints' => [
@@ -50,7 +50,7 @@ class ElectionRoundChoiceType extends AbstractType
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getParent()
     {

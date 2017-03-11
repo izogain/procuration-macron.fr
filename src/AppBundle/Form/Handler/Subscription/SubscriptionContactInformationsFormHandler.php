@@ -7,7 +7,7 @@ class SubscriptionContactInformationsFormHandler extends AbstractFormHandler
     const STEP_KEY_NAME = 'contact';
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected static function getStepKeyName()
     {

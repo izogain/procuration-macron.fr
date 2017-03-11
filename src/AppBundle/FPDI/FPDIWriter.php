@@ -167,12 +167,12 @@ class FPDIWriter
     }
 
     /**
-     * Ease text writing into boxes because that should be readable in such cases as postal code, birthdate and so on
+     * Ease text writing into boxes because that should be readable in such cases as postal code, birthdate and so on.
      *
      * @param \FPDI     $pdf
      * @param string    $content
-     * @param int|float $x The starting X position in mms
-     * @param int|float $y The starting Y position in mms
+     * @param int|float $x       The starting X position in mms
+     * @param int|float $y       The starting Y position in mms
      * @param int       $boxStep The box width
      */
     private function writeTextInBoxes(\FPDI $pdf, $content, $x, $y, $boxStep = 4)
@@ -185,7 +185,7 @@ class FPDIWriter
     }
 
     /**
-     * Easily generate a checkbox
+     * Easily generate a checkbox.
      *
      * @param \FPDI     $pdf
      * @param int|float $x
@@ -198,12 +198,12 @@ class FPDIWriter
     }
 
     /**
-     * Write the full first address line. The position of the fields is relative to $x
+     * Write the full first address line. The position of the fields is relative to $x.
      *
-     * @param \FPDI   $pdf
-     * @param Address $address
-     * @param int|float $x The X axis start position
-     * @param int|float $y The Y axis start position
+     * @param \FPDI     $pdf
+     * @param Address   $address
+     * @param int|float $x       The X axis start position
+     * @param int|float $y       The Y axis start position
      */
     private function writeFirstAddressLine(\FPDI $pdf, Address $address, $x, $y)
     {
@@ -224,12 +224,12 @@ class FPDIWriter
     }
 
     /**
-     * Write the full second address line. The position of the fields is relative to $x
+     * Write the full second address line. The position of the fields is relative to $x.
      *
-     * @param \FPDI   $pdf
-     * @param Address $address
-     * @param int|float $x The X axis start position
-     * @param int|float $y The Y axis start position
+     * @param \FPDI     $pdf
+     * @param Address   $address
+     * @param int|float $x       The X axis start position
+     * @param int|float $y       The Y axis start position
      */
     private function writeSecondAddressLine(\FPDI $pdf, Address $address, $x, $y)
     {
@@ -240,8 +240,8 @@ class FPDIWriter
     /**
      * @param \FPDI     $pdf
      * @param string    $content
-     * @param int|float $x The X axis positions in mms
-     * @param int|float $y The Y axis positions in mms
+     * @param int|float $x       The X axis positions in mms
+     * @param int|float $y       The Y axis positions in mms
      */
     private function writeTextAtPos(\FPDI $pdf, $content, $x, $y)
     {
@@ -280,6 +280,7 @@ class FPDIWriter
 
         $this->checkABox($pdf, 59.5, $y, 2.5);
     }
+
     /**
      * @param string $lastName
      *

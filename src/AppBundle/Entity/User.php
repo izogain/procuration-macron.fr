@@ -104,7 +104,7 @@ class User extends BaseUser
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setSuperAdmin($boolean)
     {
@@ -122,7 +122,7 @@ class User extends BaseUser
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function hasRole($role)
     {
@@ -138,7 +138,7 @@ class User extends BaseUser
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getRoles()
     {
@@ -156,7 +156,7 @@ class User extends BaseUser
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setRoles(array $roles)
     {

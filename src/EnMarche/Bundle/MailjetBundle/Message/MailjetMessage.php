@@ -137,9 +137,9 @@ abstract class MailjetMessage
     }
 
     /**
-     * @param string $recipientEmail
+     * @param string      $recipientEmail
      * @param string|null $recipientName
-     * @param array  $vars
+     * @param array       $vars
      */
     final public function addRecipient(string $recipientEmail, $recipientName, array $vars = [])
     {

@@ -38,6 +38,7 @@ class ProcurationMediator
             static::REASON_OTHER_LIVING_PLACE => 'Parce que je réside dans une commune différente de celle où je suis inscrit(e) sur une liste électorale',
         ];
     }
+
     /**
      * @var ProcurationRepository
      */
@@ -171,6 +172,6 @@ class ProcurationMediator
     {
         $procurationId = $procuration->getId();
 
-        return $this->cerfaOutputRootDir.'/'. ($procurationId%8).'/'.$procurationId.'.pdf';
+        return $this->cerfaOutputRootDir.'/'.($procurationId % 8).'/'.$procurationId.'.pdf';
     }
 }

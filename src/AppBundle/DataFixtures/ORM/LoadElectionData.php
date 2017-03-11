@@ -9,7 +9,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 class LoadElectionData extends AbstractFixture
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function load(ObjectManager $manager)
     {

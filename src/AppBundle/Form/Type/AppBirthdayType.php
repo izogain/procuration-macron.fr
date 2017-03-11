@@ -9,7 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class AppBirthdayType extends AbstractType
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -20,7 +20,7 @@ class AppBirthdayType extends AbstractType
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getParent()
     {

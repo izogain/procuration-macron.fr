@@ -5,7 +5,6 @@ namespace AppBundle\Repository;
 use AppBundle\Entity\Office;
 use AppBundle\Entity\User;
 use AppBundle\Search\QuerySanitizer;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityRepository;
 
 class OfficeRepository extends EntityRepository

@@ -4,7 +4,6 @@ namespace AppBundle\Mediator;
 
 use AppBundle\Entity\User;
 use AppBundle\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 

@@ -39,7 +39,7 @@ class MailjetApiTransport implements MailjetMessageTransportInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function sendTemplateEmail(MailjetTemplateEmail $email)
     {

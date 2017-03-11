@@ -2,7 +2,6 @@
 
 namespace AppBundle\Mediator;
 
-use AppBundle\Entity\Office;
 use AppBundle\Entity\User;
 use AppBundle\Repository\OfficeRepository;
 use Knp\Component\Pager\PaginatorInterface;

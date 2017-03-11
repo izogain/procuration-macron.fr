@@ -64,7 +64,6 @@ abstract class AbstractFormHandler
      * @param Request $request
      * @param string  $key
      * @param mixed   $data
-
      */
     protected function appendToSession(Request $request, $key, $data)
     {

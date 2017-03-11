@@ -2,7 +2,6 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
-use AppBundle\Entity\Address;
 use AppBundle\Entity\User;
 use AppBundle\Mediator\AddressMediator;
 use AppBundle\Mediator\UserMediator;
@@ -10,7 +9,6 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use libphonenumber\PhoneNumber;
-use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -23,7 +21,7 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface, D
     protected $container;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setContainer(ContainerInterface $container = null)
     {
@@ -31,7 +29,7 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface, D
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getDependencies()
     {
@@ -42,7 +40,7 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface, D
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function load(ObjectManager $manager)
     {
@@ -156,7 +154,7 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface, D
 
         $userManager->updateUser($availableVoter, false);
         $this->addReference('user-voter', $availableVoter);
-        
+
         for ($i = 0; $i < 150; ++$i) {
             /** @var User $user */
             $user = $userManager->createUser();

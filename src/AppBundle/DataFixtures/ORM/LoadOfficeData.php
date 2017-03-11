@@ -11,7 +11,7 @@ class LoadOfficeData extends AbstractFixture
     const NB_FIXTURES = 150;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function load(ObjectManager $manager)
     {

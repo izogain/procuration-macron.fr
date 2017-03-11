@@ -12,7 +12,7 @@ class SubscriptionElectionRoundFormHandler extends AbstractFormHandler
     const STEP_KEY_NAME = 'election_rounds';
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected static function getStepKeyName()
     {
@@ -25,7 +25,7 @@ class SubscriptionElectionRoundFormHandler extends AbstractFormHandler
     protected $entityManager;
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function __construct(
         FormFactoryInterface $formFactory,

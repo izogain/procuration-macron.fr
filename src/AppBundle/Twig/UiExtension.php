@@ -22,7 +22,7 @@ class UiExtension extends \Twig_Extension
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getFunctions()
     {
@@ -32,7 +32,7 @@ class UiExtension extends \Twig_Extension
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getFilters()
     {

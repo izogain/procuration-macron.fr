@@ -43,7 +43,7 @@ class OfficeType extends AbstractType
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -53,14 +53,14 @@ class OfficeType extends AbstractType
                 'attr' => [
                     'min' => 0,
                     'max' => 23,
-                ]
+                ],
             ])
             ->add('regularClosingHour', IntegerType::class, [
                 'required' => false,
                 'attr' => [
                     'min' => 0,
                     'max' => 23,
-                ]
+                ],
             ])
             ->add('address', AddressType::class);
 
@@ -79,7 +79,7 @@ class OfficeType extends AbstractType
                     return $userRepository->queryBuilderAllByName();
                 },
                 'choice_label' => function (User $user) {
-                    return mb_strtoupper($user->getLastName()) . ' ' . ucwords(mb_strtolower($user->getFirstName()));
+                    return mb_strtoupper($user->getLastName()).' '.ucwords(mb_strtolower($user->getFirstName()));
                 },
                 'multiple' => true,
                 'by_reference' => false,
@@ -88,7 +88,7 @@ class OfficeType extends AbstractType
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {

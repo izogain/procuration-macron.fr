@@ -61,9 +61,9 @@ class VotingAvailabilityRepository extends EntityRepository
     }
 
     /**
-     * @param int      $electionId
-     * @param string   $countryCode
-     * @param string   $cityPostalCode
+     * @param int    $electionId
+     * @param string $countryCode
+     * @param string $cityPostalCode
      *
      * @return \Doctrine\ORM\QueryBuilder
      */

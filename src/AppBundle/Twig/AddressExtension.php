@@ -9,7 +9,7 @@ use Symfony\Component\Intl\Intl;
 class AddressExtension extends \Twig_Extension
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getFilters()
     {
@@ -44,7 +44,7 @@ class AddressExtension extends \Twig_Extension
         $streetLine[] = $this->filterUcWording($address->getStreetName());
 
         $output[] = implode(' ', $streetLine);
-        $output[] = $address->getPostalCode() . ' ' .$this->filterUcWording($address->getCity());
+        $output[] = $address->getPostalCode().' '.$this->filterUcWording($address->getCity());
         $output[] = mb_strtoupper(Intl::getRegionBundle()->getCountryName($address->getCountryCode()));
 
         return implode('<br>', $output);

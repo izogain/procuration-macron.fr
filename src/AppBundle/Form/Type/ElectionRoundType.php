@@ -24,7 +24,7 @@ class ElectionRoundType extends AbstractType
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -32,13 +32,13 @@ class ElectionRoundType extends AbstractType
                 'required' => true,
             ])
             ->add('performanceDate', DateType::class, [
-                'label' => 'Date'
+                'label' => 'Date',
             ])
             ->add('active', CheckboxType::class);
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
