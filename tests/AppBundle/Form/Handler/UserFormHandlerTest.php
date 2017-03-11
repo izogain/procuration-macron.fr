@@ -5,6 +5,7 @@ namespace Tests\AppBundle\Form\Handler;
 use AppBundle\Entity\User;
 use AppBundle\Form\Handler\UserFormHandler;
 use AppBundle\Form\Type\UserType;
+use AppBundle\Generator\GeneratorInterface;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\FormConfigInterface;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -17,6 +18,7 @@ class UserFormHandlerTest extends AbstractTestCase
     protected $formFactory;
     protected $formClassName;
     protected $entityManager;
+    protected $passwordGenerator;
 
     /**
      * @var UserFormHandler
@@ -28,11 +30,13 @@ class UserFormHandlerTest extends AbstractTestCase
         $this->formFactory = $this->createMock(FormFactoryInterface::class);
         $this->formClassName = UserType::class;
         $this->entityManager = $this->createMock(EntityManager::class);
+        $this->passwordGenerator = $this->createMock(GeneratorInterface::class);
 
         $this->userFormHandler = new UserFormHandler(
             $this->formFactory,
             $this->formClassName,
-            $this->entityManager
+            $this->entityManager,
+            $this->passwordGenerator
         );
     }
 
