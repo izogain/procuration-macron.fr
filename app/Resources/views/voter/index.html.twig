@@ -1,4 +1,4 @@
-{% extends '::base.html.twig' %}
+{% extends 'base.html.twig' %}
 {% set selected_nav = 'voter' %}
 
 
@@ -27,7 +27,12 @@
                 {% set voter = voting_availability.voter %}
                 {% set voterVotingOffice = voter.votingOffice %}
                 <tr>
-                    <td>{{ voter }}</td>
+                    <td>
+                        <a class="btn btn-xs btn-info" href="tel:{{ voter.phoneNumber|phone_number_format }}">
+                            <span class="glyphicon glyphicon-phone-alt" data-toggle="tooltip" title="{{ voter.phoneNumber|phone_number_format }}"></span>
+                        </a>
+                        {{ voter }}
+                    </td>
                     <td>{{ electionRound.election }} ({{ electionRound.performanceDate|localizeddate(timeFormat='none') }})</td>
                     <td>{{ voterVotingOffice }} ({{ voter.votingOffice.address.postalCode }} {{ voter.votingOffice.address.city }})</td>
                     <td>

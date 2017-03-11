@@ -22,8 +22,8 @@ class ProcurationRepository extends EntityRepository
             ->leftJoin('p.votingAvailability', 'v')
                 ->leftJoin('v.voter', 'u')
             ->where('er.active = 1')
-            ->orderBy('p.createdAt', 'DESC')
-            ->addOrderBy('o.name', 'ASC')
+            ->addOrderBy('er.performanceDate', 'ASC')
+            ->addOrderBy('p.createdAt', 'DESC')
             ->getQuery()
             ->getResult();
     }
@@ -46,8 +46,8 @@ class ProcurationRepository extends EntityRepository
                 ->leftJoin('v.voter', 'u')
             ->where('er.active = :active_round')
             ->andWhere('ref.id = :user_id')
-            ->orderBy('p.createdAt', 'DESC')
-            ->addOrderBy('o.name', 'ASC')
+            ->addOrderBy('er.performanceDate', 'ASC')
+            ->addOrderBy('p.createdAt', 'DESC')
             ->setParameters([
                 'active_round' => true,
                 'user_id' => $userId,

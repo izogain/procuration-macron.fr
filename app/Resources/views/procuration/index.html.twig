@@ -12,12 +12,11 @@
     <table class="table table-striped table-hover">
         <thead>
             <tr>
-                <th>#</th>
-                <th>Date de la demande</th>
                 <th>Election</th>
+                <th>Date de la demande</th>
                 <th>Bureau de l'absent</th>
                 <th>Nom de l'absent</th>
-                <th>Remplaçant choisi</th>
+                <th class="text-center">Remplaçant choisi</th>
                 <th></th>
             </tr>
         </thead>
@@ -27,28 +26,42 @@
                 {% set requester = procuration.requester %}
                 {% set has_voter = procuration.votingAvailability is not null %}
                 <tr>
-                    <td>{{ procuration.id }}</td>
-                    <td>{{ procuration.createdAt|localizeddate(timeFormat='none') }}</td>
                     <td>{{ electionRound.election }} ({{ electionRound.performanceDate|localizeddate(timeFormat='none') }})</td>
+                    <td>{{ procuration.createdAt|localizeddate(timeFormat='none') }}</td>
                     <td>{{ requester.votingOffice }}</td>
-                    <td>{{ requester }}</td>
+                    <td>
+                        <a class="btn btn-xs btn-info" href="tel:{{ requester.phoneNumber|phone_number_format }}">
+                            <span class="glyphicon glyphicon-phone-alt" data-toggle="tooltip" title="{{ requester.phoneNumber|phone_number_format }}"></span>
+                        </a>
+                        {{ requester }}
+                    </td>
                     <td>
                         {% if has_voter %}
-                            {{ procuration.votingAvailability.voter }}
+                            {% set voter = procuration.votingAvailability.voter %}
+                            <a class="btn btn-xs btn-info" href="tel:{{ voter.phoneNumber|phone_number_format }}">
+                                <span class="glyphicon glyphicon-phone-alt" data-toggle="tooltip" title="{{ voter.phoneNumber|phone_number_format }}"></span>
+                            </a>
+                            {{ voter }}
                         {% else %}
                             {% set form = procuration_assignation_form(procuration) %}
                             {% if form.votingAvailability.vars.choices|length %}
                                 <form method="post" action="{{ path('procuration_assign', {'id': procuration.id}) }}" class="form-inline procuration-assignation">
                                     {{ form_errors(form) }}
-                                    <div class="form-group">
-                                        <label>
-                                            {{ form_widget(form.votingAvailability) }}
-                                            {{ form_errors(form.votingAvailability) }}
-                                        </label>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <label>
+                                                {{ form_widget(form.votingAvailability) }}
+                                                {{ form_errors(form.votingAvailability) }}
+                                            </label>
+                                        </div>
                                     </div>
 
-                                    {{ form_rest(form) }}
-                                    <button type="submit" class="btn btn-xs btn-success text-uppercase">Mettre en relation</button>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            {{ form_rest(form) }}
+                                            <button type="submit" class="btn btn-xs btn-success text-uppercase">Mettre en relation</button>
+                                        </div>
+                                    </div>
                                 </form>
                             {% else %}
                                 <i>Aucun représentant disponible</i>
@@ -74,7 +87,7 @@
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="7" class="text-center">Aucune demande</td>
+                    <td colspan="6" class="text-center">Aucune demande</td>
                 </tr>
             {% endfor %}
         </tbody>
