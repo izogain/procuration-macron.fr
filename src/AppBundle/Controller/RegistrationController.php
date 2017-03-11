@@ -19,8 +19,10 @@ class RegistrationController extends AbstractController
             throw $this->createNotFoundException();
         }
 
+        $user = $this->getUserRepository()->findOneByEmail($voterInvitation->getEmail());
+
         $formHandler = $this->getVoterInvitationFormHandler();
-        $form = $formHandler->createFormFromVoterInvitation($voterInvitation);
+        $form = $formHandler->createFormFromVoterInvitation($voterInvitation, $user);
 
         if ($formHandler->process($form, $request, $voterInvitation)) {
             return $this->redirectToRoute('registration_confirmation');

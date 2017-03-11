@@ -3,7 +3,6 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\User;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityRepository;
 
 class UserRepository extends EntityRepository
@@ -67,5 +66,15 @@ class UserRepository extends EntityRepository
             ->setParameter('id', $id)
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    /**
+     * @param string $email
+     *
+     * @return User|null
+     */
+    public function findOneByEmail($email)
+    {
+        return $this->findOneBy(['email' => $email]);
     }
 }

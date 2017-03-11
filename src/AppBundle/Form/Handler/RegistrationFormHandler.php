@@ -53,18 +53,20 @@ class RegistrationFormHandler
 
     /**
      * @param VoterInvitation $voterInvitation
+     * @param User            $user
      *
      * @return FormInterface
      */
-    public function createFormFromVoterInvitation(VoterInvitation $voterInvitation)
+    public function createFormFromVoterInvitation(VoterInvitation $voterInvitation, User $user = null)
     {
-        $user = new User();
-        $user->setCivility($voterInvitation->getCivility());
-        $user->setUsername($voterInvitation->getEmail());
-        $user->setFirstName($voterInvitation->getFirstName());
-        $user->setLastName($voterInvitation->getLastName());
-        $user->setPlainPassword(sha1(mt_rand(10000, 498954385).time()));
-        $user->setEnabled(true);
+        if (!$user) {
+            $user = new User();
+            $user->setCivility($voterInvitation->getCivility());
+            $user->setUsername($voterInvitation->getEmail());
+            $user->setFirstName($voterInvitation->getFirstName());
+            $user->setLastName($voterInvitation->getLastName());
+            $user->setPlainPassword(sha1(mt_rand(10000, 498954385).time()));
+        }
 
         return $this->formFactory->create($this->formClassName, $user);
     }
