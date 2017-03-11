@@ -8,7 +8,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class LoadOfficeData extends AbstractFixture
 {
-    const NB_FIXTURES = 15;
+    const NB_FIXTURES = 150;
 
     /**
      * @inheritdoc

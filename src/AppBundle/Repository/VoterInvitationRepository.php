@@ -9,15 +9,26 @@ use Doctrine\ORM\EntityRepository;
 class VoterInvitationRepository extends EntityRepository
 {
     /**
-     * @return VoterInvitation[]|ArrayCollection
+     * @return \Doctrine\ORM\QueryBuilder
      */
-    public function findAllByLastName()
+    public function queryBuilderAllByName()
     {
         return $this->createQueryBuilder('v')
             ->orderBy('v.lastName', 'ASC')
-            ->addOrderBy('v.firstName', 'ASC')
-            ->getQuery()
-            ->getResult();
+            ->addOrderBy('v.firstName', 'ASC');
+    }
+
+    /**
+     * @param string $userId
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function queryBuilderSentBy($userId)
+    {
+        return $this->queryBuilderAllByName()
+            ->innerJoin('v.sender', 's')
+            ->where('s.id = :user_id')
+            ->setParameter('user_id', $userId);
     }
 
     /**

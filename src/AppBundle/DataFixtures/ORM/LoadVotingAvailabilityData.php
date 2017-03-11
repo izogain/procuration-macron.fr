@@ -41,10 +41,10 @@ class LoadVotingAvailabilityData extends AbstractFixture implements DependentFix
         /** @var \AppBundle\Entity\User $userAdmin */
         $userAdmin = $this->getReference('user-admin');
 
-        for ($i = 0; $i < 5; ++$i) {
+        for ($i = 1; $i <= 2; ++$i) {
             $votingAvailability = new VotingAvailability();
             $votingAvailability->setVoter($userAdmin);
-            $votingAvailability->setElectionRound($this->getReference('election-round-pres-' . mt_rand(1, 2)));
+            $votingAvailability->setElectionRound($this->getReference('election-round-pres-' . $i));
 
             $manager->persist($votingAvailability);
         }

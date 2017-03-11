@@ -21,10 +21,8 @@ class VotingAvailabilityRepository extends EntityRepository
             ->innerJoin('v.electionRound', 'r')
                 ->innerJoin('r.election', 'e')
             ->leftJoin('v.procuration', 'p')
-            ->where('u.enabled = :enabled')
-            ->andWhere('r.active = :active_round')
+            ->where('r.active = :active_round')
             ->setParameters([
-                'enabled' => true,
                 'active_round' => true,
             ])
             ->orderBy('r.performanceDate', 'ASC')
@@ -50,11 +48,9 @@ class VotingAvailabilityRepository extends EntityRepository
                 ->innerJoin('r.election', 'e')
             ->leftJoin('v.procuration', 'p')
             ->where('ref.id = :user_id')
-            ->andWhere('u.enabled = :enabled')
             ->andWhere('r.active = :active_round')
             ->setParameters([
                 'user_id' => $userId,
-                'enabled' => true,
                 'active_round' => true,
             ])
             ->orderBy('r.performanceDate', 'ASC')

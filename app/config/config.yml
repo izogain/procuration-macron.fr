@@ -5,11 +5,14 @@ imports:
     - { resource: services/repository.yml }
     - { resource: services/form_type.yml }
     - { resource: services/form_handler.yml }
+    - { resource: services/mediator.yml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: fr
+    pagination_size: 15 # Number of items to display per page
+    pagination_parameter_name: page # Name of the page parameter in the request
     transactional_sender_email:  'contact@en-marche.fr'
     transactional_sender_name:   'En Marche !'
     data_root_path:              "%kernel.root_dir%/../data"
@@ -89,6 +92,17 @@ framework:
     assets: ~
     php_errors:
         log: true
+
+knp_paginator:
+    page_range: 5                      # default page range used in pagination control
+    default_options:
+        page_name: "%pagination_parameter_name%" # page query parameter name
+        sort_field_name: sort          # sort field query parameter name
+        sort_direction_name: direction # sort direction query parameter name
+        distinct: true                 # ensure distinct results, useful when ORM queries are using GROUP BY statements
+    template:
+        pagination: KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig     # sliding pagination controls template
+        sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig # sort link template
 
 stof_doctrine_extensions:
     orm:

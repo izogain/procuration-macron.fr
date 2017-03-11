@@ -17,33 +17,6 @@ services:
             - "@app.mediator.procuration"
             - "@filesystem"
 
-
-    app.mediator.office:
-        class: AppBundle\Mediator\OfficeMediator
-        arguments:
-            - "@app.repository.office"
-    app.mediator.procuration:
-        class: AppBundle\Mediator\ProcurationMediator
-        arguments:
-            - "@app.repository.procuration"
-            - "@doctrine.orm.entity_manager"
-            - "%cerfa_output_root_path%"
-            - "@en_marche_mailjet.client.transactional"
-    app.mediator.user:
-        class: AppBundle\Mediator\UserMediator
-        arguments:
-            - "@app.repository.user"
-    app.mediator.voter_invitation:
-        class: AppBundle\Mediator\VoterInvitationMediator
-        arguments:
-            - "@doctrine.orm.entity_manager"
-    app.mediator.voting_availability:
-        class: AppBundle\Mediator\VotingAvailabilityMediator
-        arguments:
-            - "@app.repository.voting_availability"
-            - "@doctrine.orm.entity_manager"
-
-
     app.twig.address_extension:
         class: AppBundle\Twig\AddressExtension
         public: false

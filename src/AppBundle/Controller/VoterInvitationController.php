@@ -10,12 +10,14 @@ use Symfony\Component\HttpFoundation\Response;
 class VoterInvitationController extends AbstractController
 {
     /**
+     * @param Request $request
+     *
      * @return Response
      */
-    public function indexAction(): Response
+    public function indexAction(Request $request): Response
     {
         return $this->render('voter-invitation/index.html.twig', [
-            'voter_invitations' => $this->getVoterInvitationRepository()->findAllByLastName()
+            'pagination' => $this->getVoterInvitationMediator()->getPaginatedFromCredentials($request, $this->getUser()),
         ]);
     }
 
@@ -47,10 +49,10 @@ class VoterInvitationController extends AbstractController
     }
 
     /**
-     * @return \AppBundle\Repository\VoterInvitationRepository
+     * @return \AppBundle\Mediator\VoterInvitationMediator
      */
-    private function getVoterInvitationRepository()
+    private function getVoterInvitationMediator()
     {
-        return $this->get('app.repository.voter_invitation');
+        return $this->get('app.mediator.voter_invitation');
     }
 }

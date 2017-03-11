@@ -4,17 +4,20 @@ declare(strict_types=1);
 
 namespace AppBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class VotingAvailabilityController extends AbstractController
 {
     /**
+     * @param Request $request
+     *
      * @return Response
      */
-    public function indexAction(): Response
+    public function indexAction(Request $request): Response
     {
         return $this->render('voter/index.html.twig', [
-            'voting_availabilities' => $this->getVotingAvailabilityMediator()->getAllActiveWithCredentials($this->getUser()),
+            'pagination' => $this->getVotingAvailabilityMediator()->getPaginatedActiveWithCredentials($request, $this->getUser()),
         ]);
     }
 

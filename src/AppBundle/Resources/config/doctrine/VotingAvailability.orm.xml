@@ -5,6 +5,9 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
     <entity name="AppBundle\Entity\VotingAvailability" repository-class="AppBundle\Repository\VotingAvailabilityRepository">
+        <unique-constraints>
+            <unique-constraint columns="user_id,election_round_id" />
+        </unique-constraints>
         <id name="id" type="integer" column="id">
             <generator strategy="AUTO"/>
         </id>
@@ -14,7 +17,7 @@
         </one-to-one>
 
         <many-to-one target-entity="AppBundle\Entity\User" field="voter" inversed-by="votingAvailabilities">
-            <join-column on-delete="CASCADE" />
+            <join-column on-delete="CASCADE" name="user_id" />
         </many-to-one>
 
         <many-to-one target-entity="AppBundle\Entity\ElectionRound" field="electionRound">

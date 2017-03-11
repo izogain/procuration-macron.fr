@@ -28,18 +28,6 @@ class OfficeRepository extends EntityRepository
     /**
      * @param User $user
      *
-     * @return Office[]|ArrayCollection
-     */
-    public function findAllForReferent(User $user)
-    {
-        return $this->getQueryBuilderAllForReferent($user)
-            ->getQuery()
-            ->getResult();
-    }
-
-    /**
-     * @param User $user
-     *
      * @return \Doctrine\ORM\QueryBuilder
      */
     public function getQueryBuilderAllForReferent(User $user)

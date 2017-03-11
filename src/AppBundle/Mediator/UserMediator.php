@@ -5,6 +5,8 @@ namespace AppBundle\Mediator;
 use AppBundle\Entity\User;
 use AppBundle\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class UserMediator
 {
@@ -17,11 +19,36 @@ class UserMediator
     protected $repository;
 
     /**
-     * @param UserRepository $repository
+     * @var PaginatorInterface
      */
-    public function __construct(UserRepository $repository)
-    {
+    protected $paginator;
+
+    /**
+     * @var string
+     */
+    protected $paginationPageParameterName;
+
+    /**
+     * @var int
+     */
+    protected $paginationSize;
+
+    /**
+     * @param UserRepository     $repository
+     * @param PaginatorInterface $paginator
+     * @param string             $paginationPageParameterName
+     * @param int                $paginationSize
+     */
+    public function __construct(
+        UserRepository $repository,
+        PaginatorInterface $paginator,
+        $paginationPageParameterName,
+        $paginationSize
+    ) {
         $this->repository = $repository;
+        $this->paginator = $paginator;
+        $this->paginationPageParameterName = $paginationPageParameterName;
+        $this->paginationSize = $paginationSize;
     }
 
     /**
@@ -48,16 +75,23 @@ class UserMediator
     }
 
     /**
-     * @param User $user
+     * @param Request $request
+     * @param User    $user
      *
-     * @return User[]|ArrayCollection
+     * @return \Knp\Component\Pager\Pagination\AbstractPagination
      */
-    public function getAllWithCredentials(User $user)
+    public function getPaginatorFromCredentials(Request $request, User $user)
     {
         if ($user->isSuperAdmin()) {
-            return $this->repository->findAllWithRelationshipsByName();
+            $queryBuilder = $this->repository->getQueryBuilderAllWithRelationshipsByName();
+        } else {
+            $queryBuilder = $this->repository->getQueryBuilderAllForReferent($user);
         }
 
-        return $this->repository->findAllForReferent($user);
+        return $this->paginator->paginate(
+            $queryBuilder,
+            $request->query->getInt($this->paginationPageParameterName, 1),
+            $this->paginationSize
+        );
     }
 }

@@ -12,12 +12,14 @@ use Symfony\Component\HttpFoundation\Response;
 class ProcurationController extends AbstractController
 {
     /**
+     * @param Request $request
+     *
      * @return Response
      */
-    public function indexAction(): Response
+    public function indexAction(Request $request): Response
     {
         return $this->render('procuration/index.html.twig', [
-            'procurations' => $this->getProcurationMediator()->getAllWithCredentials($this->getUser()),
+            'pagination' => $this->getProcurationMediator()->getPaginatedFromCredentials($request, $this->getUser()),
         ]);
     }
 

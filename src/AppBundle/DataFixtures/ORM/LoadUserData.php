@@ -69,7 +69,7 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface, D
         $superAdminAddress->setCountryCode('FR');
         $superAdmin->setVotingOffice($this->getRandomOfficeInParis15());
 
-        $userManager->updateUser($superAdmin);
+        $userManager->updateUser($superAdmin, false);
         $this->addReference('user-admin', $superAdmin);
 
         /** @var User $referent */
@@ -90,7 +90,7 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface, D
         $referentAddress->setCity('Somewhere');
         $referentAddress->setCountryCode('FR');
 
-        $userManager->updateUser($referent);
+        $userManager->updateUser($referent, false);
 
         /** @var User $referentRhone */
         $referentRhone = $userManager->createUser();
@@ -111,7 +111,7 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface, D
         $referentRhoneAddress->setCountryCode('FR');
         $referentRhone->addOfficeInCharge($this->getLyonVotingOffice());
 
-        $userManager->updateUser($referentRhone);
+        $userManager->updateUser($referentRhone, false);
         $this->addReference('user-referent-rhone', $referent);
 
         /** @var User $requester */
@@ -131,7 +131,7 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface, D
         $requesterAddress->setCity('Lyon');
         $requesterAddress->setCountryCode('FR');
 
-        $userManager->updateUser($requester);
+        $userManager->updateUser($requester, false);
         $this->addReference('user-requester', $requester);
 
         /** @var User $availableVoter */
@@ -154,8 +154,36 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface, D
         $availableVoterAddress->setCity('Paris');
         $availableVoterAddress->setCountryCode('FR');
 
-        $userManager->updateUser($availableVoter);
+        $userManager->updateUser($availableVoter, false);
         $this->addReference('user-voter', $availableVoter);
+        
+        for ($i = 0; $i < 150; ++$i) {
+            /** @var User $user */
+            $user = $userManager->createUser();
+            $user->setLastName('Doe');
+            $user->setFirstName('John #'.$i);
+            $user->setUsername('john.doe+'.$i.'@test.com');
+            $user->setPlainPassword('voter1234');
+            $user->setCivility(UserMediator::CIVILITY_MISTER);
+            $user->setFirstName('Vo');
+            $user->setLastName('ter');
+            $user->setBirthDate(new \DateTime('1975-02-24'));
+            $user->setPhoneNumber($this->generatePhoneNumber('0606060606'));
+            $user->setVotingOffice($this->getLyonVotingOffice());
+            /** @var \AppBundle\Entity\Address $userAddress */
+            $userAddress = $user->getAddress();
+            $userAddress->setStreetNumber(54);
+            $userAddress->setStreetRepeater(AddressMediator::STREET_REPEATER_BIS);
+            $userAddress->setStreetType(AddressMediator::STREET_TYPE_IMPASSE);
+            $userAddress->setStreetName('des bois');
+            $userAddress->setPostalCode('75015');
+            $userAddress->setCity('Paris');
+            $userAddress->setCountryCode('FR');
+
+            $userManager->updateUser($user, false);
+        }
+
+        $manager->flush();
     }
 
     /**

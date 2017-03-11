@@ -3,7 +3,7 @@
 
 {% block body %}
     <div class="page-header">
-        <h1>Liste des bureaux de vote <small>{{ offices|length }}</small></h1>
+        <h1>Liste des bureaux de vote <small>{{ pagination.totalItemCount }}</small></h1>
     </div>
 
     <table class="table table-hover table-striped">
@@ -15,7 +15,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for office in offices if offices|length %}
+            {% for office in pagination if pagination|length %}
                 <tr>
                     <td>{{ office.name }}</td>
                     <td>{{ office.address|format_address }}</td>
@@ -37,6 +37,8 @@
             {% endfor %}
         </tbody>
     </table>
+
+    {{ knp_pagination_render(pagination) }}
 {% endblock %}
 
 

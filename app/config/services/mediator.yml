@@ -1,0 +1,48 @@
+services:
+    app.mediator.election_round:
+        class: AppBundle\Mediator\ElectionRoundMediator
+        arguments:
+            - "@app.repository.election_round"
+            - "@knp_paginator"
+            - "%pagination_parameter_name%"
+            - "%pagination_size%"
+    app.mediator.office:
+        class: AppBundle\Mediator\OfficeMediator
+        arguments:
+            - "@app.repository.office"
+            - "@knp_paginator"
+            - "%pagination_parameter_name%"
+            - "%pagination_size%"
+    app.mediator.procuration:
+        class: AppBundle\Mediator\ProcurationMediator
+        arguments:
+            - "@app.repository.procuration"
+            - "@doctrine.orm.entity_manager"
+            - "%cerfa_output_root_path%"
+            - "@en_marche_mailjet.client.transactional"
+            - "@knp_paginator"
+            - "%pagination_parameter_name%"
+            - "%pagination_size%"
+    app.mediator.user:
+        class: AppBundle\Mediator\UserMediator
+        arguments:
+            - "@app.repository.user"
+            - "@knp_paginator"
+            - "%pagination_parameter_name%"
+            - "%pagination_size%"
+    app.mediator.voter_invitation:
+        class: AppBundle\Mediator\VoterInvitationMediator
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@app.repository.voter_invitation"
+            - "@knp_paginator"
+            - "%pagination_parameter_name%"
+            - "%pagination_size%"
+    app.mediator.voting_availability:
+        class: AppBundle\Mediator\VotingAvailabilityMediator
+        arguments:
+            - "@app.repository.voting_availability"
+            - "@doctrine.orm.entity_manager"
+            - "@knp_paginator"
+            - "%pagination_parameter_name%"
+            - "%pagination_size%"

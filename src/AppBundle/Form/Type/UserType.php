@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form\Type;
 
+use AppBundle\Entity\Office;
 use AppBundle\Entity\User;
 use AppBundle\Repository\OfficeRepository;
 use Misd\PhoneNumberBundle\Form\Type\PhoneNumberType;
@@ -89,6 +90,11 @@ class UserType extends AbstractType
 
                     return $officeRepository->getQueryBuilderAllForReferent($editor);
                 },
+                'choice_label' => function (Office $office) {
+                    $officeAddress = $office->getAddress();
+
+                    return sprintf('%s (%s %s)', $office->getName(), $officeAddress->getPostalCode(), $officeAddress->getCity());
+                },
                 'label' => 'Bureaux en charge'
             ]);
 
@@ -136,7 +142,7 @@ class UserType extends AbstractType
 
         foreach ($editor->getOfficesInCharge() as $editorOfficeInCharge) {
             foreach ($userOfficesInCharge as $userOfficeInCharge) {
-                if ($userOfficeInCharge->getId() == $editorOfficeInCharge) {
+                if ($userOfficeInCharge->getId() == $editorOfficeInCharge->getId()) {
                     return true;
                 }
             }

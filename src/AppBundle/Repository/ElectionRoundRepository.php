@@ -9,16 +9,14 @@ use Doctrine\ORM\EntityRepository;
 class ElectionRoundRepository extends EntityRepository
 {
     /**
-     * @return ElectionRound[]|ArrayCollection
+     * @return \Doctrine\ORM\QueryBuilder
      */
-    public function findAllByDateDesc()
+    public function getQueryBuilderfindAllByDateDesc()
     {
         return $this->createQueryBuilder('r')
             ->select('r', 'e')
             ->innerJoin('r.election', 'e')
-            ->orderBy('r.performanceDate', 'ASC')
-            ->getQuery()
-            ->getResult();
+            ->orderBy('r.performanceDate', 'ASC');
     }
 
     /**

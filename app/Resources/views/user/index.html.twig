@@ -7,6 +7,7 @@
         <h1>
             Liste des utilisateurs
             <small>
+                {{ pagination.totalItemCount }}
                 <a href="{{ path('user_new') }}" class="btn btn-xs btn-success">
                     <span class="glyphicon glyphicon-plus"></span>
                 </a>
@@ -19,29 +20,31 @@
             <tr>
                 <th>Nom</th>
                 {% if editor_is_super_admin %}
-                    <th class="text-center">Administrateur</th>
+                    <th class="text-center">Administrateur/trice</th>
                 {% endif %}
-                <th class="text-center">Référent</th>
+                <th class="text-center">Référent(e)</th>
                 <th class="text-center">Compte actif</th>
             </tr>
         </thead>
         <tbody>
-            {% for user in users if users|length %}
+            {% for user in pagination if pagination|length %}
                 <tr>
                     <td>
                         <a href="{{ path('user_edit', {'id': user.id}) }}">
                             {{ user }}
                         </a>
                     </td>
+                    {% if editor_is_super_admin %}
+                        <td class="text-center">
+                            {% if user.isSuperAdmin %}
+                                <span class="text-success">
+                                    <span class="glyphicon glyphicon-ok"></span>
+                                </span>
+                            {% endif %}
+                        </td>
+                    {% endif %}
                     <td class="text-center">
-                        {% if editor_is_super_admin and user.isSuperAdmin %}
-                            <span class="text-success">
-                                <span class="glyphicon glyphicon-ok"></span>
-                            </span>
-                        {% endif %}
-                    </td>
-                    <td class="text-center">
-                        {% if user.hasRole('ROLE_ADMIN') %}
+                        {% if user.officesInCharge|length %}
                             <span class="text-success">
                                 <span class="glyphicon glyphicon-ok"></span>
                             </span>
@@ -62,4 +65,6 @@
             {% endfor %}
         </tbody>
     </table>
+
+    {{ knp_pagination_render(pagination) }}
 {% endblock %}

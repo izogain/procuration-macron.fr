@@ -4,7 +4,10 @@
 
 {% block body %}
     <div class="page-header">
-        <h1>Liste des remplaçants</h1>
+        <h1>
+            Liste des remplaçants
+            <small>{{ pagination.totalItemCount }}</small>
+        </h1>
     </div>
 
     <table class="table table-hover table-striped">
@@ -18,7 +21,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for voting_availability in voting_availabilities if voting_availabilities|length %}
+            {% for voting_availability in pagination if pagination|length %}
                 {% set procuration = voting_availability.procuration %}
                 {% set electionRound = voting_availability.electionRound %}
                 {% set voter = voting_availability.voter %}
@@ -34,7 +37,7 @@
                             <b class="text-success">Affecté</b>
                         {% endif %}
                     </td>
-                    <td>
+                    <td class="text-right">
                         <a href="{{ path('voting_availability_delete', {'id': voting_availability.id}) }}"
                            class="delete-voting-availability btn btn-xs btn-danger{% if procuration is not null %} disabled{% endif %}"
                            data-voter="{{ voter }}" data-election="{{ electionRound.election }}"
@@ -52,13 +55,15 @@
             {% endfor %}
         </tbody>
     </table>
+
+    {{ knp_pagination_render(pagination) }}
 {% endblock %}
 
 
 {% block javascripts %}
     <script>
         $(document).ready(function() {
-            $("a.delete-voting-availability").click(function(e) {
+            $("a.delete-voting-availability").click(function() {
                 var $this = $(this);
 
                 if ($this.hasClass('disabled')) {

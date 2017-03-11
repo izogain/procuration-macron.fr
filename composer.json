@@ -36,7 +36,8 @@
         "setasign/fpdi-fpdf": "^1.6",
         "league/csv": "^8.2",
         "csa/guzzle-bundle": "^2.2",
-        "ramsey/uuid-doctrine": "^1.2"
+        "ramsey/uuid-doctrine": "^1.2",
+        "knplabs/knp-paginator-bundle": "^2.5"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^3.0",

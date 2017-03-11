@@ -10,12 +10,14 @@ use Symfony\Component\HttpFoundation\Response;
 class ElectionRoundController extends AbstractController
 {
     /**
+     * @param Request $request
+     *
      * @return Response
      */
-    public function indexAction(): Response
+    public function indexAction(Request $request): Response
     {
         return $this->render('election-round/index.html.twig', [
-            'election_rounds' => $this->getElectionRoundRepository()->findAllByDateDesc(),
+            'pagination' => $this->getElectionRoundMediator()->getAllPaginated($request),
         ]);
     }
 
@@ -76,6 +78,14 @@ class ElectionRoundController extends AbstractController
         $this->deleteEntity($election);
 
         return $this->redirectToRoute('election_round_index');
+    }
+
+    /**
+     * @return \AppBundle\Mediator\ElectionRoundMediator
+     */
+    private function getElectionRoundMediator()
+    {
+        return $this->get('app.mediator.election_round');
     }
 
     /**

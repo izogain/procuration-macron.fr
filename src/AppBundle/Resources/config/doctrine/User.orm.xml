@@ -37,7 +37,7 @@
             </cascade>
         </one-to-many>
 
-        <many-to-one target-entity="AppBundle\Entity\Office" field="votingOffice">
+        <many-to-one target-entity="AppBundle\Entity\Office" field="votingOffice" inversed-by="voters">
             <join-column on-delete="SET NULL" nullable="true" />
         </many-to-one>
 

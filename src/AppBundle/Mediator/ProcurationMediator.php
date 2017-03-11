@@ -8,6 +8,8 @@ use AppBundle\Message\ProcurationUnbindingMessage;
 use AppBundle\Repository\ProcurationRepository;
 use Doctrine\ORM\EntityManager;
 use EnMarche\Bundle\MailjetBundle\Client\MailjetClient;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class ProcurationMediator
 {
@@ -57,35 +59,66 @@ class ProcurationMediator
     protected $mailjetClient;
 
     /**
+     * @var PaginatorInterface
+     */
+    protected $paginator;
+
+    /**
+     * @var string
+     */
+    protected $paginationPageParameterName;
+
+    /**
+     * @var int
+     */
+    protected $paginationSize;
+
+    /**
      * @param ProcurationRepository $procurationRepository
      * @param EntityManager         $entityManager
      * @param string                $cerfaOutputRootDir
      * @param MailjetClient         $mailjetClient
+     * @param PaginatorInterface    $paginator
+     * @param string                $paginationPageParameterName
+     * @param int                   $paginationSize
      */
     public function __construct(
         ProcurationRepository $procurationRepository,
         EntityManager $entityManager,
         $cerfaOutputRootDir,
-        MailjetClient $mailjetClient
+        MailjetClient $mailjetClient,
+        PaginatorInterface $paginator,
+        $paginationPageParameterName,
+        $paginationSize
     ) {
         $this->procurationRepository = $procurationRepository;
         $this->entityManager = $entityManager;
         $this->cerfaOutputRootDir = $cerfaOutputRootDir;
         $this->mailjetClient = $mailjetClient;
+        $this->paginator = $paginator;
+        $this->paginationPageParameterName = $paginationPageParameterName;
+        $this->paginationSize = $paginationSize;
     }
 
     /**
-     * @param User $user
+     * @param Request $request
+     * @param User    $user
      *
-     * @return Procuration[]|\Doctrine\Common\Collections\ArrayCollection
+     * @return \Knp\Component\Pager\Pagination\AbstractPagination
      */
-    public function getAllWithCredentials(User $user)
+    public function getPaginatedFromCredentials(Request $request, User $user)
     {
         if ($user->isSuperAdmin()) {
-            return $this->procurationRepository->findAllWithRelationships();
+            $query = $this->procurationRepository->findAllWithRelationships();
+        } else {
+            $query = $this->procurationRepository->findByUserArea($user->getId());
         }
 
-        return $this->procurationRepository->findByUserArea($user->getId());
+        return $this->paginator->paginate(
+            $query,
+            $request->query->getInt($this->paginationPageParameterName, 1),
+            $this->paginationSize
+        );
     }
 
     /**

@@ -2,18 +2,16 @@
 
 namespace AppBundle\Mediator;
 
-use AppBundle\Entity\Office;
-use AppBundle\Entity\User;
-use AppBundle\Repository\OfficeRepository;
+use AppBundle\Repository\ElectionRoundRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class OfficeMediator
+class ElectionRoundMediator
 {
     /**
-     * @var OfficeRepository
+     * @var ElectionRoundRepository
      */
-    protected $officeRepository;
+    protected $electionRoundRepository;
 
     /**
      * @var PaginatorInterface
@@ -31,18 +29,18 @@ class OfficeMediator
     protected $paginationSize;
 
     /**
-     * @param OfficeRepository   $officeRepository
-     * @param PaginatorInterface $paginator
-     * @param string             $paginationPageParameterName
-     * @param int                $paginationSize
+     * @param ElectionRoundRepository $electionRoundRepository
+     * @param PaginatorInterface      $paginator
+     * @param string                  $paginationPageParameterName
+     * @param int                     $paginationSize
      */
     public function __construct(
-        OfficeRepository $officeRepository,
+        ElectionRoundRepository $electionRoundRepository,
         PaginatorInterface $paginator,
         $paginationPageParameterName,
         $paginationSize
     ) {
-        $this->officeRepository = $officeRepository;
+        $this->electionRoundRepository = $electionRoundRepository;
         $this->paginator = $paginator;
         $this->paginationPageParameterName = $paginationPageParameterName;
         $this->paginationSize = $paginationSize;
@@ -50,20 +48,13 @@ class OfficeMediator
 
     /**
      * @param Request $request
-     * @param User    $user
      *
-     * @return \Knp\Component\Pager\Pagination\AbstractPagination
+     * @return \Knp\Component\Pager\Pagination\PaginationInterface
      */
-    public function getPaginatedWithCredentials(Request $request, User $user)
+    public function getAllPaginated(Request $request)
     {
-        if ($user->isSuperAdmin()) {
-            $query = $this->officeRepository->createQueryBuilder('o');
-        } else {
-            $query = $this->officeRepository->getQueryBuilderAllForReferent($user);
-        }
-
         return $this->paginator->paginate(
-            $query,
+            $this->electionRoundRepository->getQueryBuilderfindAllByDateDesc(),
             $request->query->getInt($this->paginationPageParameterName, 1),
             $this->paginationSize
         );

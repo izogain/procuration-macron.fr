@@ -21,6 +21,8 @@
 
         <embedded name="address" class="AppBundle\Entity\Address" />
 
+        <one-to-many target-entity="AppBundle\Entity\User" mapped-by="votingOffice" field="voters" />
+
         <many-to-many target-entity="AppBundle\Entity\User" field="referents" mapped-by="officesInCharge">
             <cascade>
                 <cascade-all/>

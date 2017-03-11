@@ -34,6 +34,11 @@ class Office
     /**
      * @var User[]|ArrayCollection
      */
+    protected $voters;
+
+    /**
+     * @var User[]|ArrayCollection
+     */
     protected $referents;
 
     /**
@@ -49,6 +54,7 @@ class Office
     public function __construct()
     {
         $this->address = new Address();
+        $this->voters = new ArrayCollection();
         $this->referents = new ArrayCollection();
     }
 
@@ -135,6 +141,22 @@ class Office
     public function setAddress(Address $address)
     {
         $this->address = $address;
+    }
+
+    /**
+     * @return User[]|ArrayCollection
+     */
+    public function getVoters()
+    {
+        return $this->voters;
+    }
+
+    /**
+     * @param User[]|ArrayCollection $voters
+     */
+    public function setVoters($voters)
+    {
+        $this->voters = $voters;
     }
 
     /**

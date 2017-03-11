@@ -25,35 +25,32 @@ class UserRepository extends EntityRepository
     }
 
     /**
-     * @return User[]|ArrayCollection
+     * @return \Doctrine\ORM\QueryBuilder
      */
-    public function findAllWithRelationshipsByName()
+    public function getQueryBuilderAllWithRelationshipsByName()
     {
         return $this->createQueryBuilder('u')
             ->select('u', 'o')
             ->leftJoin('u.officesInCharge', 'o')
             ->orderBy('u.lastName', 'ASC')
-            ->addOrderBy('u.firstName', 'ASC')
-            ->getQuery()
-            ->getResult();
+            ->addOrderBy('u.firstName', 'ASC');
     }
 
     /**
      * @param User $user
      *
-     * @return User[]|ArrayCollection
+     * @return \Doctrine\ORM\QueryBuilder
      */
-    public function findAllForReferent(User $user)
+    public function getQueryBuilderAllForReferent(User $user)
     {
         return $this->createQueryBuilder('u')
+            ->select('u', 'o')
             ->innerJoin('u.officesInCharge', 'o')
-            ->innerJoin('o.referents', 'r')
-            ->where('r = :user')
+                ->innerJoin('o.referents', 'r')
+            ->where('r.id = :user')
             ->setParameter('user', $user)
             ->orderBy('u.lastName', 'ASC')
-            ->addOrderBy('u.firstName', 'ASC')
-            ->getQuery()
-            ->getResult();
+            ->addOrderBy('u.firstName', 'ASC');
     }
 
     /**
