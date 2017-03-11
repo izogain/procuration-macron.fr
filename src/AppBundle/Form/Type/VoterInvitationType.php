@@ -28,7 +28,8 @@ class VoterInvitationType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('civility', CivilityChoiceType::class)
+        $builder
+            ->add('civility', CivilityChoiceType::class)
             ->add('firstName', TextType::class, [
                 'label' => 'Prénom',
             ])

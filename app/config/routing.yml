@@ -12,7 +12,7 @@ office:
 
 voter-invitation:
     prefix: /admin/voter-invitations
-    resource: "routing/voter-invitation.yml"
+    resource: "routing/voter_invitation.yml"
 
 election_round:
     prefix: /admin/election-rounds

@@ -8,7 +8,7 @@
             Demandes de mandataires envoyées
             <small>
                 {{ pagination.totalItemCount }}
-                <a href="{{ path('voter-invitation_new') }}" class="btn btn-xs btn-success">
+                <a href="{{ path('voter_invitation_new') }}" class="btn btn-xs btn-success">
                     <span class="glyphicon glyphicon-plus"></span>
                 </a>
             </small>
@@ -22,7 +22,7 @@
                 <th>Nom</th>
                 <th>Prénom</th>
                 <th class="text-center">Date d'envoi</th>
-                <th class="text-center">Inscription</th>
+                <th class="text-center">Inscription confirmée</th>
             </tr>
         </thead>
         <tbody>
@@ -42,7 +42,7 @@
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="5" class="text-center">Aucune demande envoyée. <a href="{{ path('voter-invitation_new') }}">Envoyer une demande</a></td>
+                    <td colspan="5" class="text-center">Aucune demande envoyée. <a href="{{ path('voter_invitation_new') }}">Envoyer une demande</a></td>
                 </tr>
             {% endfor %}
         </tbody>

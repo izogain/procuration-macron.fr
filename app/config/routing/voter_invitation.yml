@@ -1,9 +1,9 @@
-voter-invitation_new:
+voter_invitation_new:
     path: /new
     defaults: { _controller: AppBundle:VoterInvitation:new }
     methods: GET|POST
 
-voter-invitation_index:
+voter_invitation_index:
     path: /
     defaults: { _controller: AppBundle:VoterInvitation:index }
     methods: GET

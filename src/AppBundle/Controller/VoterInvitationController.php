@@ -32,7 +32,7 @@ class VoterInvitationController extends AbstractController
         $form = $formHandler->createForm($this->getUser());
 
         if ($formHandler->process($form, $request)) {
-            return $this->redirectToRoute('voter-invitation_index');
+            return $this->redirectToRoute('voter_invitation_index');
         }
 
         return $this->render('voter-invitation/new.html.twig', [
