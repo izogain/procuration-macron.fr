@@ -22,6 +22,7 @@
                 <th>Nom</th>
                 <th>Prénom</th>
                 <th class="text-center">Date d'envoi</th>
+                <th>Envoyé par</th>
                 <th class="text-center">Inscription confirmée</th>
             </tr>
         </thead>
@@ -32,6 +33,7 @@
                     <td>{{ voter_invitation.lastName|upper }}</td>
                     <td>{{ voter_invitation.firstName|lower|capitalize }}</td>
                     <td>{{ voter_invitation.createdAt|localizeddate }}</td>
+                    <td>{{ voter_invitation.sender }}</td>
                     <td class="text-center">
                         {% if voter_invitation.active %}
                             <span class="label label-danger"><span class="glyphicon glyphicon-remove" title="Non utilisé"></span></span>

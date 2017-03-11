@@ -28,8 +28,8 @@
                 {% set voterVotingOffice = voter.votingOffice %}
                 <tr>
                     <td>
-                        <a class="btn btn-xs btn-info" href="tel:{{ voter.phoneNumber|phone_number_format }}">
-                            <span class="glyphicon glyphicon-phone-alt" data-toggle="tooltip" title="{{ voter.phoneNumber|phone_number_format }}"></span>
+                        <a class="btn btn-xs btn-info" href="tel:{{ voter.phoneNumber|phone_number_format }}" data-toggle="tooltip" title="{{ voter.phoneNumber|phone_number_format }}">
+                            <span class="glyphicon glyphicon-phone-alt"></span>
                         </a>
                         {{ voter }}
                     </td>

@@ -13,6 +13,8 @@ class VoterInvitationRepository extends EntityRepository
     public function queryBuilderAllByName()
     {
         return $this->createQueryBuilder('v')
+            ->select('v', 's')
+            ->innerJoin('v.sender', 's')
             ->orderBy('v.lastName', 'ASC')
             ->addOrderBy('v.firstName', 'ASC');
     }
@@ -25,7 +27,6 @@ class VoterInvitationRepository extends EntityRepository
     public function queryBuilderSentBy($userId)
     {
         return $this->queryBuilderAllByName()
-            ->innerJoin('v.sender', 's')
             ->where('s.id = :user_id')
             ->setParameter('user_id', $userId);
     }
