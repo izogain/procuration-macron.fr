@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+    <class name="AppBundle\Entity\Office">
+        <property name="name">
+            <constraint name="NotBlank"/>
+            <constraint name="Length">
+                <option name="min">2</option>
+            </constraint>
+        </property>
+
+        <property name="regularOpeningHour">
+            <constraint name="Range">
+                <option name="min">0</option>
+                <option name="max">23</option>
+            </constraint>
+        </property>
+
+        <property name="regularClosingHour">
+            <constraint name="Range">
+                <option name="min">0</option>
+                <option name="max">23</option>
+            </constraint>
+            <constraint name="Expression">
+                <option name="expression">this.getRegularOpeningHour() &lt; this.getRegularClosingHour()</option>
+                <option name="message">Cette valeur doit être supérieure à l'heure d'ouverture.</option>
+            </constraint>
+        </property>
+
+        <property name="address">
+            <constraint name="Valid" />
+        </property>
+    </class>
+
+</constraint-mapping>
