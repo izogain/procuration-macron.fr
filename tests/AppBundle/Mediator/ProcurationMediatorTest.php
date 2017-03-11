@@ -10,6 +10,7 @@ use AppBundle\Mediator\ProcurationMediator;
 use AppBundle\Repository\ProcurationRepository;
 use Doctrine\ORM\EntityManager;
 use EnMarche\Bundle\MailjetBundle\Client\MailjetClient;
+use Knp\Component\Pager\PaginatorInterface;
 use PHPUnit\Framework\TestCase;
 
 class ProcurationMediatorTest extends TestCase
@@ -23,6 +24,9 @@ class ProcurationMediatorTest extends TestCase
     protected $entityManager;
     protected $cerfaOutputDir;
     protected $mailjetClient;
+    protected $paginator;
+    protected $paginatorParameterName;
+    protected $paginationSize;
 
     protected function setUp()
     {
@@ -30,12 +34,18 @@ class ProcurationMediatorTest extends TestCase
         $this->entityManager = $this->createMock(EntityManager::class);
         $this->cerfaOutputDir = __DIR__;
         $this->mailjetClient = $this->createMock(MailjetClient::class);
+        $this->paginator = $this->createMock(PaginatorInterface::class);
+        $this->paginatorParameterName = 'some_random_param';
+        $this->paginationSize = 42;
 
         $this->mediator = new ProcurationMediator(
             $this->procurationRepository,
             $this->entityManager,
             $this->cerfaOutputDir,
-            $this->mailjetClient
+            $this->mailjetClient,
+            $this->paginator,
+            $this->paginatorParameterName,
+            $this->paginationSize
         );
     }
 
