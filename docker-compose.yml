@@ -15,8 +15,8 @@ services:
     db:
         image: mysql:5.7
         environment:
-            MYSQL_ROOT_PASSWORD: enmarche
-            MYSQL_DATABASE: enmarche
+            MYSQL_ROOT_PASSWORD: enmarche_procuration
+            MYSQL_DATABASE: enmarche_procuration
             MYSQL_USER: enmarche
             MYSQL_PASSWORD: enmarche
 #
