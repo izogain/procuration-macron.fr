@@ -67,8 +67,25 @@ class UserRepository extends EntityRepository
      *
      * @return User|null
      */
-    public function findOneByEmail($email)
+    public function findOneByEmail($email): ?User
     {
         return $this->findOneBy(['email' => $email]);
+    }
+
+    /**
+     * @param string $email
+     *
+     * @return User|null
+     */
+    public function findOneByEmailWithProcurations($email): ?User
+    {
+        return $this->createQueryBuilder('u')
+            ->select('u', 'p', 'e')
+            ->leftJoin('u.procurations', 'p')
+                ->leftJoin('p.electionRound', 'e')
+            ->where('u.email = :email')
+            ->setParameter('email', $email)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }

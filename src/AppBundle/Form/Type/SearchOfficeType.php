@@ -101,7 +101,7 @@ class SearchOfficeType extends AbstractType
             ],
             'constraints' => [
                 new NotBlank(),
-            ]
+            ],
         ]);
     }
 }

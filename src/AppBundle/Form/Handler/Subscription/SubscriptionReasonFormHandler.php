@@ -5,6 +5,7 @@ namespace AppBundle\Form\Handler\Subscription;
 use AppBundle\Entity\Procuration;
 use AppBundle\Entity\User;
 use AppBundle\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use FOS\UserBundle\Model\UserManager;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -67,7 +68,7 @@ class SubscriptionReasonFormHandler extends AbstractFormHandler
         $data = $this->getStoredData($request);
 
         /** @var User $user */
-        if (!$user = $this->userRepository->findOneByEmail($data['contact']['email'])) {
+        if (!$user = $this->userRepository->findOneByEmailWithProcurations($data['contact']['email'])) {
             $user = $this->userManager->createUser();
             $user->setVotingOffice($this->entityManager->merge($data['office']['office']));
             $user->setCivility($data['contact']['civility']);
@@ -82,12 +83,13 @@ class SubscriptionReasonFormHandler extends AbstractFormHandler
             $this->userManager->updateUser($user);
         }
 
+        $electionRounds = $this->getFilteredElectionRounds($user, $data['election_rounds']);
         $reason = $data['reason']['reason'];
 
-        /** @var \AppBundle\Entity\Election $election */
-        foreach ($data['election_rounds'] as $election) {
+        /* @var \AppBundle\Entity\Election $election */
+        foreach ($electionRounds as $electionRound) {
             $procuration = new Procuration();
-            $procuration->setElectionRound($this->entityManager->merge($election));
+            $procuration->setElectionRound($electionRound);
             $procuration->setRequester($user);
             $procuration->setReason($reason);
 
@@ -100,5 +102,30 @@ class SubscriptionReasonFormHandler extends AbstractFormHandler
         $this->setStoredData($request, []);
 
         return true;
+    }
+
+    /**
+     * @param User  $user
+     * @param array $submittedElectionRounds
+     *
+     * @return ArrayCollection
+     */
+    private function getFilteredElectionRounds(User $user, array $submittedElectionRounds)
+    {
+        $electionRoundsToAdd = new ArrayCollection();
+
+        foreach ($submittedElectionRounds as $electionRound) {
+            $electionRoundsToAdd->add($this->entityManager->merge($electionRound));
+        }
+
+        foreach ($user->getProcurations() as $procuration) {
+            $electionRound = $procuration->getElectionRound();
+
+            if ($electionRoundsToAdd->contains($electionRound)) {
+                $electionRoundsToAdd->removeElement($electionRound);
+            }
+        }
+
+        return $electionRoundsToAdd;
     }
 }

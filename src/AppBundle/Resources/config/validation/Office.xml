@@ -11,23 +11,23 @@
             </constraint>
         </property>
 
-        <property name="regularOpeningHour">
-            <constraint name="Range">
-                <option name="min">0</option>
-                <option name="max">23</option>
-            </constraint>
-        </property>
+        <!--<property name="regularOpeningHour">-->
+            <!--<constraint name="Range">-->
+                <!--<option name="min">0</option>-->
+                <!--<option name="max">23</option>-->
+            <!--</constraint>-->
+        <!--</property>-->
 
-        <property name="regularClosingHour">
-            <constraint name="Range">
-                <option name="min">0</option>
-                <option name="max">23</option>
-            </constraint>
-            <constraint name="Expression">
-                <option name="expression">this.getRegularOpeningHour() &lt; this.getRegularClosingHour()</option>
-                <option name="message">Cette valeur doit être supérieure à l'heure d'ouverture.</option>
-            </constraint>
-        </property>
+        <!--<property name="regularClosingHour">-->
+            <!--<constraint name="Range">-->
+                <!--<option name="min">0</option>-->
+                <!--<option name="max">23</option>-->
+            <!--</constraint>-->
+            <!--<constraint name="Expression">-->
+                <!--<option name="expression">this.getRegularOpeningHour() &lt; this.getRegularClosingHour()</option>-->
+                <!--<option name="message">Cette valeur doit être supérieure à l'heure d'ouverture.</option>-->
+            <!--</constraint>-->
+        <!--</property>-->
 
         <property name="address">
             <constraint name="Valid" />

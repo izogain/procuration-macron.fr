@@ -5,9 +5,21 @@
                   xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping">
 
     <entity name="AppBundle\Entity\User" repository-class="AppBundle\Repository\UserRepository">
+        <unique-constraints>
+            <unique-constraint columns="email" />
+        </unique-constraints>
+
         <id name="id" type="integer" column="id">
             <generator strategy="AUTO"/>
         </id>
+
+
+        <!-- MODEL OVERRIDE -->
+        <attribute-overrides>
+            <attribute-override name="emailCanonical">
+                <field unique="false" length="180" />
+            </attribute-override>
+        </attribute-overrides>
 
         <field name="superAdmin" type="boolean" />
         <field name="civility" type="smallint" length="1" />
