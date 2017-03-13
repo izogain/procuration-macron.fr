@@ -2,7 +2,6 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Office;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,10 +33,10 @@ class DefaultController extends AbstractController
      */
     public function cityResultsAction(Request $request): JsonResponse
     {
-        $term = $request->request->get('term');
-        $results = $this->get('app.repository.office')->searchCity($term);
-
-        return new JsonResponse($results);
+        return new JsonResponse(
+            $this->getOfficeRepository()
+                ->searchCity($request->request->get('term'))
+        );
     }
 
     /**
@@ -47,11 +46,13 @@ class DefaultController extends AbstractController
      */
     public function officeResultsAction(Request $request): JsonResponse
     {
-        $city = $request->request->get('city');
-        $postalCode = $request->request->get('postalCode');
-        $results = $this->get('app.repository.office')->findByCityAndPostalCode($city, $postalCode);
-
-        return new JsonResponse($results);
+        return new JsonResponse(
+            $this->getOfficeRepository()
+                ->findByCityAndPostalCode(
+                    $request->request->get('city'),
+                    $request->request->get('postalCode')
+                )
+        );
     }
 
     /**

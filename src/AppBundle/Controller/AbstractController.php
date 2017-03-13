@@ -23,9 +23,17 @@ abstract class AbstractController extends Controller
     /**
      * @return \AppBundle\Mediator\OfficeMediator
      */
-    public function getOfficeMediator()
+    protected function getOfficeMediator()
     {
         return $this->get('app.mediator.office');
+    }
+
+    /**
+     * @return \AppBundle\Repository\OfficeRepository
+     */
+    protected function getOfficeRepository()
+    {
+        return $this->get('app.repository.office');
     }
 
     /**

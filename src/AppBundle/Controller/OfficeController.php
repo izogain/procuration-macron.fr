@@ -94,14 +94,6 @@ class OfficeController extends AbstractController
     }
 
     /**
-     * @return \AppBundle\Repository\OfficeRepository
-     */
-    private function getOfficeRepository()
-    {
-        return $this->get('app.repository.office');
-    }
-
-    /**
      * @return \AppBundle\Form\Handler\OfficeFormHandler
      */
     private function getOfficeFormHandler()

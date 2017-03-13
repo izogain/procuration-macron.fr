@@ -10,6 +10,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class SearchOfficeType extends AbstractType
 {
@@ -98,6 +99,9 @@ class SearchOfficeType extends AbstractType
             'attr' => [
                 'class' => 'form-select',
             ],
+            'constraints' => [
+                new NotBlank(),
+            ]
         ]);
     }
 }
