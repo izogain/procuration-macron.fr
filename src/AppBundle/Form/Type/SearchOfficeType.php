@@ -53,10 +53,18 @@ class SearchOfficeType extends AbstractType
         });
 
         $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+            $formData = $event->getData();
+
+            if (!isset($formData['office'])) {
+                $this->attachOfficeWidget($event, []);
+
+                return;
+            }
+
             $this->attachOfficeWidget(
                 $event,
                 [
-                    $this->officeRepository->find($event->getData()['office']),
+                    $this->officeRepository->find($formData['office']),
                 ]
             );
         });
