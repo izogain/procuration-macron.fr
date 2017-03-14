@@ -4,6 +4,8 @@ namespace AppBundle\Command;
 
 use AppBundle\Entity\Office;
 use AppBundle\Mediator\AddressMediator;
+use Behat\Transliterator\Transliterator;
+use EnMarche\Bundle\CoreBundle\Intl\FranceCitiesBundle;
 use League\Csv\Reader;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Console\Input\InputArgument;
@@ -47,8 +49,9 @@ class ImportOfficesCommand extends AbstractCommand
         $streetTypes = array_map('mb_strtolower', AddressMediator::getStreetTypes());
 
         // Reporting data
-        $duplicateData = $invalidRowsFormat = [];
+        $duplicateData = $invalidRowsFormat = $missingPostalCodes = $mismatchInseeCityCodes = [];
         $processedRowCount = 0;
+        $cities = FranceCitiesBundle::$cities;
 
         foreach ($reader as $i => $row) {
             $rowSize = count($row);
@@ -56,11 +59,11 @@ class ImportOfficesCommand extends AbstractCommand
             // The rows with no street name is a 5 items length array
             if (5 == $rowSize) {
                 list($name, $postalCode, $city, $openingHour, $closingHour) = $row;
-                $streetName = '';
+                $streetName = null;
             } elseif (6 == $rowSize) {
                 list($name, $streetName, $postalCode, $city, $openingHour, $closingHour) = $row;
             } else {
-                $invalidRowsFormat[$i] = $row;
+                $invalidRowsFormat[$i + 1] = $row;
                 continue;
             }
 
@@ -69,9 +72,34 @@ class ImportOfficesCommand extends AbstractCommand
 
             $officeAddress = $office->getAddress();
             $officeAddress->setPostalCode(trim($postalCode));
+            $officeAddress->setCityName($city);
 
+            // The same office has already been registered
             if (isset($duplicateData[$officeAddress->getPostalCode()][$office->getName()])) {
                 ++$duplicateData[$officeAddress->getPostalCode()][$office->getName()];
+
+                continue;
+            }
+
+            // The city INSEE code is not defined
+            if (!isset($cities[$officeAddress->getPostalCode()])) {
+                if (!isset($missingPostalCodes[$officeAddress->getPostalCode()])) {
+                    $missingPostalCodes[$officeAddress->getPostalCode()] = [];
+                }
+
+                $missingPostalCodes[$officeAddress->getPostalCode()][] = $i + 1;
+
+                continue;
+            }
+
+            $cityNames = array_map('\Behat\Transliterator\Transliterator::urlize', $cities[$officeAddress->getPostalCode()]);
+
+            if (false === ($inseeCityCode = array_search(Transliterator::urlize($officeAddress->getCityName()), $cityNames))) {
+                if (!isset($mismatchInseeCityCodes[$officeAddress->getPostalCode()][$officeAddress->getCityName()])) {
+                    $mismatchInseeCityCodes[$officeAddress->getPostalCode()][$officeAddress->getCityName()] = [];
+                }
+
+                $mismatchInseeCityCodes[$officeAddress->getPostalCode()][$officeAddress->getCityName()][] = $i + 1;
 
                 continue;
             }
@@ -103,7 +131,7 @@ class ImportOfficesCommand extends AbstractCommand
             }
 
             ++$processedRowCount;
-            $officeAddress->setCity($city);
+            $officeAddress->setInseeCityCode($inseeCityCode);
             $officeAddress->setCountryCode('FR');
 
             $entityManager->persist($office);
@@ -120,6 +148,8 @@ class ImportOfficesCommand extends AbstractCommand
 
         $this->displayDuplicatedRows($output, $duplicateData);
         $this->displayInvalidRowsFormat($output, $invalidRowsFormat);
+        $this->displayMissingPostalCodes($output, $missingPostalCodes);
+        $this->displayMismatchInseeCodes($output, $mismatchInseeCityCodes);
 
         return 0;
     }
@@ -164,6 +194,7 @@ class ImportOfficesCommand extends AbstractCommand
             return;
         }
 
+        $output->writeln(str_repeat("\n", 4));
         $output->writeln(sprintf('<error>%d duplicated lines</error>', $nbDuplicates));
 
         foreach ($flattenedData as $dataInfos) {
@@ -175,9 +206,9 @@ class ImportOfficesCommand extends AbstractCommand
      * Display the number of not properly formatted rows.
      *
      * @param OutputInterface $output
-     * @param                 $invalidRowsFormat
+     * @param array           $invalidRowsFormat
      */
-    private function displayInvalidRowsFormat(OutputInterface $output, $invalidRowsFormat)
+    private function displayInvalidRowsFormat(OutputInterface $output, array $invalidRowsFormat)
     {
         $nbInvalidRows = count($invalidRowsFormat);
 
@@ -185,10 +216,57 @@ class ImportOfficesCommand extends AbstractCommand
             return;
         }
 
+        $output->writeln(str_repeat("\n", 4));
         $output->writeln(sprintf('<error>%d invalid rows:</error>', $nbInvalidRows));
 
         foreach ($invalidRowsFormat as $lineNumber => $data) {
             $output->writeln(sprintf('Line %d: %s', $lineNumber, json_encode($data)));
+        }
+    }
+
+    /**
+     * Display the different missing INSEE codes.
+     *
+     * @param OutputInterface $output
+     * @param array           $missingInseeCodes
+     */
+    private function displayMissingPostalCodes(OutputInterface $output, array $missingInseeCodes)
+    {
+        $nbMissingInseeCodes = count($missingInseeCodes);
+
+        if (!$nbMissingInseeCodes) {
+            return;
+        }
+
+        $output->writeln(str_repeat("\n", 4));
+        $output->writeln(sprintf('<error>%d missing postal codes:</error>', $nbMissingInseeCodes));
+
+        foreach ($missingInseeCodes as $postalCode => $rows) {
+            $output->writeln(sprintf('<info>%s</info>: at lines %s', $postalCode, implode(', ', $rows)));
+        }
+    }
+
+    /**
+     * @param OutputInterface $output
+     * @param array           $mismatchInseeCityCodes
+     */
+    private function displayMismatchInseeCodes(OutputInterface $output, array $mismatchInseeCityCodes)
+    {
+        $nbMismatchInseeCodes = count($mismatchInseeCityCodes);
+
+        if (!$nbMismatchInseeCodes) {
+            return;
+        }
+
+        $output->writeln(str_repeat("\n", 4));
+        $output->writeln(sprintf('<error>%s mismatching INSEE codes:</error>', $nbMismatchInseeCodes));
+
+        foreach ($mismatchInseeCityCodes as $postalCode => $cities) {
+            $output->writeln(sprintf('<info>For postal code %s:</info>', $postalCode));
+
+            foreach ($cities as $cityName => $rows) {
+                $output->writeln(sprintf('%s at rows: %s', $cityName, implode(', ', $rows)));
+            }
         }
     }
 }

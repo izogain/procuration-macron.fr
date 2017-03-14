@@ -13,8 +13,10 @@
         <title>{% block title %}Procuration-Macron.fr{% endblock %}</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-        <link rel="icon" type="image/png" href="{{ asset('img/favicon-32x32.png') }}?v2" sizes="32x32" />
-        <link rel="icon" type="image/png" href="{{ asset('img/favicon-16x16.png') }}?v2" sizes="16x16" />
+        <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+        <link rel="icon" type="image/png" href="{{ asset('img/favicon-32x32.png') }}" sizes="32x32" />
+        <link rel="icon" type="image/png" href="{{ asset('img/favicon-16x16.png') }}" sizes="16x16" />
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.min.css">
         {% block stylesheets %}{% endblock %}
         <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -68,7 +70,59 @@
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-        <script>$(function () {$('[data-toggle="tooltip"]').tooltip()});
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+        <script>
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+
+                var searchForms = $('.search-office-form');
+
+                searchForms.each(function(key, item) {
+                    item = $(item);
+                    $autocomplete = item.find('.city-autocomplete');
+                    var term;
+
+                    $autocomplete.autocomplete({
+                        minLength: 2,
+                        source: function(request, response) {
+                            term = request.term;
+                            $.ajax({
+                                url: '{{ path('en_marche_core.intl.insee_code') }}',
+                                method: 'POST',
+                                data: { term: term },
+                                success: function(data) {
+                                    response(
+                                        $.map(data, function(name, inseeCode) {
+                                            return {
+                                                label: name,
+                                                value: inseeCode
+                                            };
+                                        })
+                                    );
+                                }
+                            });
+                        },
+                        select: function(event, ui) {
+                            var select = item.find('.city-autocomplete-city-name');
+                            select.addClass('office-select-loading');
+
+                            $.ajax({
+                                url: '{{ path('en_marche_core.intl.city') }}',
+                                method: 'POST',
+                                data: {
+                                    city: ui.item.value,
+                                    postalCode: $autocomplete.val()
+                                },
+                                success: function(data) {
+                                    $autocomplete.val(term);
+                                    $(".city-autocomplete-insee-code").val(ui.item.value);
+                                    select.val(data);
+                                }
+                            });
+                        }
+                    });
+                });
+            });
         </script>
         {% block javascripts %}{% endblock %}
     </body>

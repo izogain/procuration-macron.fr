@@ -1,5 +1,5 @@
 parameters:
-    app.form.type.address: AppBundle\Form\Type\AddressType
+    app.form.type.address: EnMarche\Bundle\CoreBundle\Form\Type\AddressType
     app.form.type.election: AppBundle\Form\Type\ElectionType
     app.form.type.election_round: AppBundle\Form\Type\ElectionRoundType
     app.form.type.election_round_choice: AppBundle\Form\Type\ElectionRoundChoiceType

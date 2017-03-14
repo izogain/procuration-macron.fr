@@ -22,6 +22,6 @@ class SubscriptionAddressFormHandler extends AbstractFormHandler
      */
     public function createForm()
     {
-        return $this->formFactory->create($this->formClassName, new Address());
+        return $this->formFactory->create($this->formClassName, new Address(), ['translation_domain' => false]);
     }
 }

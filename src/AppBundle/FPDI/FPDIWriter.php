@@ -79,7 +79,7 @@ class FPDIWriter
         // Depending of the user country we have to check a different box and provide different informations
         if ('FR' == $requesterVotingOfficeAddress->getCountryCode()) {
             $this->checkABox($pdf, 17.4, 53.5);
-            $this->writeTextAtPos($pdf, $requesterVotingOfficeAddress->getCity(), 54, 56);
+            $this->writeTextAtPos($pdf, $requesterVotingOfficeAddress->getCityName(), 54, 56);
         } else {
             $this->checkABox($pdf, 17.2, 63);
             $this->writeTextAtPos($pdf, Intl::getRegionBundle()->getCountryName($requesterVotingOfficeAddress->getCountryCode()), 32, 70.5);
@@ -115,7 +115,7 @@ class FPDIWriter
 
         // Conformity part
         $currentDate = new \DateTime();
-        $this->writeTextAtPos($pdf, $requesterAddress->getCity(), 30, 169.5);
+        $this->writeTextAtPos($pdf, $requesterAddress->getCityName(), 30, 169.5);
         $this->writeTextInBoxes($pdf, $this->formatDate($currentDate), 26.5, 174.5);
         $this->writeTextInBoxes($pdf, $currentDate->format('H'), 30.5, 179.5);
         $this->writeTextInBoxes($pdf, $currentDate->format('i'), 43, 179.5);
@@ -153,7 +153,7 @@ class FPDIWriter
         $this->writeTextInBoxes($pdf, $currentDate->format('H'), 118, 251);
         $this->writeTextInBoxes($pdf, $currentDate->format('i'), 129.5, 251);
 
-        $this->writeTextAtPos($pdf, $requesterAddress->getCity(), 112.5, 258);
+        $this->writeTextAtPos($pdf, $requesterAddress->getCityName(), 112.5, 258);
 
         $outputFilePath = $this->procurationMediator->generateOutputFilePath($procuration);
         $this->createOutputDir($outputFilePath);
@@ -236,7 +236,7 @@ class FPDIWriter
     private function writeSecondAddressLine(\FPDI $pdf, Address $address, $x, $y)
     {
         $this->writeTextInBoxes($pdf, $address->getPostalCode(), $x, $y);
-        $this->writeTextAtPos($pdf, $address->getCity(), $x + 40, $y);
+        $this->writeTextAtPos($pdf, $address->getCityName(), $x + 40, $y);
     }
 
     /**

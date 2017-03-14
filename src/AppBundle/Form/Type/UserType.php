@@ -5,6 +5,7 @@ namespace AppBundle\Form\Type;
 use AppBundle\Entity\Office;
 use AppBundle\Entity\User;
 use AppBundle\Repository\OfficeRepository;
+use EnMarche\Bundle\CoreBundle\Form\Type\AddressType;
 use Misd\PhoneNumberBundle\Form\Type\PhoneNumberType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -78,31 +79,31 @@ class UserType extends AbstractType
                 ]);
             }
 
-            // List only offices the user can supervise
-            $form->add('votingOffice', EntityType::class, [
-                'class' => $this->officeObjectClassName,
-                'label' => 'Bureau de vote',
-                'query_builder' => function (OfficeRepository $officeRepository) use ($editor) {
-                    return $this->getOfficesQueryBuilderForEditor($officeRepository, $editor);
-                },
-                'choice_label' => function (Office $office) {
-                    return $this->formatOfficeName($office);
-                },
-            ]);
-
-            // List only offices the user can supervise
-            $form->add('officesInCharge', EntityType::class, [
-                'required' => false,
-                'class' => $this->officeObjectClassName,
-                'multiple' => true,
-                'query_builder' => function (OfficeRepository $officeRepository) use ($editor) {
-                    return $this->getOfficesQueryBuilderForEditor($officeRepository, $editor);
-                },
-                'choice_label' => function (Office $office) {
-                    return $this->formatOfficeName($office);
-                },
-                'label' => 'Bureaux en charge',
-            ]);
+//            // List only offices the user can supervise
+//            $form->add('votingOffice', SearchOfficeType::class, [
+//                'class' => $this->officeObjectClassName,
+//                'label' => 'Bureau de vote',
+//                'query_builder' => function (OfficeRepository $officeRepository) use ($editor) {
+//                    return $this->getOfficesQueryBuilderForEditor($officeRepository, $editor);
+//                },
+//                'choice_label' => function (Office $office) {
+//                    return $this->formatOfficeName($office);
+//                },
+//            ]);
+//
+//            // List only offices the user can supervise
+//            $form->add('officesInCharge', EntityType::class, [
+//                'required' => false,
+//                'class' => $this->officeObjectClassName,
+//                'multiple' => true,
+//                'query_builder' => function (OfficeRepository $officeRepository) use ($editor) {
+//                    return $this->getOfficesQueryBuilderForEditor($officeRepository, $editor);
+//                },
+//                'choice_label' => function (Office $office) {
+//                    return $this->formatOfficeName($office);
+//                },
+//                'label' => 'Bureaux en charge',
+//            ]);
 
             if ($editorIsSuperadmin) {
                 $form->add('superAdmin', CheckboxType::class, [

@@ -60,18 +60,18 @@ class OfficeRepository extends EntityRepository
         $keywords = QuerySanitizer::extractKeywords($term);
 
         $qb = $this->createQueryBuilder('a');
-        $qb->select('a.address.city AS city', 'a.address.postalCode AS postalCode');
-        $qb->groupBy('a.address.city', 'a.address.postalCode');
+        $qb->select('a.address.cityName AS city', 'a.address.postalCode AS postalCode');
+        $qb->groupBy('a.address.cityName', 'a.address.postalCode');
 
         $filter = $qb->expr()->orX();
         $relevancy = [];
 
         foreach ($keywords as $i => $value) {
-            $filter->add('LOWER(a.address.city) LIKE :keyword_'.$i);
+            $filter->add('LOWER(a.address.cityName) LIKE :keyword_'.$i);
             $filter->add('LOWER(a.address.postalCode) LIKE :keyword_'.$i);
 
-            $relevancy[] = '(CASE WHEN LOWER(a.address.city) LIKE :keyword_'.$i.'_start THEN 5 ELSE 0 END)';
-            $relevancy[] = '(CASE WHEN LOWER(a.address.city) LIKE :keyword_'.$i.' THEN 2 ELSE 0 END)';
+            $relevancy[] = '(CASE WHEN LOWER(a.address.cityName) LIKE :keyword_'.$i.'_start THEN 5 ELSE 0 END)';
+            $relevancy[] = '(CASE WHEN LOWER(a.address.cityName) LIKE :keyword_'.$i.' THEN 2 ELSE 0 END)';
 
             $relevancy[] = '(CASE WHEN LOWER(a.address.postalCode) LIKE :keyword_'.$i.'_start THEN 5 ELSE 0 END)';
             $relevancy[] = '(CASE WHEN LOWER(a.address.postalCode) LIKE :keyword_'.$i.' THEN 2 ELSE 0 END)';
@@ -87,7 +87,30 @@ class OfficeRepository extends EntityRepository
         return array_map([$this, 'formatCityResult'], $qb->getQuery()->getResult());
     }
 
-    private function formatCityResult(array $item)
+    /**
+     * @param null|string $cityName
+     * @param null|string $postalCode
+     *
+     * @return array
+     */
+    public function findByCityAndPostalCode(?string $cityName, ?string $postalCode)
+    {
+        return $this->createQueryBuilder('o')
+            ->select('o.name', 'o.id')
+            ->where('LOWER(o.address.cityName) = :cityName')
+            ->andWhere('LOWER(o.address.postalCode) = :postalCode')
+            ->setParameter('cityName', $cityName)
+            ->setParameter('postalCode', $postalCode)
+            ->getQuery()
+            ->getArrayResult();
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return array
+     */
+    private function formatCityResult(array $item): array
     {
         $label = $item['city'].' ('.$item['postalCode'].')';
 
@@ -97,23 +120,5 @@ class OfficeRepository extends EntityRepository
             'city' => $item['city'],
             'postalCode' => $item['postalCode'],
         ];
-    }
-
-    /**
-     * @param null|string $city
-     * @param null|string $postalCode
-     *
-     * @return array
-     */
-    public function findByCityAndPostalCode(?string $city, ?string $postalCode)
-    {
-        return $this->createQueryBuilder('o')
-            ->select('o.name', 'o.id')
-            ->where('LOWER(o.address.city) = :city')
-            ->andWhere('LOWER(o.address.postalCode) = :postalCode')
-            ->setParameter('city', $city)
-            ->setParameter('postalCode', $postalCode)
-            ->getQuery()
-            ->getArrayResult();
     }
 }

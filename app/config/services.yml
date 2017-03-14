@@ -19,11 +19,7 @@ services:
     app.generator.password:
         class: AppBundle\Generator\PasswordGenerator
 
-    app.twig.address_extension:
-        class: AppBundle\Twig\AddressExtension
-        public: false
-        tags:
-            - { name: twig.extension }
+
     app.twig.procuration_extension:
         class: AppBundle\Twig\ProcurationExtension
         public: false

@@ -89,6 +89,10 @@ registration:
     defaults: { _controller: AppBundle:Registration:register }
     methods: GET|POST
 
+en_marche_core_intl:
+    prefix: /intl
+    resource: "@EnMarcheCoreBundle/Resources/config/routing/intl.xml"
+
 homepage:
     path: /
     defaults: { _controller: AppBundle:Default:index }

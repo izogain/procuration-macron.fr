@@ -34,7 +34,7 @@
                         {{ voter }}
                     </td>
                     <td>{{ electionRound.election }} ({{ electionRound.performanceDate|localizeddate(timeFormat='none') }})</td>
-                    <td>{{ voterVotingOffice }} ({{ voter.votingOffice.address.postalCode }} {{ voter.votingOffice.address.city }})</td>
+                    <td>{{ voterVotingOffice }} ({{ voter.votingOffice.address.postalCode }} {{ voter.votingOffice.address.cityName }})</td>
                     <td>
                         {% if procuration is null %}
                             Disponible

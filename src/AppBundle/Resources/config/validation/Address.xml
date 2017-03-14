@@ -5,7 +5,6 @@
 
     <class name="AppBundle\Entity\Address">
         <property name="streetName">
-            <constraint name="NotBlank"/>
             <constraint name="Length">
                 <option name="min">2</option>
             </constraint>
@@ -18,7 +17,7 @@
             </constraint>
         </property>
 
-        <property name="city">
+        <property name="cityName">
             <constraint name="NotBlank"/>
             <constraint name="Length">
                 <option name="min">2</option>

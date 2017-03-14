@@ -21,6 +21,8 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new Csa\Bundle\GuzzleBundle\CsaGuzzleBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+
+            new EnMarche\Bundle\CoreBundle\EnMarcheCoreBundle(),
             new EnMarche\Bundle\MailjetBundle\EnMarcheMailjetBundle(),
             new AppBundle\AppBundle(),
         ];

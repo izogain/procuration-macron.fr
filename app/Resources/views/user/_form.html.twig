@@ -5,8 +5,19 @@
     {{ form_row(form.email) }}
     {{ form_row(form.phoneNumber) }}
     {{ form_row(form.birthDate) }}
-    {{ form_row(form.votingOffice) }}
-    {{ form_row(form.address) }}
+</fieldset>
+<fieldset>
+    <div class="page-header">
+        <h2>Adresse</h2>
+    </div>
+    {{ form_row(form.address.streetNumber) }}
+    {{ form_row(form.address.streetRepeater) }}
+    {{ form_row(form.address.streetType) }}
+    {{ form_row(form.address.streetName) }}
+    {{ form_row(form.address.countryCode, {'label': 'Pays'}) }}
+    {{ form_row(form.address.postalCode, {'attr': {'class': 'city-autocomplete'}, 'label': 'Code postal'}) }}
+    {{ form_row(form.address.cityName, {'attr': {'class': 'city-autocomplete-city-name'}, 'label': 'Ville'}) }}
+    {#{{ form_row(form.votingOffice) }}#}
 </fieldset>
 
 <fieldset>
@@ -26,6 +37,7 @@
 
 <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
+        {{ form_row(form.address.inseeCityCode, {'attr': {'class': 'city-autocomplete-insee-code'}}) }}
         {{ form_rest(form) }}
         <input type="submit" class="btn btn-primary">
         <a class="btn btn-link" href="{{ path('user_index') }}">Retour</a>
