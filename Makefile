@@ -15,6 +15,9 @@ start:          ## Start the Docker containers
 stop:           ## Stop the Docker containers
 	docker-compose down
 
+assets:           ## Watch the scss and build its development version on change
+	gulp
+
 deps:           ## [composer perm] Install the project PHP dependencies
 deps: composer perm
 

@@ -16,14 +16,17 @@ See Makefile
 $ npm install
 ```
 
-
-### Watch
+### Build (first time, or rebuild)
 ```bash
-$ gulp
+$ make install
 ```
 
-
-### Build
+### Start db (unnecessary if `make install` was just run)
 ```bash
-$ gulp build
+$ make start
+```
+
+### Watch and build scss/js
+```bash
+$ make assets
 ```
