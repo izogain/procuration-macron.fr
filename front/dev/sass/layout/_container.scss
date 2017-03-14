@@ -4,7 +4,8 @@
     max-width: $max-width + 2 * 15px;
 }
 
-l-container--slim {
+.l-container--slim {
     margin: 0 auto;
-    max-width: $bp-small;
+    width: 90%;
+    max-width: $bp-xsmall;
 }

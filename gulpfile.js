@@ -9,7 +9,6 @@ var uglify = require('gulp-uglify');
 var devDir = 'front/dev/';
 var appAssetsDir = 'web/';
 
-
 /*
 ** Watch
 */
