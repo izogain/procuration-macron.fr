@@ -7,11 +7,7 @@ var autoprefixer = require('gulp-autoprefixer');
 var csso = require('gulp-csso');
 var uglify = require('gulp-uglify');
 var devDir = 'front/dev/';
-var appDir = 'front/app/';
 var appAssetsDir = 'web/';
-
-
-
 
 
 /*
@@ -24,7 +20,6 @@ gulp.task('js', function() {
         .pipe(uglify())
         .pipe(sourcemaps.write())
         .pipe(gulp.dest(appAssetsDir + 'js/'))
-        .pipe(browserSync.stream());
 });
 
 gulp.task('css', function() {
@@ -38,24 +33,14 @@ gulp.task('css', function() {
         .pipe(csso())
         .pipe(sourcemaps.write())
         .pipe(gulp.dest(appAssetsDir + 'css/'))
-        .pipe(browserSync.stream());
 });
 
 gulp.task('watch', ['css', 'js'], function() {
-    browserSync.init({
-        server: {
-            baseDir: appDir
-        }
-    });
-    gulp.watch(appDir + '*.html').on('change', reload);
     gulp.watch(devDir + 'sass/**/*.{scss,css}', ['css']).on('change', reload);
     gulp.watch(devDir + 'js/*.js', ['js']).on('change', reload);
 });
 
 gulp.task('default', ['watch', 'css', 'js']);
-
-
-
 
 
 /*
